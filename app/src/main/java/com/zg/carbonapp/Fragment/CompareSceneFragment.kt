@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
@@ -22,35 +20,38 @@ import com.zg.carbonapp.MMKV.SceneMmkv
 import com.zg.carbonapp.R
 import com.zg.carbonapp.Tool.MyToast
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CompareSceneFragment : Fragment() {
 
     // 用于保存对比历史（可持久化到 MMKV/数据库）
     private val compareHistory = mutableListOf<ComparisonResult>()
-    private lateinit var et_scene1:EditText
-    private lateinit var et_scene2:EditText
-    private lateinit var   tv_smart_analysis:TextView
+    private lateinit var et_scene1: EditText
+    private lateinit var et_scene2: EditText
+    private lateinit var tv_smart_analysis: TextView
+    private lateinit var btn_compare: Button
+    private lateinit var btn_save_history: Button
+    private lateinit var chart_comparison: BarChart
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_compare_scene, container, false)
+        return inflater.inflate(R.layout.fragment_scenarios, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btn_compare=view.findViewById<Button>(R.id.btn_compare)
-         et_scene1=view.findViewById<EditText>(R.id.et_scene1)
-         et_scene2=view.findViewById<EditText>(R.id.et_scene2)
-        tv_smart_analysis=view.findViewById<TextView>(R.id.tv_smart_analysis)
-        val btn_save_history=view.findViewById<Button>(R.id.btn_save_history)
+        et_scene1 = view.findViewById(R.id.et_scene1)
+        et_scene2 = view.findViewById(R.id.et_scene2)
+        tv_smart_analysis = view.findViewById(R.id.tv_smart_analysis)
+        btn_compare = view.findViewById(R.id.btn_compare)
+        btn_save_history = view.findViewById(R.id.btn_save_history)
+        chart_comparison = view.findViewById(R.id.chart_comparison)
+
         // 绑定按钮事件
         btn_compare.setOnClickListener { startCompare() }
         btn_save_history.setOnClickListener { saveCompareHistory() }
-
     }
 
     // 核心对比逻辑：校验场景 + 可视化 + 智能分析
@@ -104,36 +105,36 @@ class CompareSceneFragment : Fragment() {
 
     // 可视化：用柱状图对比「碳排放、空气质量、绿化率」（可扩展更多维度）
     private fun renderComparisonChart(sceneA: Scene, sceneB: Scene) {
-        val chart = view?.findViewById<BarChart>(R.id.chart_comparison) ?: return
-
-
+        // 示例：仅用detail长度做对比（实际应用可扩展为碳排放等）
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(0f, sceneA.detail.length.toFloat()))
+        entries.add(BarEntry(1f, sceneB.detail.length.toFloat()))
+        val dataSet = BarDataSet(entries, "场景对比")
+        dataSet.colors = listOf(
+            resources.getColor(R.color.green_light, null),
+            resources.getColor(R.color.blue_light, null)
+        )
+        val barData = BarData(dataSet)
+        chart_comparison.data = barData
+        chart_comparison.xAxis.valueFormatter = com.github.mikephil.charting.formatter.IndexAxisValueFormatter(arrayOf(sceneA.name, sceneB.name))
+        chart_comparison.invalidate()
     }
 
     // 智能分析：结合权重算法生成环保评分 + 改善建议
     private fun generateSmartAnalysis(sceneA: Scene, sceneB: Scene): String {
-        // 简易算法：碳排放*0.4 + 空气质量*0.3 + 绿化率*0.3
-        fun calculateScore(scene: Scene): Double {
-            return 100.0
-//            return scene.carbonEmission.toDouble() * 0.4 +
-//                    scene.airQuality.toDouble() * 0.3 +
-//                    scene.greenRate.toDouble() * 0.3
-        }
-
-        val scoreA = calculateScore(sceneA)
-        val scoreB = calculateScore(sceneB)
+        // 示例算法：detail长度越长分数越高
+        val scoreA = sceneA.detail.length
+        val scoreB = sceneB.detail.length
         val winner = if (scoreA > scoreB) sceneA.name else sceneB.name
-
-        // 生成建议（可接入 AI 接口优化，这里示例固定文案）
         val suggestion = if (winner == sceneA.name) {
-            "${sceneB.name} 可参考 ${sceneA.name} 的绿化方案，增加植被覆盖率"
+            "${sceneB.name} 可参考 ${sceneA.name} 的方案，丰富场景细节"
         } else {
-            "${sceneA.name} 可学习 ${sceneB.name} 的碳排放控制策略"
+            "${sceneA.name} 可学习 ${sceneB.name} 的方案，丰富场景细节"
         }
-
         return """
             智能分析结果：
-            - ${sceneA.name} 综合得分：${String.format("%.2f", scoreA)}
-            - ${sceneB.name} 综合得分：${String.format("%.2f", scoreB)}
+            - ${sceneA.name} 评分：$scoreA
+            - ${sceneB.name} 评分：$scoreB
             - 更优场景：$winner
             - 改善建议：$suggestion
         """.trimIndent()
@@ -153,8 +154,6 @@ class CompareSceneFragment : Fragment() {
                 it.applicationContext)
         }
     }
-
-
 
     // 对比结果数据类（用于历史记录）
     data class ComparisonResult(
