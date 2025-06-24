@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private val registerButton by lazy { binding.registerButton }
     private val userNameEditText by lazy { binding.userNameEditText }
     private val userAgreementTextView by lazy { binding.userAgreementTextView }
+    private val rememberPasswordCheckBox by lazy { binding.rememberPasswordCheckBox }
     private var countDownTimer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,15 @@ class LoginActivity : AppCompatActivity() {
         // 通过视图绑定初始化布局
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 记住密码功能：启动时自动填充
+        val prefs = getSharedPreferences("login_prefs", MODE_PRIVATE)
+        val savedUser = prefs.getString("userName", "")
+        val savedPwd = prefs.getString("userPwd", "")
+        val remember = prefs.getBoolean("rememberPwd", false)
+        userNameEditText.setText(savedUser)
+        passwordEditText.setText(savedPwd)
+        rememberPasswordCheckBox.isChecked = remember
 
         initListener()
 
@@ -55,6 +65,21 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 // 这里应该是调用后端的一个api来进行验证 暂时简单一点
                 if (userName == "admin" && userPassword == "123456") {
+                    // 记住密码逻辑
+                    val prefs = getSharedPreferences("login_prefs", MODE_PRIVATE)
+                    if (rememberPasswordCheckBox.isChecked) {
+                        prefs.edit()
+                            .putString("userName", userName)
+                            .putString("userPwd", userPassword)
+                            .putBoolean("rememberPwd", true)
+                            .apply()
+                    } else {
+                        prefs.edit()
+                            .remove("userName")
+                            .remove("userPwd")
+                            .putBoolean("rememberPwd", false)
+                            .apply()
+                    }
                     MyToast.sendToast("登陆成功", this)
                     IntentHelper.goIntent(this, MainActivity::class.java)
                 } else {

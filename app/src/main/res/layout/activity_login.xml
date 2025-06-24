@@ -102,13 +102,22 @@
 					android:id="@+id/passwordEditText"
 					android:layout_width="match_parent"
 					android:layout_height="56dp"
-					android:layout_marginBottom="32dp"
+					android:layout_marginBottom="16dp"
 					android:background="@drawable/bg_edittext"
 					android:hint="请输入密码"
 					android:inputType="textPassword"
 					android:paddingStart="16dp"
 					android:paddingEnd="16dp"
 					android:textSize="16sp" />
+
+				<CheckBox
+					android:id="@+id/rememberPasswordCheckBox"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="记住密码"
+					android:checked="false"
+					android:textColor="#757575"
+					android:layout_marginBottom="16dp"/>
 
 				<!-- 手机号快捷登录 -->
 				<TextView
