@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="black">#FF000000</color>
-	<color name="white">#FFFFFFFF</color>
-	<color name="blue">#2196F3</color>
-
-		<color name="colorPrimary">#2E7D32</color>
-		<color name="colorSecondary">#8BC34A</color>
-		<color name="textGray">#757575</color>
-
-
-	<color name="gray">#d5ddde</color>
-</resources>
+    <!-- Material Design 3 环保主题色彩 -->
+    <color name="primary">#4CAF50</color>
+    <color name="primary_dark">#388E3C</color>
+    <color name="primary_light">#81C784</color>
+    <color name="accent">#2196F3</color>
+    <color name="accent_light">#64B5F6</color>
+    
+    <!-- 环保相关色彩 -->
+    <color name="green_light">#66BB6A</color>
+    <color name="green_dark">#2E7D32</color>
+    <color name="blue_light">#42A5F5</color>
+    <color name="orange_warning">#FF9800</color>
+    <color name="red_alert">#F44336</color>
+    
+    <!-- 基础色彩 -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray_light">#FAFAFA</color>
+    <color name="gray_medium">#E0E0E0</color>
+    <color name="gray_dark">#757575</color>
+    
+    <!-- Material Design 3 语义色彩 -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F5F5F5</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#49454F</color>
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+    
+    <!-- 兼容性色彩（保留原有的一些色彩名称） -->
+    <color name="blue">#2196F3</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorSecondary">#2196F3</color>
+    <color name="textGray">#757575</color>
+    <color name="gray">#E0E0E0</color>
+</resources> 
