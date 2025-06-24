@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/scenariosFragment"
-        android:icon="@drawable/ic_scenarios"
-        android:title="低碳场景" />
-
-    <item
         android:id="@+id/challengeFragment"
         android:icon="@drawable/ic_challenge"
         android:title="减排挑战" />
