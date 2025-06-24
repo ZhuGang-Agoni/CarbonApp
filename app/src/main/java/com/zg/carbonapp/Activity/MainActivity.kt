@@ -3,7 +3,7 @@ package com.zg.carbonapp.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+
 import com.google.android.material.tabs.TabLayout
 import com.zg.carbonapp.Fragment.AskFragment
 import com.zg.carbonapp.Fragment.ChallengeFragment
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         initListener()
 //实现一个初始化
         if (savedInstanceState == null) {
-            val firstFragment = ChallengeFragment()
+            val firstFragment = AskFragment()
             fragments[2] = firstFragment
             supportFragmentManager.beginTransaction()
                 .add(container.id, firstFragment)
