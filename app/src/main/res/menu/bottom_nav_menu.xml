@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/scenariosFragment"
+        android:icon="@drawable/ic_scenarios"
+        android:title="低碳场景" />
+
+    <item
+        android:id="@+id/challengeFragment"
+        android:icon="@drawable/ic_challenge"
+        android:title="减排挑战" />
+
+    <item
+        android:id="@+id/aiAssistantFragment"
+        android:icon="@drawable/ic_ai_assistant"
+        android:title="低碳AI助手" />
+
+    <item
+        android:id="@+id/communityFragment"
+        android:icon="@drawable/ic_community"
+        android:title="碳社区" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="我的" />
+
+</menu> 

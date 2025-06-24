@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/aiAssistantFragment">
+
+    <fragment
+        android:id="@+id/aiAssistantFragment"
+        android:name="com.zg.carbonapp.Fragment.AskFragment"
+        android:label="低碳AI助手" />
+
+    <fragment
+        android:id="@+id/scenariosFragment"
+        android:name="com.zg.carbonapp.Fragment.CompareSceneFragment"
+        android:label="低碳场景" />
+
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.zg.carbonapp.Fragment.CommunityFragment"
+        android:label="碳社区" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.zg.carbonapp.Fragment.ImFragment"
+        android:label="我的" />
+
+    <fragment
+        android:id="@+id/challengeFragment"
+        android:name="com.zg.carbonapp.Fragment.ChallengeFragment"
+        android:label="减排挑战" />
+
+</navigation> 

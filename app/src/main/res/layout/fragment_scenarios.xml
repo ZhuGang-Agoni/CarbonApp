@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/et_scene1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入第一个场景名称"/>
+
+        <EditText
+            android:id="@+id/et_scene2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入第二个场景名称"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btn_compare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="对比"
+            android:layout_marginTop="12dp"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_comparison"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_smart_analysis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="智能分析结果将在这里显示"
+            android:textColor="@color/gray_dark"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_save_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存对比历史"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView> 
