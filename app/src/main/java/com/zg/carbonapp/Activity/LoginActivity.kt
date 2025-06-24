@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                 MyToast.sendToast("请输入你的账号和密码", this)
             } else {
                 // 这里应该是调用后端的一个api来进行验证 暂时简单一点
+
                 if (userName == "admin" && userPassword == "123456") {
                     // 记住密码逻辑
                     val prefs = getSharedPreferences("login_prefs", MODE_PRIVATE)

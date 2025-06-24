@@ -6,7 +6,6 @@ import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import com.zg.carbonapp.Fragment.SearchFragment
 
 object MyToast {
     //这里面就是实现了一个简单的自定义Toast

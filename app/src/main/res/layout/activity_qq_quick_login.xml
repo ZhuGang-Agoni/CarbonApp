@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_horizontal"
 		android:layout_marginTop="200dp"
-		android:text="重置密码"
+		android:text="QQ登录"
 		android:textSize="24sp"
 		android:textStyle="bold" />
 

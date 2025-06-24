@@ -1,5 +1,6 @@
 package com.zg.carbonapp.Dao
 
+//这个是进行排名
 data class RankingItem(
                          val userName: String,
                          val userEvator:String,

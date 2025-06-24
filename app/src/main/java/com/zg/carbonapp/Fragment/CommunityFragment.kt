@@ -71,25 +71,3 @@ class CommunityFragment : Fragment() {
         }
     }
 }
-
-class CommunityFeedFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // TODO: 实现动态页面布局
-        return null
-    }
-}
-
-class CommunityRankingFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // TODO: 实现排行榜页面布局
-        return null
-    }
-} 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.zg.carbonapp.databinding.FragmentRankingBinding
 
-class RankingFragment: Fragment() {
+class CommunityRankingFragment: Fragment() {
     private lateinit var  binding:FragmentRankingBinding
 
     override fun onCreateView(
