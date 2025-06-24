@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+	android:layout_width="match_parent"
+	android:layout_height="?attr/actionBarSize"
+	android:background="?attr/colorPrimary"
+	android:elevation="4dp"
+	android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+	app:title="发布动态"
+	 />
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="16dp">
+
+<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:spacing="16dp">
+
+	<EditText
+		android:id="@+id/etContent"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="分享你的低碳生活..."
+		android:minLines="6"
+		android:maxLines="12"
+		android:textSize="16sp" />
+
+	<!-- 图片选择区域（点击打开相册） -->
+	<TextView
+				android:id="@+id/btnAddImage"
+				android:layout_width="100dp"
+				android:layout_height="40dp"
+				android:backgroundTint="?attr/colorPrimary"
+				android:text="添加图片"
+				android:textColor="@android:color/black"
+				android:textSize="20dp" />
+	<ImageView
+		android:id="@+id/choose_image"
+		android:layout_width="match_parent"
+		android:layout_height="200dp"
+		android:src="@drawable/add_iamges"
+		android:contentDescription="选择图片"
+		android:scaleType="centerInside"
+ />
+
+	<!-- 图片容器（横向排列，最多3张） -->
+	<LinearLayout
+		android:id="@+id/llSelectedImages"
+		android:layout_width="match_parent"
+		android:layout_height="200dp"
+		android:orientation="horizontal"
+		android:padding="8dp"
+		android:visibility="gone"
+		android:gravity="center_vertical" />
+
+	<Button
+		android:id="@+id/btnPublish"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="发布"
+		android:backgroundTint="?attr/colorPrimary"
+		android:textColor="@android:color/white" />
+</LinearLayout>
+</ScrollView>
+	</LinearLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:orientation="vertical">-->
+
+<!--<com.google.android.material.appbar.MaterialToolbar-->
+<!--	android:id="@+id/toolbar"-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="?attr/actionBarSize"-->
+<!--	android:background="?attr/colorPrimary"-->
+<!--	android:elevation="4dp"-->
+<!--	android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"-->
+<!--	app:title="发布动态"-->
+<!--	 />-->
+
+<!--<ScrollView-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="match_parent"-->
+<!--	android:padding="16dp">-->
+
+<!--	<LinearLayout-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		android:orientation="vertical"-->
+<!--		android:spacing="16dp">-->
+
+<!--		<EditText-->
+<!--			android:id="@+id/etContent"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:hint="分享你的低碳生活..."-->
+<!--			android:minLines="6"-->
+<!--			android:maxLines="12"-->
+<!--			android:textSize="16sp" />-->
+
+
+
+
+
+<!--			android:layout_width="200dp"-->
+<!--			android:layout_height="200dp"-->
+<!--			android:id="@+id/choose_image"-->
+<!--			android:src="@drawable/add_iamges"/>-->
+
+
+<!--		&lt;!&ndash; 这里可以添加显示已选图片的区域 &ndash;&gt;-->
+<!--		<LinearLayout-->
+<!--			android:id="@+id/llSelectedImages"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:orientation="horizontal"-->
+<!--			android:padding="8dp"-->
+<!--			android:visibility="gone" />-->
+
+<!--		<Button-->
+<!--			android:id="@+id/btnPublish"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="发布"-->
+<!--			android:backgroundTint="?attr/colorPrimary"-->
+<!--			android:textColor="@android:color/white" />-->
+<!--	</LinearLayout>-->
+<!--</ScrollView>-->
+<!--</LinearLayout>-->
+
+<!--&lt;!&ndash;<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+<!--&lt;!&ndash;	xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+<!--&lt;!&ndash;	xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+<!--&lt;!&ndash;	android:id="@+id/main"&ndash;&gt;-->
+<!--&lt;!&ndash;	android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;	android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;	tools:context=".Activity.PostFeedActivity">&ndash;&gt;-->
+
+<!--&lt;!&ndash;</androidx.constraintlayout.widget.ConstraintLayout>&ndash;&gt;-->

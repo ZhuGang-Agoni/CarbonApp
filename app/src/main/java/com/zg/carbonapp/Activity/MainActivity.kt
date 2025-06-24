@@ -28,6 +28,15 @@ class MainActivity : AppCompatActivity() {
 
         initTableLayout()
         initListener()
+//实现一个初始化
+        if (savedInstanceState == null) {
+            val firstFragment = ChallengeFragment()
+            fragments[0] = firstFragment
+            supportFragmentManager.beginTransaction()
+                .add(container.id, firstFragment)
+                .show(firstFragment)
+                .commit()
+        }
     }
 //这里在添加的时候一定要按顺序来
     private fun initTableLayout(){

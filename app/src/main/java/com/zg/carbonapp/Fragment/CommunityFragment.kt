@@ -27,7 +27,7 @@ class CommunityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        setupListeners()
+//        setupListeners()
     }
 
     private fun setupUI() {
@@ -47,12 +47,12 @@ class CommunityFragment : Fragment() {
         }.attach()
     }
 
-    private fun setupListeners() {
-        // 发布按钮点击事件
-        binding.fabPost.setOnClickListener {
-            // TODO: 处理发布动态逻辑
-        }
-    }
+//    private fun setupListeners() {
+//        // 发布按钮点击事件
+//        binding.fabPost.setOnClickListener {
+//            // TODO: 处理发布动态逻辑
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
