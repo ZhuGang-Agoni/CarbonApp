@@ -34,7 +34,7 @@
 				app:strokeColor="@color/black"
 				app:strokeWidth="2dp"
 
-				app:textColor="@color/white" />
+			 />
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/btn_week"
@@ -49,7 +49,7 @@
 				app:cornerRadius="24dp"
 				app:strokeColor="@color/black"
 				app:strokeWidth="1dp"
-				app:textColor="@color/text_primary" />
+				 />
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/btn_month"
@@ -62,9 +62,9 @@
 				android:text="本月"
 				android:textSize="14sp"
 				app:cornerRadius="24dp"
-			app:strokeColor="@color/black"
+			    app:strokeColor="@color/black"
 				app:strokeWidth="1dp"
-				app:textColor="@color/text_primary" />
+			 />
 		</LinearLayout>
 
 		<!-- 数据概览卡片 -->
@@ -339,6 +339,8 @@
 
 	</LinearLayout>
 </androidx.core.widget.NestedScrollView>
+
+
 
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
