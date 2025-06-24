@@ -1,11 +1,62 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 	<!-- Base application theme. -->
 	<style name="Base.Theme.CarbonApp" parent="Theme.Material3.DayNight.NoActionBar">
-		<!-- Customize your light theme here. -->
-		<!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+		<!-- Primary brand color. -->
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryVariant">@color/primary_dark</item>
+		<item name="colorOnPrimary">@color/white</item>
+		
+		<!-- Secondary brand color. -->
+		<item name="colorSecondary">@color/accent</item>
+		<item name="colorSecondaryVariant">@color/accent_light</item>
+		<item name="colorOnSecondary">@color/white</item>
+		
+		<!-- Status bar color. -->
+		<item name="android:statusBarColor">@color/primary</item>
+		<item name="android:windowLightStatusBar">false</item>
+		
+		<!-- Surface colors -->
+		<item name="colorSurface">@color/surface</item>
+		<item name="colorSurfaceVariant">@color/surface_variant</item>
+		<item name="colorOnSurface">@color/on_surface</item>
+		<item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+		
+		<!-- Outline colors -->
+		<item name="colorOutline">@color/outline</item>
+		<item name="colorOutlineVariant">@color/outline_variant</item>
+		
+		<!-- Background color -->
+		<item name="android:colorBackground">@color/gray_light</item>
+		<item name="colorOnBackground">@color/on_surface</item>
+		
+		<!-- Error colors -->
+		<item name="colorError">@color/red_alert</item>
+		<item name="colorOnError">@color/white</item>
+		
+		<!-- Shape styles -->
+		<item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
 	</style>
 
 	<style name="Theme.CarbonApp" parent="Base.Theme.CarbonApp" />
+	
+	<!-- Shape styles for Material Design 3 -->
+	<style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">8dp</item>
+	</style>
+	
+	<style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">12dp</item>
+	</style>
+	
+	<style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">16dp</item>
+	</style>
+
 	<style name="IconButton" parent="Widget.Material3.Button">
 		<item name="iconPadding">0dp</item>
 		<item name="iconSize">32dp</item>
