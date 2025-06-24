@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#FFFFFF">
+
+	<!-- 顶部渐变背景图 -->
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/scrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<!-- 顶部背景区域 - 渐变绿色 + 环保图标 -->
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_marginBottom="24dp"
+				android:padding="24dp"
+				android:layout_weight="1">
+
+				<!-- 渐变背景 -->
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/gradient_background" />
+
+				<!-- 简约环保图标 -->
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerInParent="true"
+					android:text="🌍"
+					android:textSize="120sp"
+					android:textColor="#E0F7FA" />
+			</RelativeLayout>
+
+			<!-- Logo区域 -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="48dp"
+				android:layout_marginEnd="48dp"
+				android:layout_marginBottom="48dp"
+				android:gravity="center_horizontal"
+				android:orientation="vertical">
+
+				<TextView
+					android:id="@+id/appName"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="碳足迹"
+					android:textSize="32sp"
+					android:textColor="#2E7D32"
+					android:textStyle="bold" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="低碳生活，从记录开始"
+					android:textSize="14sp"
+					android:textColor="#757575" />
+			</LinearLayout>
+
+			<!-- 登录表单区域 -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="48dp"
+				android:layout_marginEnd="48dp"
+				android:layout_marginBottom="32dp"
+				android:orientation="vertical">
+
+				<!-- 手机号输入框 -->
+				<EditText
+					android:id="@+id/userNameEditText"
+					android:layout_width="match_parent"
+					android:layout_height="56dp"
+					android:layout_marginBottom="16dp"
+					android:background="@drawable/bg_edittext"
+					android:hint="请输入用户名"
+					android:inputType="text"
+					android:paddingStart="16dp"
+					android:paddingEnd="16dp"
+					android:textSize="16sp"
+					android:maxLines="1"
+					android:imeOptions="actionNext"
+					tools:ignore="Autofill" />
+
+				<!-- 密码输入框 -->
+				<androidx.appcompat.widget.AppCompatEditText
+					android:id="@+id/passwordEditText"
+					android:layout_width="match_parent"
+					android:layout_height="56dp"
+					android:layout_marginBottom="32dp"
+					android:background="@drawable/bg_edittext"
+					android:hint="请输入密码"
+					android:inputType="textPassword"
+					android:paddingStart="16dp"
+					android:paddingEnd="16dp"
+					android:textSize="16sp" />
+
+				<!-- 手机号快捷登录 -->
+				<TextView
+					android:id="@+id/phoneQuickLoginText"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="24dp"
+					android:gravity="center"
+					android:text="手机号快捷登录"
+					android:textColor="#4CAF50"
+					android:textSize="16sp"
+					android:textStyle="bold" />
+
+				<!-- 登录按钮（改为TextView） -->
+				<TextView
+					android:id="@+id/loginButton"
+					android:layout_width="match_parent"
+					android:layout_height="56dp"
+					android:background="@drawable/bg_button_primary"
+					android:gravity="center"
+					android:text="登录"
+					android:textColor="#FFFFFF"
+					android:textSize="18sp"
+					android:textStyle="bold" />
+			</LinearLayout>
+
+			<!-- 注册与忘记密码 -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="48dp"
+				android:layout_marginEnd="48dp"
+				android:layout_marginBottom="48dp"
+				android:gravity="center_horizontal"
+				android:orientation="horizontal">
+
+				<TextView
+					android:id="@+id/registerTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="还未注册？"
+					android:textColor="#757575"
+					android:textSize="14sp" />
+
+				<TextView
+					android:id="@+id/registerButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="4dp"
+					android:text="立即注册"
+					android:textColor="#4CAF50"
+					android:textSize="14sp"
+					android:textStyle="bold" />
+
+				<TextView
+					android:id="@+id/forgotPasswordButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="32dp"
+					android:text="忘记密码？"
+					android:textColor="#4CAF50"
+					android:textSize="14sp"
+					android:textStyle="bold" />
+			</LinearLayout>
+
+			<!-- 底部协议 -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="48dp"
+				android:layout_marginEnd="48dp"
+				android:layout_marginBottom="24dp"
+				android:gravity="center"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="登录即代表您同意"
+					android:textColor="#757575"
+					android:textSize="12sp" />
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/privacyPolicyTextView"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="《隐私协议》"
+						android:textColor="#4CAF50"
+						android:textSize="12sp" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="8dp"
+						android:layout_marginEnd="8dp"
+						android:text="和"
+						android:textColor="#757575"
+						android:textSize="12sp" />
+
+					<TextView
+						android:id="@+id/userAgreementTextView"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="《用户协议》"
+						android:textColor="#4CAF50"
+						android:textSize="12sp" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

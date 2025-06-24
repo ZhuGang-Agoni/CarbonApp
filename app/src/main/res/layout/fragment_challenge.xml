@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<com.google.android.material.appbar.MaterialToolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		app:title="减排挑战" />
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<!-- 当前挑战进度卡片 -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				app:cardCornerRadius="16dp"
+				app:cardElevation="4dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="20dp">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="本周步行挑战"
+						android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+						android:textColor="?attr/colorOnSurface" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="目标：连续7天每天步行1万步"
+						android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+						android:textColor="?attr/colorOnSurfaceVariant"
+						android:layout_marginTop="4dp" />
+
+					<com.google.android.material.progressindicator.LinearProgressIndicator
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:progress="60"
+						app:indicatorColor="@color/primary"
+						app:trackColor="@color/surface_variant" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="已坚持4/7天"
+						android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+						android:textColor="?attr/colorOnSurfaceVariant"
+						android:layout_marginTop="8dp" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+			<!-- 挑战列表标题 -->
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="可参与的挑战"
+				android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+				android:textColor="?attr/colorOnSurface"
+				android:layout_marginBottom="8dp" />
+
+			<!-- 挑战列表（可用RecyclerView替换） -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="12dp"
+				app:cardCornerRadius="12dp"
+				app:cardElevation="2dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="减少用电挑战"
+						android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+						android:textColor="?attr/colorOnSurface" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="本月用电量减少5%"
+						android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+						android:textColor="?attr/colorOnSurfaceVariant"
+						android:layout_marginTop="4dp" />
+
+					<Button
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="参与挑战"
+						android:layout_marginTop="8dp" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+			<!-- 可继续添加更多挑战卡片 -->
+
+			<!-- 查看历史挑战按钮 -->
+			<Button
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="查看历史挑战"
+				android:layout_marginTop="16dp" />
+
+		</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

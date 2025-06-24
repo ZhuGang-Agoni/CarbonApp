@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/gray_light"
+	tools:context=".ui.ai.AiAssistantFragment">
+
+	<!-- 顶部AppBar -->
+	<com.google.android.material.appbar.MaterialToolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:title="低碳AI助手"
+		app:titleTextColor="@color/on_surface"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+	<!-- 欢迎卡片 -->
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/welcomeCard"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		app:cardCornerRadius="16dp"
+		app:cardElevation="4dp"
+		app:layout_constraintTop_toBottomOf="@id/toolbar"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:padding="20dp">
+
+			<com.google.android.material.imageview.ShapeableImageView
+				android:layout_width="60dp"
+				android:layout_height="60dp"
+				android:layout_gravity="center_vertical"
+				android:background="@color/primary_light"
+				android:src="@drawable/ic_ai_assistant"
+				app:shapeAppearanceOverlay="@style/ShapeAppearance.App.LargeComponent" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_weight="1"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="你好！我是你的低碳助手"
+					android:textAppearance="?attr/textAppearanceHeadlineSmall"
+					android:textColor="@color/on_surface" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="4dp"
+					android:text="有什么可以帮助你的吗？"
+					android:textAppearance="?attr/textAppearanceBodyMedium"
+					android:textColor="@color/on_surface_variant" />
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<!-- 聊天记录RecyclerView自适应剩余空间 -->
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/chatRecyclerView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:padding="8dp"
+		app:layout_constraintTop_toBottomOf="@id/welcomeCard"
+		app:layout_constraintBottom_toTopOf="@id/inputLayout"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		tools:listitem="@layout/item_chat_user" />
+
+	<!-- 底部输入栏 -->
+	<LinearLayout
+		android:id="@+id/inputLayout"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@color/surface"
+		android:elevation="8dp"
+		android:orientation="horizontal"
+		android:padding="16dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<com.google.android.material.textfield.TextInputLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_marginEnd="8dp"
+			app:boxCornerRadiusBottomEnd="24dp"
+			app:boxCornerRadiusBottomStart="24dp"
+			app:boxCornerRadiusTopEnd="24dp"
+			app:boxCornerRadiusTopStart="24dp"
+			app:boxStrokeColor="@color/outline"
+			app:hintTextColor="@color/primary"
+			style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/message_input"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="输入你的问题..."
+				android:inputType="textMultiLine"
+				android:maxLines="3" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
+			android:id="@+id/send_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_send"
+			app:backgroundTint="@color/primary"
+			app:tint="@color/white" />
+
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+	<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--	xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--	xmlns:tools="http://schemas.android.com/tools"-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="match_parent"-->
+<!--	android:orientation="vertical"-->
+<!--	tools:context=".Fragment.AskFragment">-->
+
+<!--<TextView-->
+<!--android:id="@id/title"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--	android:gravity="center"-->
+<!--	android:padding="16dp"-->
+<!--	android:text="碳知识问答"-->
+<!--	android:textSize="24sp"-->
+<!--	android:textColor="@color/blue" />-->
+
+<!--<com.google.android.material.card.MaterialCardView-->
+<!--android:id="@+id/card_view"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="0dp"-->
+<!--	android:layout_weight="1"-->
+<!--	android:layout_margin="16dp"-->
+<!--	app:cardCornerRadius="12dp"-->
+<!--	app:cardElevation="4dp"-->
+<!--	app:contentPadding="16dp"-->
+<!--	>-->
+
+<!--<LinearLayout-->
+<!--android:id="@+id/card_view_layout"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:orientation="vertical">-->
+
+<!--<TextView-->
+<!--	android:id="@+id/text_res"-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="0dp"-->
+<!--    android:layout_weight="4"-->
+<!--    android:padding="16dp"-->
+<!--	android:text="结果反馈框"-->
+<!--    android:textSize="18sp"-->
+<!--     android:lineSpacingExtra="4sp"-->
+<!--   android:scrollbars="vertical"-->
+<!--   android:maxLines="20"-->
+<!--   android:ellipsize="end"-->
+<!--/>-->
+
+<!--<LinearLayout-->
+<!--	android:id="@+id/search_layout"-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="16dp"-->
+<!--    android:background="@drawable/main_research"-->
+<!--    android:orientation="horizontal"-->
+<!--	android:padding="4dp"-->
+<!--&gt;-->
+
+<!--<ImageView-->
+<!--	android:layout_width="24dp"-->
+<!--	android:layout_height="24dp"-->
+<!--	android:layout_gravity="center_vertical"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:src="@drawable/component2" />-->
+
+<!--<EditText-->
+<!--	android:id="@+id/input_text"-->
+<!--	android:layout_width="0dp"-->
+<!--android:layout_height="40dp"-->
+<!--android:layout_marginEnd="8dp"-->
+<!--android:layout_weight="1"-->
+<!--android:background="@android:color/white"-->
+<!--android:hint="请在此输入你想询问的相关信息"-->
+<!--android:inputType="text"-->
+<!--android:paddingStart="8dp"-->
+<!--android:paddingEnd="8dp"-->
+<!--android:textColorHint="@color/black"-->
+<!--android:textSize="16sp"-->
+<!--android:maxLines="1"-->
+<!--/>-->
+
+<!--<ImageView-->
+<!--	android:id="@+id/btnSend"-->
+<!--	android:layout_width="40dp"-->
+<!--	android:layout_height="40dp"-->
+<!--	android:layout_gravity="center_vertical"-->
+<!--    android:layout_marginEnd="8dp"-->
+<!--    android:src="@drawable/up" />-->
+<!--</LinearLayout>-->
+<!--	</LinearLayout>-->
+<!--	</com.google.android.material.card.MaterialCardView>-->
+<!--	</LinearLayout>-->

@@ -1,0 +1,20 @@
+<resources>
+	<string name="app_name">CarbonApp</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+	<string name="app_slogan">低碳生活，从记录开始</string>
+	<string name="phone_hint">请输入11位手机号</string>
+	<string name="code_hint">请输入验证码</string>
+	<string name="send_code">发送</string>
+	<string name="login">登录</string>
+	<string name="other_login_methods">或使用其他方式登录</string>
+	<string name="not_registered">还未注册？</string>
+	<string name="register_now">立即注册</string>
+	<string name="forgot_password">忘记密码？</string>
+	<string name="login_agreement">登录即代表您同意《隐私协议》和《用户协议》</string>
+	<string name="app_logo">应用图标</string>
+
+
+</resources>

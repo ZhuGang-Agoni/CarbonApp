@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".Fragment.SearchFragment">
+
+<!--	&lt;!&ndash; TODO: Update blank fragment layout &#45;&#45;-->
+
+  <androidx.recyclerview.widget.RecyclerView
+	  android:layout_width="match_parent"
+	  android:layout_height="match_parent"
+	  android:id="@+id/recycler_view"/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/add_scene"
+		android:layout_width="wrap_content"
+		android:layout_height="75dp"
+		android:layout_gravity="right"
+		android:layout_marginTop="600dp"
+		android:src="@drawable/add"
+	/>
+</FrameLayout>

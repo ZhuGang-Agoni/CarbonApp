@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/gray_light">
+
+	<com.google.android.material.appbar.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/surface">
+
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:title="碳社区"
+			app:titleTextColor="@color/on_surface" />
+
+		<com.google.android.material.tabs.TabLayout
+			android:id="@+id/tab_layout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:tabGravity="fill"
+			app:tabMode="fixed"
+			app:tabTextColor="@color/on_surface_variant"
+			app:tabSelectedTextColor="@color/primary"
+			app:tabIndicatorColor="@color/primary">
+
+			<com.google.android.material.tabs.TabItem
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="动态" />
+
+			<com.google.android.material.tabs.TabItem
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="排行榜" />
+
+		</com.google.android.material.tabs.TabLayout>
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<androidx.viewpager2.widget.ViewPager2
+		android:id="@+id/view_pager"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+	<!-- 发布按钮 -->
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/fabPost"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_margin="16dp"
+		android:src="@android:drawable/ic_menu_edit" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+	<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--	android:layout_width="match_parent"-->
+<!--	android:layout_height="match_parent">-->
+
+<!--	<LinearLayout-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		android:orientation="vertical"-->
+<!--		android:padding="16dp">-->
+
+<!--		&lt;!&ndash; 1. 用户输入区 &ndash;&gt;-->
+<!--		<TextView-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="选择/输入要对比的场景"-->
+<!--			android:textSize="18sp"-->
+<!--			android:textStyle="bold" />-->
+
+<!--		<EditText-->
+<!--			android:id="@+id/et_scene1"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:hint="场景A名称（如：森林）"-->
+<!--			android:layout_marginTop="8dp" />-->
+
+<!--		<EditText-->
+<!--			android:id="@+id/et_scene2"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:hint="场景B名称（如：城市街道）"-->
+<!--			android:layout_marginTop="8dp" />-->
+
+<!--		<Button-->
+<!--			android:id="@+id/btn_compare"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="开始对比"-->
+<!--			android:layout_marginTop="16dp"-->
+<!--			android:onClick="startCompare" />-->
+
+<!--		&lt;!&ndash; 2. 可视化对比区（用第三方库占位，如 MPAndroidChart） &ndash;&gt;-->
+<!--		<TextView-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="多维度数据对比"-->
+<!--			android:textSize="18sp"-->
+<!--			android:textStyle="bold"-->
+<!--			android:layout_marginTop="24dp" />-->
+
+<!--		<com.github.mikephil.charting.charts.BarChart-->
+<!--			android:id="@+id/chart_comparison"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="300dp"-->
+<!--			android:layout_marginTop="8dp" />-->
+
+<!--		&lt;!&ndash; 3. 智能分析与建议区 &ndash;&gt;-->
+<!--		<TextView-->
+<!--			android:id="@+id/tv_smart_analysis"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="智能分析结果将展示于此"-->
+<!--			android:textSize="16sp"-->
+<!--			android:layout_marginTop="24dp" />-->
+
+<!--		&lt;!&ndash; 4. 历史记录与共创区 &ndash;&gt;-->
+<!--		<Button-->
+<!--			android:id="@+id/btn_save_history"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="保存对比记录"-->
+<!--			android:layout_marginTop="16dp" />-->
+
+<!--		<Button-->
+<!--			android:id="@+id/btn_submit_optimize"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="提交场景优化方案"-->
+<!--			android:layout_marginTop="8dp" />-->
+
+<!--	</LinearLayout>-->
+<!--</ScrollView>-->

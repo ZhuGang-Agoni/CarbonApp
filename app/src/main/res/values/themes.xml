@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+	<!-- Base application theme. -->
+	<style name="Base.Theme.CarbonApp" parent="Theme.Material3.DayNight.NoActionBar">
+		<!-- Customize your light theme here. -->
+		<!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+	</style>
+
+	<style name="Theme.CarbonApp" parent="Base.Theme.CarbonApp" />
+	<style name="IconButton" parent="Widget.Material3.Button">
+		<item name="iconPadding">0dp</item>
+		<item name="iconSize">32dp</item>
+		<item name="iconGravity">start</item>
+		<item name="shapeAppearance">@style/ShapeAppearance.Material3.LargeComponent</item>
+		<item name="android:insetTop">0dp</item>
+		<item name="android:insetBottom">0dp</item>
+	</style>
+</resources>
