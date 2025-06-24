@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/gray_light"
-	tools:context=".ui.ai.AiAssistantFragment">
+	>
 
 	<!-- 顶部AppBar -->
 	<com.google.android.material.appbar.MaterialToolbar
