@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import com.zg.carbonapp.Fragment.AskFragment
 import com.zg.carbonapp.Fragment.ChallengeFragment
 import com.zg.carbonapp.Fragment.CommunityFragment
+import com.zg.carbonapp.Fragment.DataAnalyseFragment
 import com.zg.carbonapp.Fragment.ImFragment
 
 import com.zg.carbonapp.R
@@ -28,6 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         initTableLayout()
         initListener()
+//实现一个初始化
+        if (savedInstanceState == null) {
+            val firstFragment = ChallengeFragment()
+            fragments[2] = firstFragment
+            supportFragmentManager.beginTransaction()
+                .add(container.id, firstFragment)
+                .show(firstFragment)
+                .commit()
+        }
     }
 //这里在添加的时候一定要按顺序来
     private fun initTableLayout(){
@@ -37,7 +47,9 @@ class MainActivity : AppCompatActivity() {
             val challengeTab = tabLayout.newTab().setIcon(R.drawable.ic_challenge).setText("减排挑战")
             val communityTab = tabLayout.newTab().setIcon(R.drawable.ic_community).setText("碳社区")
             val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的主页")
+            val dataTab=tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
             tabLayout.addTab(challengeTab)
+            tabLayout.addTab(dataTab)
             tabLayout.addTab(askTab)
             tabLayout.addTab(communityTab)
             tabLayout.addTab(imTab)
@@ -54,9 +66,10 @@ class MainActivity : AppCompatActivity() {
               {//如果这个Fragment已经存在了 就直接返回 如果不存在就先添加
                   when (tab.position) {//position是Int类型的
                       0 -> ChallengeFragment()//这里的newInstance就是获取对象的一个意思
-                      1 -> AskFragment()
-                      2 -> CommunityFragment()
-                      3 -> ImFragment()
+                      1->  DataAnalyseFragment()
+                      2 -> AskFragment()
+                      3 -> CommunityFragment()
+                      4 -> ImFragment()
                       else -> throw IllegalStateException("Invalid position")
                   }
               }

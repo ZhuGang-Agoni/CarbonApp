@@ -49,13 +49,7 @@
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 	<!-- 发布按钮 -->
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fabPost"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|end"
-		android:layout_margin="16dp"
-		android:src="@android:drawable/ic_menu_edit" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="12dp">
+
+	<!-- 用户信息区域 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingBottom="8dp">
+
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/ivAvatar"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:src="@drawable/img"
+			android:scaleType="centerCrop"
+			app:shapeAppearanceOverlay="@style/AvatarShapeAppearance" />
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical"
+			android:paddingStart="8dp">
+
+			<TextView
+				android:id="@+id/tvUsername"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="用户名"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:id="@+id/tvTime"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="10分钟前"
+				android:textSize="12sp"
+				android:textColor="#888888" />
+		</LinearLayout>
+
+		<ImageView
+			android:id="@+id/ivMore"
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:src="@drawable/more"
+			android:padding="4dp" />
+	</LinearLayout>
+
+	<!-- 动态内容 -->
+	<TextView
+		android:id="@+id/tvContent"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="这是一条碳社区的动态内容，分享我的低碳生活方式和环保行动..."
+		android:textSize="14sp"
+		android:paddingBottom="8dp" />
+
+	<!-- 图片展示区域 -->
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/rvImages"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingBottom="8dp"
+		app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+		app:spanCount="3" />
+
+	<!-- 碳足迹信息 -->
+<!--	<LinearLayout-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		android:orientation="horizontal"-->
+<!--		android:padding="8dp"-->
+<!--		android:background="#f5f5f5"-->
+<!--		android:borderRadius="8dp"-->
+<!--		android:paddingStart="12dp"-->
+<!--		android:paddingEnd="12dp">-->
+
+<!--		<ImageView-->
+<!--			android:layout_width="20dp"-->
+<!--			android:layout_height="20dp"-->
+<!--			android:src="@drawable/ic_carbon"-->
+<!--			android:layout_gravity="center_vertical" />-->
+
+<!--		<TextView-->
+<!--			android:id="@+id/tvCarbonFootprint"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:text="减少碳排放: 0.5kg"-->
+<!--			android:textSize="12sp"-->
+<!--			android:paddingStart="4dp"-->
+<!--			android:layout_gravity="center_vertical" />-->
+<!--	</LinearLayout>-->
+
+	<!-- 互动按钮区域 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingTop="8dp"
+		android:weightSum="3">
+
+		<LinearLayout
+			android:id="@+id/btnLike"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:padding="8dp">
+
+			<ImageView
+				android:id="@+id/ivLike"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:src="@drawable/like" />
+
+			<TextView
+				android:id="@+id/tvLikeCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="128"
+				android:textSize="12sp"
+				android:paddingStart="4dp" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/btnComment"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:padding="8dp">
+
+			<ImageView
+				android:id="@+id/ivComment"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:src="@drawable/comment_light" />
+
+			<TextView
+				android:id="@+id/tvCommentCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="36"
+				android:textSize="12sp"
+				android:paddingStart="4dp" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/btnShare"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:padding="8dp">
+
+			<ImageView
+				android:id="@+id/ivShare"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:src="@drawable/share" />
+
+			<TextView
+				android:id="@+id/tvShareCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="8"
+				android:textSize="12sp"
+				android:paddingStart="4dp" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<!-- 分割线 -->
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#e0e0e0"
+		android:layout_marginTop="12dp" />
+</LinearLayout>
