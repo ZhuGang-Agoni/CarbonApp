@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class UserFeed(
     val userId: String,
-    val username: String,
+    val username: String="",
     val avatar: String,
     val content: String,
     val images: List<String>,

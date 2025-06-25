@@ -36,6 +36,11 @@ class RankingAdapter (val itemList:List<RankingItem>,context : Context):Recycler
 
           holder.carbonCount.text=item.carbonCount.toString()
           holder.userName.text=item.userName
+
+          holder.itemView.setOnClickListener{
+                //这边可以看情况进行一个展示
+
+          }
     }
 
 }

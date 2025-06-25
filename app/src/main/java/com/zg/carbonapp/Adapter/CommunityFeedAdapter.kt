@@ -13,7 +13,7 @@ import com.zg.carbonapp.R
 import com.zg.carbonapp.databinding.FragmentFeedItemCommunityBinding
 
 class CommunityFeedAdapter(
-    private val onLikeClick: (Int) -> Unit,
+    private val onLikeClick: (Int) -> Unit,//这种写法是比较合理的
     private val onCommentClick: (Int) -> Unit,
     private val onShareClick: (Int) -> Unit,
     private val onAvatarClick: (Int) -> Unit
@@ -44,12 +44,6 @@ class CommunityFeedAdapter(
             binding.ivLike.setImageResource(
                 if (isLiked) R.drawable.like__1_ else R.drawable.like
             )
-//            binding.tvLikeCount.setTextColor(
-//                if (isLiked)
-//                    binding.tvLikeCount.context.getColor(R.color.red)
-//                else
-//                    binding.tvLikeCount.context.getColor(R.color.black)
-//            )
 
             // 处理图片展示
             setupImages(binding, feed.images)
