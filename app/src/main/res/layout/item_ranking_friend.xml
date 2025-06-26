@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="8dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <!-- 排名数字 -->
+    <TextView
+        android:id="@+id/tvRank"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/surface"
+        android:gravity="center"/>
+
+    <!-- 头像 -->
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_profile"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_primary_textview"
+        android:clipToOutline="true"/>
+
+    <!-- 昵称和描述 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="好友昵称"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_dark"/>
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="一起低碳种树"
+            android:textSize="12sp"
+            android:textColor="@color/gray_dark"/>
+    </LinearLayout>
+
+    <!-- 种树数量 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivTree"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:contentDescription="树"/>
+
+        <TextView
+            android:id="@+id/tvTreeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textSize="16sp"
+            android:textColor="@color/green_dark"
+            android:layout_marginStart="4dp"/>
+    </LinearLayout>
+</LinearLayout>

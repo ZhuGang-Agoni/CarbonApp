@@ -37,6 +37,12 @@
 		<activity
 			android:name=".Activity.RegisterActivity"
 			android:exported="false" />
+		<activity
+			android:name=".Activity.FootprintActivity"
+			android:exported="false"/>
+		<activity
+			android:name=".Activity.PlantTreeActivity"
+			android:exported="false"/>
 
 
 		<activity

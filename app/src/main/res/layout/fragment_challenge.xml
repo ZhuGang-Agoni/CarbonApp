@@ -1,140 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:background="@color/gray_light">
+	android:background="@color/gray_light"
+	android:padding="16dp">
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/recyclerViewChallenge"
+	<!-- 顶部：碳足迹与种树 -->
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		android:layout_marginBottom="20dp">
+
+		<!-- 碳足迹卡片 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="0dp"
+			android:layout_height="150dp"
+			android:layout_weight="2"
+			app:cardCornerRadius="20dp"
+			app:cardElevation="6dp"
+			app:strokeColor="@color/green_dark"
+			app:strokeWidth="1dp"
+			android:layout_marginEnd="8dp"
+			android:backgroundTint="@android:color/white">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center">
+
+				<ImageView
+					android:layout_width="40dp"
+					android:layout_height="40dp"
+					android:src="@drawable/ic_footprint"
+					android:contentDescription="碳足迹"
+					android:layout_marginBottom="6dp"/>
+				<TextView
+					android:id="@+id/tvStepCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="0 步"
+					android:textSize="28sp"
+					android:textStyle="bold"
+					android:textColor="@color/green_dark"/>
+				<TextView
+					android:id="@+id/tvStepTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="碳足迹"
+					android:textSize="15sp"
+					android:textColor="@color/primary_dark"
+					android:layout_marginTop="2dp"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="实时步数，助力低碳生活"
+					android:textSize="11sp"
+					android:textColor="@color/gray_dark"
+					android:layout_marginTop="2dp"/>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- 种树卡片 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="0dp"
+			android:layout_height="150dp"
+			android:layout_weight="1"
+			app:cardCornerRadius="20dp"
+			app:cardElevation="6dp"
+			app:strokeColor="@color/green_dark"
+			app:strokeWidth="1dp"
+			android:layout_marginStart="8dp"
+			android:backgroundTint="@android:color/white">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center">
+
+				<ImageView
+					android:layout_width="40dp"
+					android:layout_height="40dp"
+					android:src="@drawable/ic_tree"
+					android:contentDescription="可种树"
+					android:layout_marginBottom="6dp"/>
+				<TextView
+					android:id="@+id/tvTreeCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="0 棵"
+					android:textSize="28sp"
+					android:textStyle="bold"
+					android:textColor="@color/green_dark"/>
+				<TextView
+					android:id="@+id/tvTreeTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="可种树"
+					android:textSize="15sp"
+					android:textColor="@color/primary_dark"
+					android:layout_marginTop="2dp"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="步数兑换，绿色公益"
+					android:textSize="11sp"
+					android:textColor="@color/gray_dark"
+					android:layout_marginTop="2dp"/>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+	</LinearLayout>
+
+	<!-- 激励语 -->
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="你已超越 80% 的好友，继续加油！"
+		android:textColor="@color/primary"
+		android:textSize="15sp"
+		android:gravity="center"
+		android:layout_marginBottom="8dp"
+		android:textStyle="bold"/>
+
+	<!-- 排行榜标题 -->
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="好友种树排行榜"
+		android:textSize="18sp"
+		android:textStyle="bold"
+		android:textColor="@color/primary_dark"
+		android:layout_marginStart="20dp"
+		android:layout_marginBottom="8dp"/>
+
+	<!-- 排行榜列表 -->
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recyclerViewRanking"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:background="@android:color/white"
 		android:padding="8dp"/>
 </LinearLayout>
-<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--	xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--	android:layout_width="match_parent"-->
-<!--	android:layout_height="match_parent">-->
+<!--	android:layout_height="match_parent"-->
+<!--	android:orientation="vertical"-->
+<!--	android:background="@color/gray_light">-->
 
-<!--	<com.google.android.material.appbar.MaterialToolbar-->
-<!--		android:id="@+id/toolbar"-->
-<!--		android:layout_width="match_parent"-->
-<!--		android:layout_height="?attr/actionBarSize"-->
-<!--		app:title="减排挑战" />-->
-
-<!--	<androidx.core.widget.NestedScrollView-->
+<!--	<androidx.recyclerview.widget.RecyclerView-->
+<!--		android:id="@+id/recyclerViewChallenge"-->
 <!--		android:layout_width="match_parent"-->
 <!--		android:layout_height="match_parent"-->
-<!--		android:padding="16dp"-->
-<!--		app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+<!--		android:padding="8dp"/>-->
+<!--</LinearLayout>-->
+<!--&lt;!&ndash;<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+<!--&lt;!&ndash;	xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+<!--&lt;!&ndash;	android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;	android:layout_height="match_parent">&ndash;&gt;-->
 
-<!--		<LinearLayout-->
-<!--			android:layout_width="match_parent"-->
-<!--			android:layout_height="wrap_content"-->
-<!--			android:orientation="vertical">-->
+<!--&lt;!&ndash;	<com.google.android.material.appbar.MaterialToolbar&ndash;&gt;-->
+<!--&lt;!&ndash;		android:id="@+id/toolbar"&ndash;&gt;-->
+<!--&lt;!&ndash;		android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;		android:layout_height="?attr/actionBarSize"&ndash;&gt;-->
+<!--&lt;!&ndash;		app:title="减排挑战" />&ndash;&gt;-->
 
-<!--			&lt;!&ndash; 当前挑战进度卡片 &ndash;&gt;-->
-<!--			<com.google.android.material.card.MaterialCardView-->
-<!--				android:layout_width="match_parent"-->
-<!--				android:layout_height="wrap_content"-->
-<!--				android:layout_marginBottom="16dp"-->
-<!--				app:cardCornerRadius="16dp"-->
-<!--				app:cardElevation="4dp">-->
+<!--&lt;!&ndash;	<androidx.core.widget.NestedScrollView&ndash;&gt;-->
+<!--&lt;!&ndash;		android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;		android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;		android:padding="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;		app:layout_behavior="@string/appbar_scrolling_view_behavior">&ndash;&gt;-->
 
-<!--				<LinearLayout-->
-<!--					android:layout_width="match_parent"-->
-<!--					android:layout_height="wrap_content"-->
-<!--					android:orientation="vertical"-->
-<!--					android:padding="20dp">-->
+<!--&lt;!&ndash;		<LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;			android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;			android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;			android:orientation="vertical">&ndash;&gt;-->
 
-<!--					<TextView-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="本周步行挑战"-->
-<!--						android:textAppearance="@style/TextAppearance.Material3.TitleMedium"-->
-<!--						android:textColor="?attr/colorOnSurface" />-->
+<!--&lt;!&ndash;			&lt;!&ndash; 当前挑战进度卡片 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;			<com.google.android.material.card.MaterialCardView&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_marginBottom="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;				app:cardCornerRadius="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;				app:cardElevation="4dp">&ndash;&gt;-->
 
-<!--					<TextView-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="目标：连续7天每天步行1万步"-->
-<!--						android:textAppearance="@style/TextAppearance.Material3.BodyMedium"-->
-<!--						android:textColor="?attr/colorOnSurfaceVariant"-->
-<!--						android:layout_marginTop="4dp" />-->
+<!--&lt;!&ndash;				<LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;					android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:orientation="vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:padding="20dp">&ndash;&gt;-->
 
-<!--					<com.google.android.material.progressindicator.LinearProgressIndicator-->
-<!--						android:layout_width="match_parent"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:layout_marginTop="12dp"-->
-<!--						android:progress="60"-->
-<!--						app:indicatorColor="@color/primary"-->
-<!--						app:trackColor="@color/surface_variant" />-->
+<!--&lt;!&ndash;					<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="本周步行挑战"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textAppearance="@style/TextAppearance.Material3.TitleMedium"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textColor="?attr/colorOnSurface" />&ndash;&gt;-->
 
-<!--					<TextView-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="已坚持4/7天"-->
-<!--						android:textAppearance="@style/TextAppearance.Material3.BodySmall"-->
-<!--						android:textColor="?attr/colorOnSurfaceVariant"-->
-<!--						android:layout_marginTop="8dp" />-->
-<!--				</LinearLayout>-->
-<!--			</com.google.android.material.card.MaterialCardView>-->
+<!--&lt;!&ndash;					<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="目标：连续7天每天步行1万步"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textAppearance="@style/TextAppearance.Material3.BodyMedium"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textColor="?attr/colorOnSurfaceVariant"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_marginTop="4dp" />&ndash;&gt;-->
 
-<!--			&lt;!&ndash; 挑战列表标题 &ndash;&gt;-->
-<!--			<TextView-->
-<!--				android:layout_width="wrap_content"-->
-<!--				android:layout_height="wrap_content"-->
-<!--				android:text="可参与的挑战"-->
-<!--				android:textAppearance="@style/TextAppearance.Material3.TitleMedium"-->
-<!--				android:textColor="?attr/colorOnSurface"-->
-<!--				android:layout_marginBottom="8dp" />-->
+<!--&lt;!&ndash;					<com.google.android.material.progressindicator.LinearProgressIndicator&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_marginTop="12dp"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:progress="60"&ndash;&gt;-->
+<!--&lt;!&ndash;						app:indicatorColor="@color/primary"&ndash;&gt;-->
+<!--&lt;!&ndash;						app:trackColor="@color/surface_variant" />&ndash;&gt;-->
 
-<!--			&lt;!&ndash; 挑战列表（可用RecyclerView替换） &ndash;&gt;-->
-<!--			<com.google.android.material.card.MaterialCardView-->
-<!--				android:layout_width="match_parent"-->
-<!--				android:layout_height="wrap_content"-->
-<!--				android:layout_marginBottom="12dp"-->
-<!--				app:cardCornerRadius="12dp"-->
-<!--				app:cardElevation="2dp">-->
+<!--&lt;!&ndash;					<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="已坚持4/7天"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textAppearance="@style/TextAppearance.Material3.BodySmall"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textColor="?attr/colorOnSurfaceVariant"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_marginTop="8dp" />&ndash;&gt;-->
+<!--&lt;!&ndash;				</LinearLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;			</com.google.android.material.card.MaterialCardView>&ndash;&gt;-->
 
-<!--				<LinearLayout-->
-<!--					android:layout_width="match_parent"-->
-<!--					android:layout_height="wrap_content"-->
-<!--					android:orientation="vertical"-->
-<!--					android:padding="16dp">-->
+<!--&lt;!&ndash;			&lt;!&ndash; 挑战列表标题 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;			<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:text="可参与的挑战"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:textAppearance="@style/TextAppearance.Material3.TitleMedium"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:textColor="?attr/colorOnSurface"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_marginBottom="8dp" />&ndash;&gt;-->
 
-<!--					<TextView-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="减少用电挑战"-->
-<!--						android:textAppearance="@style/TextAppearance.Material3.BodyLarge"-->
-<!--						android:textColor="?attr/colorOnSurface" />-->
+<!--&lt;!&ndash;			&lt;!&ndash; 挑战列表（可用RecyclerView替换） &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;			<com.google.android.material.card.MaterialCardView&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_marginBottom="12dp"&ndash;&gt;-->
+<!--&lt;!&ndash;				app:cardCornerRadius="12dp"&ndash;&gt;-->
+<!--&lt;!&ndash;				app:cardElevation="2dp">&ndash;&gt;-->
 
-<!--					<TextView-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="本月用电量减少5%"-->
-<!--						android:textAppearance="@style/TextAppearance.Material3.BodySmall"-->
-<!--						android:textColor="?attr/colorOnSurfaceVariant"-->
-<!--						android:layout_marginTop="4dp" />-->
+<!--&lt;!&ndash;				<LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;					android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:orientation="vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;					android:padding="16dp">&ndash;&gt;-->
 
-<!--					<Button-->
-<!--						android:layout_width="wrap_content"-->
-<!--						android:layout_height="wrap_content"-->
-<!--						android:text="参与挑战"-->
-<!--						android:layout_marginTop="8dp" />-->
-<!--				</LinearLayout>-->
-<!--			</com.google.android.material.card.MaterialCardView>-->
+<!--&lt;!&ndash;					<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="减少用电挑战"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textAppearance="@style/TextAppearance.Material3.BodyLarge"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textColor="?attr/colorOnSurface" />&ndash;&gt;-->
 
-<!--			&lt;!&ndash; 可继续添加更多挑战卡片 &ndash;&gt;-->
+<!--&lt;!&ndash;					<TextView&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="本月用电量减少5%"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textAppearance="@style/TextAppearance.Material3.BodySmall"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:textColor="?attr/colorOnSurfaceVariant"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_marginTop="4dp" />&ndash;&gt;-->
 
-<!--			&lt;!&ndash; 查看历史挑战按钮 &ndash;&gt;-->
-<!--			<Button-->
-<!--				android:layout_width="match_parent"-->
-<!--				android:layout_height="wrap_content"-->
-<!--				android:text="查看历史挑战"-->
-<!--				android:layout_marginTop="16dp" />-->
+<!--&lt;!&ndash;					<Button&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:text="参与挑战"&ndash;&gt;-->
+<!--&lt;!&ndash;						android:layout_marginTop="8dp" />&ndash;&gt;-->
+<!--&lt;!&ndash;				</LinearLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;			</com.google.android.material.card.MaterialCardView>&ndash;&gt;-->
 
-<!--		</LinearLayout>-->
-<!--	</androidx.core.widget.NestedScrollView>-->
-<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+<!--&lt;!&ndash;			&lt;!&ndash; 可继续添加更多挑战卡片 &ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;			&lt;!&ndash; 查看历史挑战按钮 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;			<Button&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:text="查看历史挑战"&ndash;&gt;-->
+<!--&lt;!&ndash;				android:layout_marginTop="16dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;		</LinearLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;	</androidx.core.widget.NestedScrollView>&ndash;&gt;-->
+<!--&lt;!&ndash;</androidx.coordinatorlayout.widget.CoordinatorLayout>&ndash;&gt;-->

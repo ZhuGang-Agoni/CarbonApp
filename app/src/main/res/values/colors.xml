@@ -37,4 +37,8 @@
     <color name="gray">#E0E0E0</color>
 
     <color name="error">#F44336</color> <!-- Material Design 红色，代表错误 -->
+
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
 </resources> 
