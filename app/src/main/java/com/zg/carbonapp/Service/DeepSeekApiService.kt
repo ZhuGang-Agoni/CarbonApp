@@ -2,7 +2,7 @@ package com.zg.carbonapp.Service
 
 import com.zg.carbonapp.Dao.ChatRequest
 import com.zg.carbonapp.Dao.ChatResponse
-import okhttp3.ResponseBody
+//import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header

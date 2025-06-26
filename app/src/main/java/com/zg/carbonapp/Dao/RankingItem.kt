@@ -6,7 +6,7 @@ data class RankingItem(
                          val userEvator:String,
                          val carbonCount: Double,
                          val rank: Int,
-                         val isCurrentUser: Boolean = false)
+                         val isCurrentUser: Boolean = true)
 //                         val badge: BadgeType? = null
 
 //enum class BadgeType {
