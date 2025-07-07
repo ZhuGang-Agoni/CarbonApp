@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_light"
+    android:padding="16dp">
+
+    <!-- 顶部：碳足迹与种树 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <!-- 碳足迹卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="2"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/green_dark"
+            app:strokeWidth="1dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_footprint"
+                    android:contentDescription="碳足迹"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/tvStepCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 步"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_dark"/>
+                <TextView
+                    android:id="@+id/tvStepTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日步数"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_dark"
+                    android:layout_marginTop="2dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实时步数，助力低碳生活"
+                    android:textSize="11sp"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 种树卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/green_dark"
+            app:strokeWidth="1dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_tree"
+                    android:contentDescription="可种树"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/tvTreeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 棵"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_dark"/>
+                <TextView
+                    android:id="@+id/tvTreeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可种树"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_dark"
+                    android:layout_marginTop="2dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="步数兑换，绿色公益"
+                    android:textSize="11sp"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- 激励语 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="你已超越 80% 的好友，继续加油！"
+        android:textColor="@color/primary"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
+
+    <!-- 排行榜标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好友种树排行榜"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_dark"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 排行榜列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewRanking"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:padding="8dp"/>
+
+</LinearLayout>

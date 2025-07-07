@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_light"
+    android:padding="24dp">
+
+    <!-- 顶部标题 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用电挑战"
+        android:textColor="@color/green_dark"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="36dp" />
+
+    <!-- 近7天记录卡片 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardRecent7Days"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="6dp"
+        app:strokeColor="@color/green_dark"
+        app:strokeWidth="2dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本周用电趋势"
+                android:textColor="@color/green_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- 数值显示 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView android:id="@+id/tvVal1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="12" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="18" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="9" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="15" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="20" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal6" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="13" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+                <TextView android:id="@+id/tvVal7" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="17" android:textColor="@color/primary" android:textSize="13sp" android:gravity="center"/>
+            </LinearLayout>
+
+            <!-- 柱状图 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom|center_horizontal"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay1"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="12" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay2"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="18" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay3"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="9" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay4"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="15" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay5"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="20" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay6"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="13" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270" android:layout_marginEnd="4dp"/>
+                <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/pbDay7"
+                    android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1"
+                    android:progress="17" android:max="30" android:progressDrawable="@drawable/bg_progress_bar"
+                    android:rotation="270"/>
+            </LinearLayout>
+
+            <!-- 日期标签 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="一" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="二" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="三" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="四" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="五" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="六" android:textColor="@color/green_dark" android:gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="日" android:textColor="@color/green_dark" android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 数据分析卡片 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDataAnalysis"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="6dp"
+        app:strokeColor="@color/green_dark"
+        app:strokeWidth="2dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本周总用电量：32.5 kWh"
+                android:textColor="@color/green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvAvg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平均每日用电：4.6 kWh"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tvSaveRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="节能率：18%"
+                android:textColor="@color/primary"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout> 

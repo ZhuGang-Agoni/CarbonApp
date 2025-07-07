@@ -19,7 +19,7 @@ class PlantTreeActivity : AppCompatActivity() {
         val stepList = generateStepData()
         val totalSteps = stepList.sumOf { it.steps }
         val totalCarbon = totalSteps * 0.00004
-        val treeCount = (totalCarbon / 1800).toInt() // 1800g CO₂ = 1棵树
+        val treeCount = (totalCarbon / 0.5).toInt() // 0.5g CO₂ = 1棵树 便于用户体验
 
         binding.tvTotalSteps.text = "本周总步数：$totalSteps"
         binding.tvTotalCarbon.text = "累计碳吸收：${"%.2f".format(totalCarbon)}g"
@@ -42,4 +42,4 @@ class PlantTreeActivity : AppCompatActivity() {
     }
 
     data class StepRecord(val steps: Int)
-} 
+}

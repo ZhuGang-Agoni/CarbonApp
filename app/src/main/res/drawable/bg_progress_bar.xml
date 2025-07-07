@@ -1,18 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 背景轨道 -->
-    <item android:id="@android:id/background">
+    <item>
         <shape android:shape="rectangle">
-            <corners android:radius="5dp"/>
-            <solid android:color="@color/gray_light"/>
+            <solid android:color="#E0E0E0"/>
+            <corners android:radius="6dp"/>
         </shape>
     </item>
     <!-- 进度条 -->
     <item android:id="@android:id/progress">
         <clip>
             <shape android:shape="rectangle">
-                <corners android:radius="5dp"/>
-                <solid android:color="@color/green_dark"/>
+                <gradient android:startColor="#81C784" android:endColor="#388E3C" android:angle="270"/>
+                <corners android:radius="6dp"/>
             </shape>
         </clip>
     </item>
-</layer-list> 
+</layer-list>
