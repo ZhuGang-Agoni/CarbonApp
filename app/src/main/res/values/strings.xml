@@ -1,26 +1,26 @@
 <resources>
-    <string name="app_name">CarbonApp</string>
+	<string name="app_name">CarbonApp</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <string name="app_slogan">低碳生活，从记录开始</string>
-    <string name="phone_hint">请输入11位手机号</string>
-    <string name="code_hint">请输入验证码</string>
-    <string name="send_code">发送</string>
-    <string name="login">登录</string>
-    <string name="other_login_methods">或使用其他方式登录</string>
-    <string name="not_registered">还未注册？</string>
-    <string name="register_now">立即注册</string>
-    <string name="forgot_password">忘记密码？</string>
-    <string name="login_agreement">登录即代表您同意《隐私协议》和《用户协议》</string>
-    <string name="app_logo">应用图标</string>
-    <string name="challenge_green_travel">绿色出行</string>
-    <string name="challenge_garbage_sort">垃圾分类</string>
-    <string name="challenge_power_saving">节电挑战</string>
-    <string name="desc_green_travel">公交、骑行、步行，绿色出行，低碳环保！</string>
-    <string name="desc_garbage_sort">科学分类垃圾，绿色生活每一天！</string>
-    <string name="desc_power_saving">节约用电，低碳环保，从我做起！</string>
+	<string name="app_slogan">低碳生活，从记录开始</string>
+	<string name="phone_hint">请输入11位手机号</string>
+	<string name="code_hint">请输入验证码</string>
+	<string name="send_code">发送</string>
+	<string name="login">登录</string>
+	<string name="other_login_methods">或使用其他方式登录</string>
+	<string name="not_registered">还未注册？</string>
+	<string name="register_now">立即注册</string>
+	<string name="forgot_password">忘记密码？</string>
+	<string name="login_agreement">登录即代表您同意《隐私协议》和《用户协议》</string>
+	<string name="app_logo">应用图标</string>
+	<string name="challenge_green_travel">绿色出行</string>
+	<string name="challenge_garbage_sort">垃圾分类</string>
+	<string name="challenge_power_saving">节电挑战</string>
+	<string name="desc_green_travel">公交、骑行、步行，绿色出行，低碳环保！</string>
+	<string name="desc_garbage_sort">科学分类垃圾，绿色生活每一天！</string>
+	<string name="desc_power_saving">节约用电，低碳环保，从我做起！</string>
 
 
 </resources>

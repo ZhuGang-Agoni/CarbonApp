@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         initTableLayout()
         initListener()
+
 //实现一个初始化
         if (savedInstanceState == null) {
             val firstFragment = AskFragment()
@@ -38,8 +39,12 @@ class MainActivity : AppCompatActivity() {
                 .show(firstFragment)
                 .commit()
         }
+        handleShareIntent()
     }
 //这里在添加的时候一定要按顺序来
+ private fun handleShareIntent(){
+
+ }
     private fun initTableLayout(){
 
             // 动态添加 tabs icon是图像的意思

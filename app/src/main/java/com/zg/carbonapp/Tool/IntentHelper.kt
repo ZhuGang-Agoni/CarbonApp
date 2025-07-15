@@ -7,6 +7,5 @@ object IntentHelper {
     fun <T>goIntent(context : Context,aimActivity:Class<T>){
          val intent= Intent(context,aimActivity)
          context.startActivity(intent)
-
     }
 }

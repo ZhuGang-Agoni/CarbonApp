@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--  &lt;!&ndash; Zxing的扫描视图（必须保留） &ndash;&gt;-->
+<!--  <com.journeyapps.barcodescanner.BarcodeView-->
+<!--      android:id="@+id/zxing_barcode_surface"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="match_parent"/>-->
+
+<!--  &lt;!&ndash; 扫描框覆盖层 &ndash;&gt;-->
+<!--  <com.journeyapps.barcodescanner.ViewfinderView-->
+<!--      android:id="@+id/zxing_viewfinder_view"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="match_parent"/>-->
+
+  <!-- 顶部标题 -->
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="16dp"
+      android:text="扫描商品条形码"
+      android:textColor="@android:color/white"
+      android:textSize="18sp"
+      android:background="#80000000"/>
+
+  <!-- 返回按钮 -->
+  <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/iv_back"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:padding="12dp"
+      android:src="@drawable/ic_back"
+      android:layout_margin="16dp"
+      android:background="#80000000"/>
+
+</FrameLayout>

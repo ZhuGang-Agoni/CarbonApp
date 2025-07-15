@@ -109,7 +109,7 @@ class ImFragment : Fragment() {
         currentUser = UserMMKV.getUser()
 
         if (currentUser == null) {
-            // 创建默认用户
+            // 创建默认用户  由于后端还没有搭建起来 所以这个是个麻烦
             currentUser = User(
                 userId = "123456",
                 userName = "Agoni",

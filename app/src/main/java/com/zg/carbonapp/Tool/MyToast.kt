@@ -22,7 +22,7 @@ object MyToast {
             val textView= TextView(context).apply {
                 text=message
                 textSize=20f
-                setTextColor(Color.BLUE)
+                setTextColor(Color.BLACK)
                 setGravity(Gravity.CENTER)
                 setPadding(80,40,80,40)
             }

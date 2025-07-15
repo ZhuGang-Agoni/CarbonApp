@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.zg.carbonapp.R
 import java.util.*
 
-class PowerSavingActivity : AppCompatActivity() {
+class ElectricitySavingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_power_saving)
+        setContentView(R.layout.activity_electricity_saving)
 
         // 7天用电量模拟（10~30度电）
         val random = Random()

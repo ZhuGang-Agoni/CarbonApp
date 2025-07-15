@@ -1,78 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+<uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission
+    android:name="android.permission.READ_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission
+    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32"
+    tools:ignore="ScopedStorage" /> <!-- AndroidManifest.xml 添加权限和API Key -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 网络权限 -->
+<!-- 定位权限 -->
+<!-- 其他必要权限 -->
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<!--相机权限-->
+<uses-permission android:name="android.permission.CAMERA" />
 
-    <application
-        android:name=".Tool.AppApplication"
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.CarbonApp"
-        tools:targetApi="31">
-        <activity
-            android:name=".Activity.PostFeedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.QQuickLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.ForgetPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.FootprintActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.PlantTreeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Activity.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.CarbonFootprintActivity"
-            android:exported="false" />
-        <activity android:name=".Activity.GreenTravelActivity" android:exported="false" />
-        <activity android:name=".Activity.GarbageSortActivity" android:exported="false" />
-        <activity android:name=".Activity.PowerSavingActivity" android:exported="false" />
+<meta-data
+    android:name="com.amap.api.v2.apikey"
+    android:value="77760b774a262e67ef6ea8ce75a6701d" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" />
-        </provider>
-    </application>
+<application
+    android:name=".Tool.AppApplication"
+    android:allowBackup="true"
+    android:dataExtractionRules="@xml/data_extraction_rules"
+    android:fullBackupContent="@xml/backup_rules"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.CarbonApp"
+    tools:targetApi="31">
+    <activity
+        android:name=".Activity.CarbonResultActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.BarcodeScannerActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.PostFeedActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.QQuickLoginActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.ForgetPasswordActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.RegisterActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.FootprintActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.PlantTreeActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.LoginActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".Activity.MainActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.CarbonFootprintActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.GreenTravelActivity"
+        android:exported="false" />
+    <activity
+        android:name=".Activity.GarbageSortActivity"
+        android:exported="false" />
+
+    <activity
+        android:name=".Activity.CustomScanActivity"
+        android:exported="false"
+
+        />
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_path" />
+    </provider>
+</application>
 
 </manifest>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<!-- 相机预览（占满屏幕） -->
+	<TextureView
+		android:id="@+id/textureView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+
+	<!-- 扫描线（屏幕中间，从上到下动） -->
+	<View
+		android:id="@+id/scanLine"
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:background="#FF0000"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="200dp"/>
+
+	<!-- 提示文本 -->
+	<TextView
+		android:id="@+id/tvHint"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="扫描中..."
+		android:textColor="#FFFFFF"
+		android:textSize="18sp"
+		android:layout_centerInParent="true"/>
+
+</RelativeLayout>

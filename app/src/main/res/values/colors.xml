@@ -42,6 +42,10 @@
     <color name="silver">#C0C0C0</color>
     <color name="bronze">#CD7F32</color>
 
+
+    <color name="success_green">#4CAF50</color>
+    <color name="warning_red">#F44336</color>
+    <color name="hint_default">#FFFFFF</color>
     <!-- 新增绿色和蓝色可选色值 -->
     <color name="green_500">#4CAF50</color>
     <color name="blue_500">#2196F3</color>

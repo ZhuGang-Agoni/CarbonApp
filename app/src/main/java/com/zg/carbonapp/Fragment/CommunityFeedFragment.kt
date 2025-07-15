@@ -35,20 +35,20 @@ class CommunityFeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 设置发布按钮（仅打开发布页面，无登录检查）
         binding.fabPost.setOnClickListener {
             val intent = Intent(requireContext(), PostFeedActivity::class.java)
+
             startActivityForResult(intent, 1001)
         }
 
         initRecyclerView()
         loadFeeds()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1001 && resultCode == RESULT_OK) {
             loadFeeds()
+
         }
     }
 
