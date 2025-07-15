@@ -3,14 +3,12 @@ package com.zg.carbonapp.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-
 import com.google.android.material.tabs.TabLayout
 import com.zg.carbonapp.Fragment.AskFragment
 import com.zg.carbonapp.Fragment.ChallengeFragment
 import com.zg.carbonapp.Fragment.CommunityFragment
 import com.zg.carbonapp.Fragment.DataAnalyseFragment
 import com.zg.carbonapp.Fragment.ImFragment
-
 import com.zg.carbonapp.R
 import com.zg.carbonapp.databinding.ActivityMainBinding
 
@@ -18,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val tabLayout by lazy { binding.tabLayout }
     private val container by lazy { binding.container }
-    private var currentTabPosition=0
+    private var currentTabPosition = 2 // 默认选中第3个Tab (AskFragment)
     private val fragments = mutableMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,74 +24,75 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         initTableLayout()
         initListener()
 
-//实现一个初始化
+        // 初始化AskFragment并显示
         if (savedInstanceState == null) {
             val firstFragment = AskFragment()
-            fragments[2] = firstFragment
+            fragments[currentTabPosition] = firstFragment
             supportFragmentManager.beginTransaction()
                 .add(container.id, firstFragment)
                 .show(firstFragment)
                 .commit()
+
+            // 确保TabLayout选中与Fragment一致的位置
+            tabLayout.selectTab(tabLayout.getTabAt(currentTabPosition))
         }
+
         handleShareIntent()
     }
-//这里在添加的时候一定要按顺序来
- private fun handleShareIntent(){
 
- }
-    private fun initTableLayout(){
-
-            // 动态添加 tabs icon是图像的意思
-            val askTab = tabLayout.newTab().setIcon(R.drawable.ic_ai_assistant).setText("低碳ai助手")
-            val challengeTab = tabLayout.newTab().setIcon(R.drawable.ic_challenge).setText("减排挑战")
-            val communityTab = tabLayout.newTab().setIcon(R.drawable.ic_community).setText("碳社区")
-            val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的主页")
-            val dataTab=tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
-            tabLayout.addTab(challengeTab)
-            tabLayout.addTab(dataTab)
-            tabLayout.addTab(askTab)
-            tabLayout.addTab(communityTab)
-            tabLayout.addTab(imTab)
-
-
+    private fun handleShareIntent() {
+        // 处理分享逻辑
     }
-//这里有一个 Fragment被我删掉了 应该是那个啥 场景的你自己到时候添加进来 下面的代码 我都要写了注释了
-  private fun  initListener() {
-      tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-          override fun onTabSelected(tab: TabLayout.Tab) {
-              if (currentTabPosition == tab.position) return
-//这是一个高阶函数哈 fun:(Int)->Int
-              val fragment = fragments.getOrPut(tab.position) //通过源码我们可以得知 后面一个参数是一个函数
-              {//如果这个Fragment已经存在了 就直接返回 如果不存在就先添加
-                  when (tab.position) {//position是Int类型的
-                      0 -> ChallengeFragment()//这里的newInstance就是获取对象的一个意思
-                      1->  DataAnalyseFragment()
-                      2 -> AskFragment()
-                      3 -> CommunityFragment()
-                      4 -> ImFragment()
-                      else -> throw IllegalStateException("Invalid position")
-                  }
-              }
 
-              switchFragment(fragment)
-              currentTabPosition = tab.position
+    private fun initTableLayout() {
+        // 动态添加 tabs
+        val askTab = tabLayout.newTab().setIcon(R.drawable.ic_ai_assistant).setText("低碳ai助手")
+        val challengeTab = tabLayout.newTab().setIcon(R.drawable.ic_challenge).setText("减排挑战")
+        val communityTab = tabLayout.newTab().setIcon(R.drawable.ic_community).setText("碳社区")
+        val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的主页")
+        val dataTab = tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
 
-          }
+        // 按指定顺序添加Tabs
+        tabLayout.addTab(challengeTab)  // position 0
+        tabLayout.addTab(dataTab)       // position 1
+        tabLayout.addTab(askTab)        // position 2 (默认选中)
+        tabLayout.addTab(communityTab)  // position 3
+        tabLayout.addTab(imTab)         // position 4
+    }
 
-          override fun onTabUnselected(tab: TabLayout.Tab) {
-              // 可选：处理未选中事件
-          }
+    private fun initListener() {
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                if (currentTabPosition == tab.position) return
 
-          override fun onTabReselected(tab: TabLayout.Tab) {
-              // 可选：处理重新选中事件
-          }
-      })
-  }
-//交换Fragment
+                val fragment = fragments.getOrPut(tab.position) {
+                    when (tab.position) {
+                        0 -> ChallengeFragment()
+                        1 -> DataAnalyseFragment()
+                        2 -> AskFragment()
+                        3 -> CommunityFragment()
+                        4 -> ImFragment()
+                        else -> throw IllegalStateException("Invalid position")
+                    }
+                }
+
+                switchFragment(fragment)
+                currentTabPosition = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                // 可选：处理未选中事件
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                // 可选：处理重新选中事件
+            }
+        })
+    }
+
     private fun switchFragment(newFragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
 
@@ -107,10 +106,7 @@ class MainActivity : AppCompatActivity() {
             transaction.add(container.id, newFragment)
             transaction.show(newFragment)
         }
+
         transaction.commit()
-
     }
-
-
-
 }
