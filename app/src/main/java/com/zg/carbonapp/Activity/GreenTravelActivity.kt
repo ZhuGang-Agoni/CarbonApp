@@ -21,6 +21,7 @@ import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
+import com.amap.api.maps.MapsInitializer
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Marker
@@ -104,7 +105,11 @@ class GreenTravelActivity : AppCompatActivity(),
 
     // ====================== 1. 地图初始化 ======================
     private fun initMap(savedInstanceState: Bundle?) {
+        AMapLocationClient.updatePrivacyShow(this, true, true)
+        AMapLocationClient.updatePrivacyAgree(this, true)
 
+        // 🔥 设置API Key（替换成你在高德平台申请的Key）
+        AMapLocationClient.setApiKey("77760b774a262e67ef6ea8ce75a6701d")
         // 初始化逆地理编码
         geocodeSearch = GeocodeSearch(this).apply {
             setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
