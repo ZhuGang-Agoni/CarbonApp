@@ -108,7 +108,7 @@ class GreenTravelActivity : AppCompatActivity(),
         AMapLocationClient.updatePrivacyShow(this, true, true)
         AMapLocationClient.updatePrivacyAgree(this, true)
 
-        // 🔥 设置API Key（替换成你在高德平台申请的Key）
+        //
         AMapLocationClient.setApiKey("77760b774a262e67ef6ea8ce75a6701d")
         // 初始化逆地理编码
         geocodeSearch = GeocodeSearch(this).apply {
