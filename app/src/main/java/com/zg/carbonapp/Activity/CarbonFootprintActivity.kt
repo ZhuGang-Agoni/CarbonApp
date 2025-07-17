@@ -13,27 +13,8 @@ import com.zg.carbonapp.databinding.ActivityCarbonFootprintBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * 碳足迹主界面
- * 
- * 功能说明：
- * 1. 显示用户今日步数和本周总步数
- * 2. 根据步数计算可种植的树木数量
- * 3. 显示好友排行榜
- * 4. 提供跳转到详细页面的功能
- * 
- * 数据获取策略（优先级）：
- * 1. 本地缓存数据（MMKV）
- * 2. 服务器数据（网络请求）
- * 3. 传感器实时数据（Google Fit/本地传感器）
- * 
- * 计算逻辑：
- * - 树木数量 = (本周总步数 * 0.00004) / 0.5
- * - 0.00004：每步减少的碳排放量（克）
- * - 0.5：每棵树吸收的碳排放量（克）
- */
 class CarbonFootprintActivity : AppCompatActivity() {
-    // 视图绑定对象
+
     private lateinit var binding: ActivityCarbonFootprintBinding
     // 传感器管理器，用于获取步数数据
     private lateinit var sensorManager: SensorManager
@@ -79,9 +60,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
 
     /**
      * 加载今日步数数据
-     * 
-     * @param today 今天的日期字符串
-     * 
+     *
      * 数据获取策略：
      * 1. 优先从本地缓存获取
      * 2. 本地没有则从服务器获取
@@ -114,10 +93,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
 
     /**
      * 异步获取本周7天真实步数总和
-     * 
-     * @param weekDates 本周7天的日期列表
-     * @param callback 回调函数，返回总步数
-     * 
+     *
      * 实现说明：
      * 1. 遍历本周7天的日期
      * 2. 对每个日期异步获取步数
@@ -144,10 +120,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
 
     /**
      * 更新界面显示
-     * 
-     * @param todaySteps 今日步数
-     * @param weekSteps 本周总步数
-     * 
+     *
      * 显示内容：
      * - 今日步数
      * - 可种植的树木数量
@@ -196,11 +169,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 获取今天的日期字符串
-     * 
-     * @return 今天的日期，格式：yyyy-MM-dd
-     */
+    // 获取今天的日期字符串
     private fun getTodayDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(Date())
@@ -208,9 +177,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
     
     /**
      * 获取本周7天的日期列表
-     * 
-     * @return 本周7天的日期列表，从周一到周日
-     * 
+     *
      * 实现说明：
      * 1. 获取当前日期是周几
      * 2. 计算本周一的日期
@@ -233,12 +200,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
         }
     }
     
-    /**
-     * 从服务器获取指定日期的步数（待实现）
-     * 
-     * @param date 日期字符串，格式：yyyy-MM-dd
-     * @return 步数
-     */
+    // 从服务器获取指定日期的步数（待实现）
     private fun fetchStepFromServer(date: String): Int {
         // TODO: 实现后端接口
         return 12345
@@ -246,9 +208,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
     
     /**
      * 从服务器获取好友排行榜数据（待实现）
-     * 
-     * @return 好友排行榜列表
-     * 
+     *
      * TODO: 实现后端接口调用
      * 当前返回模拟数据用于测试
      */

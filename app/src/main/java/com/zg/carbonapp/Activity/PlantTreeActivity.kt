@@ -11,26 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.zg.carbonapp.Service.SensorManager
 
-/**
- * 种树界面
- * 
- * 功能说明：
- * 1. 显示用户本周总步数
- * 2. 根据步数计算可种植的树木数量
- * 3. 实时更新步数和种树数据
- * 
- * 计算逻辑：
- * - 树木数量 = (本周总步数 * 0.00004) / 0.5
- * - 0.00004：每步减少的碳排放量（克）
- * - 0.5：每棵树吸收的碳排放量（克）
- * 
- * 数据来源：
- * - 本地传感器步数
- * - Google Fit步数数据
- * - 本地缓存数据
- */
 class PlantTreeActivity : AppCompatActivity() {
-    // 视图绑定对象
+
     private lateinit var binding: ActivityPlantTreeBinding
     // 传感器管理器，用于获取步数数据
     private lateinit var sensorManager: SensorManager
@@ -69,10 +51,7 @@ class PlantTreeActivity : AppCompatActivity() {
 
     /**
      * 异步获取本周7天真实步数总和
-     * 
-     * @param weekDates 本周7天的日期列表
-     * @param callback 回调函数，返回总步数
-     * 
+     *
      * 实现说明：
      * 1. 遍历本周7天的日期
      * 2. 对每个日期异步获取步数
@@ -99,9 +78,7 @@ class PlantTreeActivity : AppCompatActivity() {
 
     /**
      * 更新界面显示
-     * 
-     * @param weekSteps 本周总步数
-     * 
+     *
      * 显示内容：
      * - 本周总步数
      * - 可种植的树木数量
@@ -129,9 +106,7 @@ class PlantTreeActivity : AppCompatActivity() {
 
     /**
      * 设置树木可视化显示
-     * 
-     * @param treeCount 可种植的树木数量
-     * 
+     *
      * 功能说明：
      * 1. 创建树木图标数据列表
      * 2. 设置RecyclerView的布局管理器（网格布局）
@@ -155,11 +130,7 @@ class PlantTreeActivity : AppCompatActivity() {
         binding.recyclerViewTrees.adapter = treeAdapter
     }
 
-    /**
-     * 获取今天的日期字符串
-     * 
-     * @return 今天的日期，格式：yyyy-MM-dd
-     */
+    // 获取今天的日期字符串
     private fun today(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(Date())
@@ -167,9 +138,7 @@ class PlantTreeActivity : AppCompatActivity() {
     
     /**
      * 获取本周7天的日期列表
-     * 
-     * @return 本周7天的日期列表，从周一到周日
-     * 
+     *
      * 实现说明：
      * 1. 获取当前日期是周几
      * 2. 计算本周一的日期
@@ -192,12 +161,7 @@ class PlantTreeActivity : AppCompatActivity() {
         }
     }
     
-    /**
-     * 从服务器获取指定日期的步数（待实现）
-     * 
-     * @param date 日期字符串，格式：yyyy-MM-dd
-     * @return 步数
-     */
+    // 从服务器获取指定日期的步数（待实现）
     private fun fetchStepFromServer(date: String): Int {
         // TODO: 实现后端接口
         return 12345

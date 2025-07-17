@@ -3,34 +3,13 @@ package com.zg.carbonapp.MMKV
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 
-/**
- * 碳足迹数据本地存储管理类
- * 
- * 功能说明：
- * 1. 使用MMKV高性能键值存储管理步数数据
- * 2. 按日期保存和获取步数记录
- * 3. 提供数据同步和清理功能
- * 
- * 存储策略：
- * - 键名格式：step_yyyy-MM-dd
- * - 数据类型：Int（步数）
- * - 存储位置：MMKV专用存储空间
- * 
- * 使用场景：
- * - 缓存用户步数数据，避免重复网络请求
- * - 离线时提供历史步数数据
- * - 作为步数数据的本地备份
- */
 object CarbonFootprintDataMMKV {
     // 初始化MMKV实例，使用专用ID确保数据隔离
     private val mmkv by lazy { MMKV.mmkvWithID("carbonfootprint_data") }
 
     /**
      * 按天保存步数到本地存储
-     * 
-     * @param date 日期字符串，格式：yyyy-MM-dd
-     * @param step 步数
-     * 
+     *
      * 存储说明：
      * - 键名：step_yyyy-MM-dd
      * - 值：步数Int值
@@ -42,10 +21,7 @@ object CarbonFootprintDataMMKV {
     
     /**
      * 按天获取本地存储的步数
-     * 
-     * @param date 日期字符串，格式：yyyy-MM-dd
-     * @return 步数，如果不存在则返回0
-     * 
+     *
      * 获取说明：
      * - 优先从本地缓存获取
      * - 不存在时返回默认值0
@@ -56,10 +32,7 @@ object CarbonFootprintDataMMKV {
     
     /**
      * 检查指定日期是否有步数记录
-     * 
-     * @param date 日期字符串，格式：yyyy-MM-dd
-     * @return true 存在记录，false 不存在记录
-     * 
+     *
      * 使用场景：
      * - 判断是否需要从服务器获取数据
      * - 检查本地缓存是否有效

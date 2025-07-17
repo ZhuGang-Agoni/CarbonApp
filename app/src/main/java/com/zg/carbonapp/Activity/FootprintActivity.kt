@@ -14,13 +14,8 @@ import java.util.*
 import com.zg.carbonapp.MMKV.CarbonFootprintDataMMKV
 import com.zg.carbonapp.Service.SensorManager
 
-/**
- * FootprintActivity
- * 展示本周步数、碳吸收、步数柱状图等碳足迹相关信息
- * 支持Google Fit、本地传感器、MMKV本地缓存
- */
 class FootprintActivity : AppCompatActivity() {
-    // 视图绑定
+
     private lateinit var binding: ActivityFootprintBinding
     // 步数传感器管理器（支持Google Fit和本地传感器）
     private lateinit var sensorManager: SensorManager
@@ -61,11 +56,7 @@ class FootprintActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 异步获取本周7天真实步数，全部获取后统一刷新UI
-     * @param weekDates 本周7天日期字符串列表
-     * @param callback 回调，返回每一天的步数数据
-     */
+    // 异步获取本周7天真实步数，全部获取后统一刷新UI
     private fun getWeekSteps(weekDates: List<String>, callback: (List<FootprintStepRecord>) -> Unit) {
         val sdf = SimpleDateFormat("MM-dd", Locale.getDefault())
         val stepRecords = MutableList(7) { FootprintStepRecord(sdf.format(Date()), 0) }
@@ -84,10 +75,7 @@ class FootprintActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 刷新UI，包括本周总步数、累计碳吸收、步数柱状图
-     * @param weekStepRecords 本周7天步数数据
-     */
+    // 刷新UI，包括本周总步数、累计碳吸收、步数柱状图
     private fun updateUI(weekStepRecords: List<FootprintStepRecord>) {
         val totalSteps = weekStepRecords.sumOf { it.steps }
         val totalCarbon = totalSteps * 0.00004
@@ -109,9 +97,7 @@ class FootprintActivity : AppCompatActivity() {
         binding.barChart.invalidate()
     }
 
-    /**
-     * 获取本周7天的日期字符串（yyyy-MM-dd）
-     */
+    // 获取本周7天的日期字符串（yyyy-MM-dd）
     private fun getThisWeekDates(): List<String> {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val calendar = Calendar.getInstance()
@@ -124,17 +110,13 @@ class FootprintActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 获取今天日期字符串（yyyy-MM-dd）
-     */
+    // 获取今天日期字符串（yyyy-MM-dd）
     private fun getTodayDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(Date())
     }
 
-    /**
-     * 柱状图X轴日期格式化
-     */
+    // 柱状图X轴日期格式化
     class DayAxisValueFormatter(private val list: List<FootprintStepRecord>) : com.github.mikephil.charting.formatter.ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val idx = value.toInt()
