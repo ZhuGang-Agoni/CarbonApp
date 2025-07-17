@@ -10,7 +10,8 @@ import com.zg.carbonapp.Dao.GarbageRecord
 import com.zg.carbonapp.R
 
 class GarbageRecordAdapter(
-    private val recordList: List<GarbageRecord>
+    private val recordList: List<GarbageRecord>,
+    private val onItemClick: ((GarbageRecord) -> Unit)? = null
 ) : RecyclerView.Adapter<GarbageRecordAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,6 +34,10 @@ class GarbageRecordAdapter(
         holder.tvGarbageName.text = record.garbageName
         holder.tvCategoryName.text = record.categoryName
         holder.tvTime.text = record.time
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(record)
+        }
     }
 
     override fun getItemCount(): Int = recordList.size

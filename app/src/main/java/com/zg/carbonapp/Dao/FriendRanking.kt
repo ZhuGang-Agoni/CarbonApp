@@ -4,5 +4,6 @@ data class FriendRanking(
     val id: Int,
     val nickname: String,
     val avatarResId: Int, // 头像资源id
-    val treeCount: Int
+    val treeCount: Int = 0,
+    val step: Int
 ) 
