@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.play.services.fitness)
 //    implementation(libs.androidx.camera.core)
 //    implementation(libs.androidx.navigation.fragment.ktx)
 //    implementation(libs.androidx.navigation.ui.ktx)
@@ -62,11 +63,11 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 //    implementation ("com.amap.api:location:6.4.0")       // 定位SDK
-    implementation ("com.amap.api:search:9.7.0")
+    implementation("com.amap.api:search:9.7.0")
     implementation("com.amap.api:3dmap:9.8.2")
 //    implementation("com.amap.api:map:7.9.0")
     implementation(files("libs/core-3.5.1.jar"))
-//    implementation ("androidx.camera:camera-core:1.4.0")
-    implementation("com.google.android.gms:play-services-fitness:21.2.0")// Google Fit API
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+//     implementation("com.google.android.gms:play-services-fitness:21.2.0")
+//     implementation("com.google.android.gms:play-services-auth:21.2.0")
 }
