@@ -1,407 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/gray_light">
 
     <!-- 顶部标题栏 -->
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_light"
-        app:elevation="0dp">
+        android:background="@color/bg_green_light"
+        android:padding="18dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_leaf"
+            app:tint="@color/primary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="垃圾分类"
+            android:textColor="@color/primary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/gray_light"
-            app:layout_scrollFlags="scroll|enterAlways">
-
+    <!-- 主功能卡片区 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <!-- 分类挑战卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_challenge"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_back"
-                    android:contentDescription="返回" />
-
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/bg_green_light">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_challenge"
+                    app:tint="@color/primary" />
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="垃圾分类"
-                    android:textColor="@color/green_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/btn_help"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_help"
-                    android:contentDescription="帮助" />
-
+                    android:text="分类挑战"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="6dp" />
+                <!-- 今日挑战次数 -->
+                <TextView
+                    android:id="@+id/tv_challenge_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日挑战次数：0/3"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="13sp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"/>
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <!-- 垃圾识别卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_recognition"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/bg_green_light">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_garbage_sort"
+                    app:tint="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="垃圾识别"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- 主内容区域 -->
-    <androidx.core.widget.NestedScrollView
+    <!-- 分类记录卡片 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/primary"
+        app:strokeWidth="1dp"
+        android:layout_margin="16dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/bg_green_light"
             android:padding="16dp">
-
-            <!-- 搜索框 -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_search_box"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="12dp"
-                        android:src="@drawable/ic_search"
-                        android:contentDescription="搜索" />
-
-                    <EditText
-                        android:id="@+id/et_search"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="搜索垃圾类型..."
-                        android:textColor="@color/green_dark"
-                        android:textColorHint="@color/text_secondary"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 分类卡片区域 -->
+            <!-- 标题 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical">
-
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_garbage_sort"
+                    app:tint="@color/primary" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="选择分类"
-                    android:textColor="@color/green_dark"
+                    android:text="分类记录"
+                    android:textColor="@color/primary"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- 第一行：可回收物、有害垃圾 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-                    <!-- 可回收物卡片 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_recyclable"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_recyclable_card"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_recyclable_card"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_recyclable"
-                                android:contentDescription="可回收物" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="可回收物"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- 有害垃圾卡片 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_hazardous"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_hazardous_card"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_hazardous_card"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_hazardous"
-                                android:contentDescription="有害垃圾" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="有害垃圾"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
-
-                <!-- 第二行：厨余垃圾、其他垃圾 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- 厨余垃圾卡片 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_kitchen"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_kitchen_card"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_kitchen_card"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_kitchen"
-                                android:contentDescription="厨余垃圾" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="厨余垃圾"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- 其他垃圾卡片 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_other"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_other_card"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_other_card"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_other"
-                                android:contentDescription="其他垃圾" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="其他垃圾"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
-
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp" />
             </LinearLayout>
-
-            <!-- 分类指南 -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- 历史记录列表 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recent_records"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:text="分类指南"
-                        android:textColor="@color/green_dark"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="• 可回收物：废纸、废塑料、废玻璃、废金属、废织物等\n• 有害垃圾：废电池、废灯管、废药品、废油漆等\n• 厨余垃圾：剩菜剩饭、果皮、蛋壳、茶渣等\n• 其他垃圾：除以上三种之外的其他生活废弃物"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 分类记录 -->
-            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:overScrollMode="never"
+                android:background="@android:color/transparent"/>
+            <!-- 查看全部历史记录按钮 -->
+            <Button
+                android:id="@+id/btn_view_all_history"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="分类记录"
-                            android:textColor="@color/green_dark"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_view_all"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="查看全部"
-                            android:textColor="@color/primary"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_records"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        tools:itemCount="3"
-                        tools:listitem="@layout/item_garbage_record" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_gradient"
+                android:text="查看全部历史记录"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- 悬浮拍照按钮 -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"
-        android:src="@drawable/ic_camera"
-        app:backgroundTint="@color/primary"
-        app:tint="@color/white" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout> 
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
