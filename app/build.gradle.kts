@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
+    implementation(libs.androidx.swiperefreshlayout)
 //    implementation(libs.androidx.camera.core)
 
 //    implementation(libs.androidx.navigation.fragment.ktx)

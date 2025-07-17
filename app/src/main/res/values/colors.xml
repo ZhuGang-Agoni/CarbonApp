@@ -31,18 +31,21 @@
     
     <!-- 兼容性色彩（保留原有的一些色彩名称） -->
     <color name="blue">#2196F3</color>
-    <color name="colorPrimary">#4CAF50</color>
+
     <color name="colorSecondary">#2196F3</color>
     <color name="textGray">#757575</color>
     <color name="gray">#E0E0E0</color>
 
     <color name="error">#F44336</color> <!-- Material Design 红色，代表错误 -->
 
-    <color name="gold">#FFD700</color>
-    <color name="silver">#C0C0C0</color>
-    <color name="bronze">#CD7F32</color>
 
 
+    <color name="gray_200">#F5F5F5</color> <!-- 边框色 -->
+    <color name="gray_600">#666666</color> <!-- 辅助文字色 -->
+    <color name="colorPrimary">#3F51B5</color> <!-- 主色调（可替换为你的主题色） -->
+    <color name="gold">#FFD700</color> <!-- 第一名金色 -->
+    <color name="silver">#C0C0C0</color> <!-- 第二名银色 -->
+    <color name="bronze">#CD7F32</color> <!-- 第三名铜色 -->
     <color name="success_green">#4CAF50</color>
     <color name="warning_red">#F44336</color>
     <color name="hint_default">#FFFFFF</color>
