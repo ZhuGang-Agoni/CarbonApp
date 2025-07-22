@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/game_background"
+	android:padding="16dp"
+	tools:context=".HigherSortGameActivity">
+
+	<!-- 顶部信息栏 -->
+	<TextView
+		android:id="@+id/tvTimer"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="60秒"
+		android:textColor="#FFFFFF"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/tvScore"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="分数: 0"
+		android:textColor="#FFFFFF"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/tvCombo"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="2连击!"
+		android:textColor="#FFFF00"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		android:visibility="invisible"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<!-- 游戏区域 -->
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/gameArea"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@+id/binContainer"
+		app:layout_constraintTop_toBottomOf="@+id/tvCombo" />
+
+	<!-- 垃圾桶容器 -->
+	<LinearLayout
+		android:id="@+id/binContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:gravity="center"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<!-- 可回收垃圾桶 -->
+		<ImageView
+			android:id="@+id/recyclableBin"
+			android:layout_width="80dp"
+			android:layout_height="100dp"
+			android:layout_margin="8dp"
+			android:contentDescription="可回收垃圾桶"
+			android:src="@drawable/kehuishoulaji" />
+
+		<!-- 厨余垃圾桶 -->
+		<ImageView
+			android:id="@+id/kitchenBin"
+			android:layout_width="80dp"
+			android:layout_height="100dp"
+			android:layout_margin="8dp"
+			android:contentDescription="厨余垃圾桶"
+			android:src="@drawable/chuyulaji" />
+
+		<!-- 有害垃圾桶 -->
+		<ImageView
+			android:id="@+id/hazardousBin"
+			android:layout_width="80dp"
+			android:layout_height="100dp"
+			android:layout_margin="8dp"
+			android:contentDescription="有害垃圾桶"
+			android:src="@drawable/youhailaji" />
+
+		<!-- 其他垃圾桶 -->
+		<ImageView
+			android:id="@+id/otherBin"
+			android:layout_width="80dp"
+			android:layout_height="100dp"
+			android:layout_margin="8dp"
+			android:contentDescription="其他垃圾桶"
+			android:src="@drawable/qitalaji" />
+	</LinearLayout>
+
+	<!-- 游戏结束界面 -->
+	<LinearLayout
+		android:id="@+id/gameOverLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#80000000"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:padding="32dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="游戏结束"
+			android:textColor="#FFFFFF"
+			android:textSize="36sp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/finalScore"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="最终分数: 0"
+			android:textColor="#FFFFFF"
+			android:textSize="28sp"
+			android:gravity="center"
+			android:lineSpacingExtra="8dp"/>
+
+		<TextView
+			android:id="@+id/btnRestart"
+			android:layout_width="200dp"
+			android:layout_height="60dp"
+			android:layout_marginTop="32dp"
+			android:background="@drawable/btn_restart_bg"
+			android:gravity="center"
+			android:text="重新开始"
+			android:textColor="#FFFFFF"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/btnMenu"
+			android:layout_width="200dp"
+			android:layout_height="60dp"
+			android:layout_marginTop="16dp"
+			android:background="@drawable/btn_menu_bg"
+			android:gravity="center"
+			android:text="返回菜单"
+			android:textColor="#FFFFFF"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

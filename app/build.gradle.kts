@@ -68,6 +68,6 @@ dependencies {
 //    implementation("com.amap.api:map:7.9.0")
     implementation(files("libs/core-3.5.1.jar"))
 
-//     implementation("com.google.android.gms:play-services-fitness:21.2.0")
-//     implementation("com.google.android.gms:play-services-auth:21.2.0")
+     implementation("com.google.android.gms:play-services-fitness:21.2.0")
+     implementation("com.google.android.gms:play-services-auth:21.2.0")
 }

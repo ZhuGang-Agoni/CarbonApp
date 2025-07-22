@@ -69,6 +69,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="6dp" />
                 <!-- 今日挑战次数 -->
+
                 <TextView
                     android:id="@+id/tv_challenge_count"
                     android:layout_width="wrap_content"

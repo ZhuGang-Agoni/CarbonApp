@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="8dp"
+	app:cardCornerRadius="8dp"
+	app:cardElevation="4dp"
+	app:cardBackgroundColor="@android:color/white">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="16dp">
+
+		<!-- 分数 -->
+		<TextView
+			android:id="@+id/tv_item_score"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="分数: 100"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			android:textColor="@color/black"/>
+
+		<!-- 碳减排量 -->
+		<TextView
+			android:id="@+id/tv_item_carbon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="减少碳排放: 10kg"
+			android:textSize="14sp"
+			android:layout_marginTop="4dp"
+			android:textColor="@color/dark_gray"/>
+
+		<!-- 时间 -->
+		<TextView
+			android:id="@+id/tv_item_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="2024-07-20 15:30"
+			android:textSize="12sp"
+			android:layout_marginTop="8dp"
+			android:textColor="@color/gray"/>
+
+	</LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -13,7 +13,10 @@
     <color name="blue_light">#42A5F5</color>
     <color name="orange_warning">#FF9800</color>
     <color name="red_alert">#F44336</color>
-    
+    <color name="teal_500">#008577</color>
+    <color name="red">#F44336</color>
+    <color name="dark_gray">#616161</color>
+
     <!-- 基础色彩 -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
