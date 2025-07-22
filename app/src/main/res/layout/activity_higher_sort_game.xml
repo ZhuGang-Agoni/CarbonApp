@@ -4,9 +4,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/game_background"
+	android:background="@drawable/game_bg"
 	android:padding="16dp"
-	tools:context=".HigherSortGameActivity">
+	tools:context=".Activity.HigherSortGameActivity"
+>
 
 	<!-- 顶部信息栏 -->
 	<TextView

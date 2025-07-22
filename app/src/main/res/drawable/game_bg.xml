@@ -8,6 +8,6 @@
 	<item>
 		<bitmap
 			android:gravity="fill"
-			android:src="@drawable/img_4" />
+			android:src="@drawable/game_background" />
 	</item>
 </layer-list>

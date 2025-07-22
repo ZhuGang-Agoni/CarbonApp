@@ -43,7 +43,7 @@ class GameHistoryActivity : AppCompatActivity() {
     }
     private fun initListener(){
 //       返回逻辑
-        binding.`return`.setOnClickListener{
+        binding.back.setOnClickListener{
             finish()
         }
 
