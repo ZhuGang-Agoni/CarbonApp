@@ -26,8 +26,9 @@ import com.zg.carbonapp.Dao.GameHistoryRecord
 import com.zg.carbonapp.MMKV.GameHistoryRecordMMKV
 import com.zg.carbonapp.R
 import kotlin.random.Random
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 
@@ -438,13 +439,12 @@ class HigherSortGameActivity : AppCompatActivity() {
         finalScore.text = "最终分数: $score\n减少碳排放: ${carbonReduction}kg"
 
 // 这里的id 从 userMMKV 获取去 这里只是模拟
-        val currentTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val formattedTime = currentTime.format(formatter)
+
+
+// 获取当前时间并格式化的兼容方法
+        val currentTime = Date()
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val formattedTime = formatter.format(currentTime)
 //？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
         val gameRecord = GameHistoryRecord(
             id = 123, // 实际从userMMKV获取
