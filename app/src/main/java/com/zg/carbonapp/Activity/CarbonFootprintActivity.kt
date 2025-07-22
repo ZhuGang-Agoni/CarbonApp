@@ -1,17 +1,24 @@
 package com.zg.carbonapp.Activity
 
+import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zg.carbonapp.Adapter.FriendRankingAdapter
 import com.zg.carbonapp.Dao.FriendRanking
-import com.zg.carbonapp.MMKV.CarbonFootprintDataMMKV
 import com.zg.carbonapp.R
 import com.zg.carbonapp.Service.SensorManager
 import com.zg.carbonapp.databinding.ActivityCarbonFootprintBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import java.util.Calendar
 
 class CarbonFootprintActivity : AppCompatActivity() {
 
@@ -25,12 +32,36 @@ class CarbonFootprintActivity : AppCompatActivity() {
     // 本周总步数
     private var weekSteps: Int = 0
 
+    private val resetReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.zg.carbonapp.RESET_STEP_BASELINE") {
+                sensorManager.resetDailyBaseline()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCarbonFootprintBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 初始化传感器管理器
+        // 注册0点重置的广播接收器
+        val filter = IntentFilter("com.zg.carbonapp.RESET_STEP_BASELINE")
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            // Android 8.0 及以上
+            registerReceiver(resetReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        }
+        setupMidnightResetAlarm()
+
+        // 用全限定名获取系统 SensorManager
+        val sysSensorManager = getSystemService(Context.SENSOR_SERVICE) as android.hardware.SensorManager
+        val stepCounterSensor = sysSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        if (stepCounterSensor != null) {
+            Toast.makeText(this, "本设备支持步数计数器", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "本设备不支持步数计数器", Toast.LENGTH_SHORT).show()
+        }
+
         sensorManager = SensorManager(this)
         sensorManager.initializeSensors()
 
@@ -43,11 +74,11 @@ class CarbonFootprintActivity : AppCompatActivity() {
             updateUI(todaySteps, weekSteps)
         }
 
-        // 获取今日步数（本地缓存 > 后端 > 传感器）
-        val today = getTodayDate()
-        loadTodaySteps(today)
-
-        // 实时监听本地步数变化，自动刷新今日步数和一周统计
+        // 实时获取今日步数并监听变化，始终以传感器为准
+        sensorManager.getTodaySteps { steps ->
+            todaySteps = steps
+            updateUI(todaySteps, weekSteps)
+        }
         sensorManager.setOnStepChangedListener { newTodaySteps ->
             todaySteps = newTodaySteps
             // 重新异步统计一周步数
@@ -59,36 +90,38 @@ class CarbonFootprintActivity : AppCompatActivity() {
     }
 
     /**
-     * 加载今日步数数据
-     *
-     * 数据获取策略：
-     * 1. 优先从本地缓存获取
-     * 2. 本地没有则从服务器获取
-     * 3. 服务器没有则从传感器获取
-     * 4. 获取到数据后保存到本地缓存
+     * 设置每天0点重置步数基准的闹钟
      */
-    private fun loadTodaySteps(today: String) {
-        // 检查本地缓存(MMKV)是否有今日步数
-        if (CarbonFootprintDataMMKV.hasStep(today)) {
-            todaySteps = CarbonFootprintDataMMKV.getStep(today)
-            updateUI(todaySteps, weekSteps)
-        } else {
-            // 本地（MMKV）没有，尝试从服务器(后端)获取
-            val stepFromServer = fetchStepFromServer(today)
-            if (stepFromServer > 0) {
-                // 服务器(后端)有数据，保存到本地（MMKV）缓存
-                CarbonFootprintDataMMKV.saveStep(today, stepFromServer)
-                todaySteps = stepFromServer
-                updateUI(todaySteps, weekSteps)
-            } else {
-                // 服务器（后端）没有，从传感器获取
-                sensorManager.getTodaySteps { localStep ->
-                    CarbonFootprintDataMMKV.saveStep(today, localStep)
-                    todaySteps = localStep
-                    updateUI(todaySteps, weekSteps)
-                }
-            }
+    private fun setupMidnightResetAlarm() {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent("com.zg.carbonapp.RESET_STEP_BASELINE")
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        // 设置每天0点执行
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        // 如果当前时间已过今天0点，则设置为明天0点
+        if (calendar.timeInMillis <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
+
+        // 设置重复闹钟，每天执行一次
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
     }
 
     /**
@@ -168,12 +201,6 @@ class CarbonFootprintActivity : AppCompatActivity() {
             binding.recyclerViewRanking.adapter = rankingAdapter
         }
     }
-
-    // 获取今天的日期字符串
-    private fun getTodayDate(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return sdf.format(Date())
-    }
     
     /**
      * 获取本周7天的日期列表
@@ -220,12 +247,13 @@ class CarbonFootprintActivity : AppCompatActivity() {
             FriendRanking(id = 4, nickname = "小美", avatarResId = R.drawable.ic_profile, step = 6000)
         )
     }
-    
+
     /**
      * 界面销毁时释放传感器资源
      */
     override fun onDestroy() {
         super.onDestroy()
         sensorManager.releaseSensors()
+        unregisterReceiver(resetReceiver)
     }
 } 

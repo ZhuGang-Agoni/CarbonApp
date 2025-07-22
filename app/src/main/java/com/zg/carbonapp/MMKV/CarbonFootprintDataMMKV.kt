@@ -1,6 +1,5 @@
 package com.zg.carbonapp.MMKV
 
-import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 
 object CarbonFootprintDataMMKV {
@@ -82,4 +81,46 @@ object CarbonFootprintDataMMKV {
             // 上传成功后可以删除本地数据：mmkv.remove(key)
         }
     }
+
+    /**
+     * 通用Int存取方法
+     */
+    fun encodeInt(key: String, value: Int) {
+        mmkv.encode(key, value)
+    }
+    fun decodeInt(key: String, defaultValue: Int = 0): Int {
+        return mmkv.decodeInt(key, defaultValue)
+    }
+
+    /**
+     * 通用String存取方法
+     */
+    fun encodeString(key: String, value: String) {
+        mmkv.encode(key, value)
+    }
+    fun decodeString(key: String, defaultValue: String? = null): String? {
+        return mmkv.decodeString(key, defaultValue)
+    }
+
+    /**
+     * 通用Boolean存取方法
+     */
+    fun encodeBool(key: String, value: Boolean) {
+        mmkv.encode(key, value)
+    }
+    fun decodeBool(key: String, defaultValue: Boolean = false): Boolean {
+        return mmkv.decodeBool(key, defaultValue)
+    }
+
+    // 专用存取方法：步数基准
+    fun saveLastStepCount(value: Int) = encodeInt("last_step_count", value)
+    fun getLastStepCount(): Int = decodeInt("last_step_count", 0)
+
+    // 专用存取方法：最后记录日期
+    fun saveLastRecordDate(value: String) = encodeString("last_record_date", value)
+    fun getLastRecordDate(): String? = decodeString("last_record_date", null)
+
+    // 专用存取方法：是否初始化
+    fun saveIsInitialized(value: Boolean) = encodeBool("is_initialized", value)
+    fun getIsInitialized(): Boolean = decodeBool("is_initialized", false)
 } 

@@ -14,6 +14,8 @@ import com.zg.carbonapp.Tool.MyToast
 import java.util.*
 import android.widget.LinearLayout
 import com.zg.carbonapp.MMKV.UserChallengePhotoMMKV
+import android.speech.tts.TextToSpeech
+import android.content.Intent
 
 class GarbageChallengeActivity : AppCompatActivity() {
     
@@ -32,6 +34,9 @@ class GarbageChallengeActivity : AppCompatActivity() {
     private var totalQuestions = 10
     private val scorePerQuestion = 10
     
+    private lateinit var textToSpeech: TextToSpeech
+    private var ttsReady = false
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garbage_challenge)
@@ -39,6 +44,22 @@ class GarbageChallengeActivity : AppCompatActivity() {
         initViews()
         initChallenges()
         startChallenge()
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result = textToSpeech.setLanguage(Locale.CHINESE)
+                ttsReady = result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED
+                if (!ttsReady) {
+                    MyToast.sendToast("未安装中文语音包，无法语音播报", this)
+                }
+            } else {
+                ttsReady = false
+                MyToast.sendToast("TTS 初始化失败，请检查系统文字转语音设置", this)
+                // 跳转到TTS数据安装界面
+                val intent = Intent()
+                intent.action = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA
+                startActivity(intent)
+            }
+        }
     }
     
     private fun initViews() {
@@ -132,6 +153,13 @@ class GarbageChallengeActivity : AppCompatActivity() {
     }
     
     private fun showKnowledgeDialog(challenge: GarbageChallenge) {
+        val speakText = "正确答案：${challenge.correctCategory}。${challenge.explanation}"
+//        if (ttsReady) {
+//            val speakResult = textToSpeech.speak(speakText, TextToSpeech.QUEUE_FLUSH, null, null)
+//            if (speakResult == TextToSpeech.ERROR) {
+//                MyToast.sendToast("语音播报失败", this)
+//            }
+//        }
         AlertDialog.Builder(this)
             .setTitle("知识科普")
             .setMessage("正确答案：${challenge.correctCategory}\n\n${challenge.explanation}")
@@ -151,14 +179,32 @@ class GarbageChallengeActivity : AppCompatActivity() {
             isFinished = true
         )
         GarbageRecordMMKV.saveChallengeRecord(record)
-        AlertDialog.Builder(this)
-            .setTitle("挑战完成！")
-            .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n根据你的表现，获得${calculateCarbonPoints(currentScore)}碳积分！")
-            .setPositiveButton("确定") { _, _ -> 
-                finish()
-            }
-            .setCancelable(false)
-            .show()
+        val maxScore = totalQuestions * scorePerQuestion
+        if (currentScore == maxScore) {
+            // 满分，弹窗提示是否挑战高阶
+            AlertDialog.Builder(this)
+                .setTitle("挑战完成！")
+                .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n恭喜你全部答对！要不要尝试更高阶的分类挑战？")
+                .setPositiveButton("去试试") { _, _ ->
+                    val intent = Intent(this, HigherSortGameActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("下次吧") { _, _ ->
+                    finish()
+                }
+                .setCancelable(false)
+                .show()
+        } else {
+            AlertDialog.Builder(this)
+                .setTitle("挑战完成！")
+                .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n根据你的表现，获得${calculateCarbonPoints(currentScore)}碳积分！")
+                .setPositiveButton("确定") { _, _ -> 
+                    finish()
+                }
+                .setCancelable(false)
+                .show()
+        }
     }
     
     private fun calculateCarbonPoints(score: Int): Int {
@@ -211,5 +257,13 @@ class GarbageChallengeActivity : AppCompatActivity() {
                 source = "developer"
             )
         }
+    }
+
+    override fun onDestroy() {
+        if (::textToSpeech.isInitialized) {
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        super.onDestroy()
     }
 } 

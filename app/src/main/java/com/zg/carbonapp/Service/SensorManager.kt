@@ -18,6 +18,9 @@ import java.util.*
 class SensorManager(private val context: Context) {
     companion object {
         private const val TAG = "SensorManager"
+        private const val KEY_LAST_STEP_COUNT = "last_step_count"
+        private const val KEY_LAST_RECORD_DATE = "last_record_date"
+        private const val KEY_IS_INITIALIZED = "is_initialized"
     }
     // Android系统的传感器服务
     private val sensorManager: SensorManager by lazy {
@@ -30,11 +33,13 @@ class SensorManager(private val context: Context) {
     // 当前步数（从传感器获取的原始值）
     private var stepCount = 0
     // 上次记录的步数（用于计算当天步数）
-    private var lastStepCount = 0
+    private var lastStepCount: Int = CarbonFootprintDataMMKV.getLastStepCount()
     // 是否已初始化传感器
-    private var isInitialized = false
+    private var isInitialized: Boolean = CarbonFootprintDataMMKV.getIsInitialized()
     // 步数变化回调（用于实时UI刷新）
     private var onStepChanged: ((Int) -> Unit)? = null
+    // 添加日期记录
+    private var lastRecordDate: String? = CarbonFootprintDataMMKV.getLastRecordDate()
 
     /**
      * 设置步数变化监听器（UI可注册此回调实现实时刷新）
@@ -53,25 +58,27 @@ class SensorManager(private val context: Context) {
             event?.let {
                 if (it.sensor.type == Sensor.TYPE_STEP_COUNTER) {
                     val newStepCount = it.values[0].toInt()
-                    
-                    // 初始化时记录当前步数作为基准
+                    val today = getTodayDate() // 获取当前日期
+
+                    // 首次初始化
                     if (!isInitialized) {
                         lastStepCount = newStepCount
-                        stepCount = newStepCount
                         isInitialized = true
-                        Log.d(TAG, "传感器初始化完成，基准步数: $stepCount")
-                    } else {
-                        stepCount = newStepCount
+                        saveBaselineData()
+                        Log.d(TAG, "传感器初始化，基准步数: $lastStepCount")
                     }
-                    
-                    Log.d(TAG, "步数传感器更新: $stepCount")
-                    // 计算今天步数
+
+                    // 更新当前总步数
+                    stepCount = newStepCount
+                    lastRecordDate = today // 更新记录日期
+                    saveBaselineData()
+
+                    // 计算当日步数
                     val todaySteps = stepCount - lastStepCount
-                    // 自动保存到本地MMKV缓存
-                    val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                    CarbonFootprintDataMMKV.saveStep(today, if (todaySteps > 0) todaySteps else stepCount)
-                    // 实时通知UI
-                    onStepChanged?.invoke(if (todaySteps > 0) todaySteps else stepCount)
+                    CarbonFootprintDataMMKV.saveStep(today, todaySteps)
+
+                    // 通知UI更新
+                    onStepChanged?.invoke(todaySteps)
                 }
             }
         }
@@ -79,7 +86,32 @@ class SensorManager(private val context: Context) {
             // 精度变化处理（可选实现）
         }
     }
-    
+
+    /**
+     * 保存基准数据到本地存储
+     */
+    private fun saveBaselineData() {
+        CarbonFootprintDataMMKV.saveLastStepCount(lastStepCount)
+        lastRecordDate?.let { CarbonFootprintDataMMKV.saveLastRecordDate(it) }
+        CarbonFootprintDataMMKV.saveIsInitialized(isInitialized)
+    }
+
+    /**
+     * 重置每日基准线（供0点闹钟调用）
+     */
+    fun resetDailyBaseline() {
+        if (stepCount > 0) {
+            lastRecordDate?.let { date ->
+                CarbonFootprintDataMMKV.saveStep(date, stepCount - lastStepCount)
+            }
+
+            lastStepCount = stepCount
+            lastRecordDate = getTodayDate()
+            saveBaselineData()
+            Log.d(TAG, "0点自动重置基准步数: $lastStepCount")
+        }
+    }
+
     /**
      * 初始化本地步数传感器（如有）
      * 注册监听器，开始监听步数变化
@@ -139,7 +171,9 @@ class SensorManager(private val context: Context) {
             if (isToday(date)) {
                 getLocalSteps(callback)
             } else {
-                callback(0)
+                // 从本地存储获取历史数据
+                val savedSteps = CarbonFootprintDataMMKV.getStep(date)
+                callback(savedSteps)
             }
         }
     }
@@ -158,7 +192,12 @@ class SensorManager(private val context: Context) {
             callback(0)
         }
     }
-    
+
+    // 添加日期获取方法
+    private fun getTodayDate(): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    }
+
     /**
      * 判断传入日期是否为今天
      * @param date 日期字符串
@@ -175,14 +214,7 @@ class SensorManager(private val context: Context) {
     fun getGoogleFitService(): GoogleFitService {
         return googleFitService
     }
-    
-    /**
-     * 检查设备是否支持步数传感器
-     */
-    fun isStepSensorAvailable(): Boolean {
-        return stepSensor != null
-    }
-    
+
     /**
      * 检查是否已登录Google Fit
      */
@@ -198,15 +230,7 @@ class SensorManager(private val context: Context) {
             sensorManager.unregisterListener(stepSensorListener, stepSensor)
         }
     }
-    
-    /**
-     * 更新步数记录（用于计算每日步数，通常在每天0点调用）
-     */
-    fun updateStepRecord() {
-        lastStepCount = stepCount
-        Log.d(TAG, "更新步数记录: lastStepCount = $lastStepCount")
-    }
-    
+
     /**
      * 重置传感器初始化状态（用于重新初始化）
      */
@@ -216,4 +240,4 @@ class SensorManager(private val context: Context) {
         stepCount = 0
         Log.d(TAG, "重置传感器初始化状态")
     }
-} 
+}
