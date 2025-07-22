@@ -38,9 +38,14 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CarbonApp"
 		tools:targetApi="31">
-
-		<activity android:name=".Activity.HigherSortGameActivity"
+		<activity android:name=".Activity.GameHistoryActivity"
 			android:exported="false"/>
+		<activity
+			android:name=".Activity.GameMenuActivity"
+			android:exported="false" />
+		<activity
+			android:name=".Activity.HigherSortGameActivity"
+			android:exported="false" />
 		<activity
 			android:name=".Activity.CarbonResultActivity"
 			android:exported="false" />

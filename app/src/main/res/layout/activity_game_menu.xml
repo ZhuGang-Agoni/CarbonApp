@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@drawable/gradient_background"
+	android:padding="24dp">
+
+	<!-- 顶部标题区域 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="2"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		android:paddingTop="48dp">
+
+		<!-- 游戏标题 -->
+		<TextView
+			android:id="@+id/tv_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="垃圾分类挑战"
+			android:textSize="42sp"
+			android:textColor="#FFFFFF"
+			android:textStyle="bold"
+			android:shadowColor="#000000"
+			android:shadowRadius="8"
+			android:shadowDx="2"
+			android:shadowDy="2"/>
+
+		<!-- 副标题 -->
+		<TextView
+			android:id="@+id/tv_subtitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="正确分类，保护环境"
+			android:textSize="18sp"
+			android:textColor="#E0E0E0"
+			android:layout_marginTop="12dp"/>
+
+		<!-- 装饰性分隔线 -->
+		<View
+			android:layout_width="120dp"
+			android:layout_height="3dp"
+			android:background="#4CAF50"
+			android:layout_marginTop="24dp"/>
+	</LinearLayout>
+
+	<!-- 中间按钮区域 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="3"
+		android:orientation="vertical"
+		android:gravity="center"
+		android:paddingStart="32dp"
+		android:paddingEnd="32dp">
+
+		<!-- 开始游戏按钮 -->
+		<Button
+			android:id="@+id/btn_start"
+			android:layout_width="match_parent"
+			android:layout_height="60dp"
+			android:text="开始游戏"
+			android:textSize="20sp"
+			android:textColor="#FFFFFF"
+			android:layout_marginBottom="24dp"
+			android:elevation="6dp"
+			android:paddingStart="16dp"
+			android:drawableStart="@drawable/ic_play"
+			android:drawablePadding="12dp"/>
+
+		<!-- 历史记录按钮 -->
+		<Button
+			android:id="@+id/btn_history"
+			android:layout_width="match_parent"
+			android:layout_height="60dp"
+			android:text="历史记录"
+			android:textSize="20sp"
+			android:textColor="#FFFFFF"
+			android:layout_marginBottom="24dp"
+			android:elevation="6dp"
+			android:paddingStart="16dp"
+			android:drawableStart="@drawable/ic_history"
+			android:drawablePadding="12dp"/>
+
+		<!-- 设置按钮 -->
+		<Button
+			android:id="@+id/btn_settings"
+			android:layout_width="match_parent"
+			android:layout_height="60dp"
+			android:text="游戏设置"
+			android:textSize="20sp"
+			android:textColor="#FFFFFF"
+
+			android:elevation="6dp"
+			android:paddingStart="16dp"
+			android:drawableStart="@drawable/ic_settings"
+			android:drawablePadding="12dp"/>
+	</LinearLayout>
+
+	<!-- 底部区域 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical"
+		android:gravity="bottom">
+
+		<!-- 退出按钮 -->
+		<Button
+			android:id="@+id/btn_exit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="退出游戏"
+			android:textSize="16sp"
+			android:textColor="#BDBDBD"
+			android:background="@android:color/transparent"
+			android:layout_gravity="center_horizontal"
+			android:padding="12dp"/>
+
+		<!-- 版本信息 -->
+		<TextView
+			android:id="@+id/tv_version"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="v1.0.0"
+			android:textSize="12sp"
+			android:textColor="#9E9E9E"
+			android:layout_gravity="end"
+			android:layout_marginBottom="12dp"/>
+	</LinearLayout>
+</LinearLayout>

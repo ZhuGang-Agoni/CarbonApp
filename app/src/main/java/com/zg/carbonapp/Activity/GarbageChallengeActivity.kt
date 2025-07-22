@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import com.zg.carbonapp.MMKV.UserChallengePhotoMMKV
 import android.speech.tts.TextToSpeech
 import android.content.Intent
+import android.widget.Toast
 
 class GarbageChallengeActivity : AppCompatActivity() {
     
@@ -34,7 +35,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
     private var totalQuestions = 10
     private val scorePerQuestion = 10
     
-    private lateinit var textToSpeech: TextToSpeech
+//    private lateinit var textToSpeech: TextToSpeech
     private var ttsReady = false
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,24 +45,36 @@ class GarbageChallengeActivity : AppCompatActivity() {
         initViews()
         initChallenges()
         startChallenge()
-        textToSpeech = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                val result = textToSpeech.setLanguage(Locale.CHINESE)
-                ttsReady = result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED
-                if (!ttsReady) {
-                    MyToast.sendToast("未安装中文语音包，无法语音播报", this)
-                }
-            } else {
-                ttsReady = false
-                MyToast.sendToast("TTS 初始化失败，请检查系统文字转语音设置", this)
-                // 跳转到TTS数据安装界面
-                val intent = Intent()
-                intent.action = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA
-                startActivity(intent)
-            }
-        }
+//        // 在你的GarbageChallengeActivity中，找到TTS初始化的代码（类似下面的结构）
+//        textToSpeech = TextToSpeech(this, object : TextToSpeech.OnInitListener {
+//            override fun onInit(status: Int) {
+//                if (status == TextToSpeech.SUCCESS) {
+//                    // TTS初始化成功，正常使用
+//                    val result = textToSpeech.setLanguage(Locale.CHINESE)
+//                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                        // 语言数据缺失或不支持，尝试提示用户
+//                        showToast("不支持中文TTS，请检查TTS引擎")
+//                    }
+//                } else {
+//                    // TTS初始化失败，尝试安装TTS数据（关键修改处）
+//                    val installIntent = Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)
+//                    // 检查是否有Activity能处理这个意图
+//                    if (installIntent.resolveActivity(packageManager) != null) {
+//                        startActivity(installIntent) // 有则启动
+//                    } else {
+//                        // 没有则提示，不崩溃
+//                        showToast("无法安装TTS数据，请确保设备支持文本转语音功能")
+//                    }
+//                }
+//            }
+//        })
+
+
     }
-    
+    // 辅助方法：显示Toast
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
     private fun initViews() {
         ivGarbageImage = findViewById(R.id.iv_garbage_image)
         btnRecyclable = findViewById(R.id.btn_recyclable)
@@ -180,13 +193,13 @@ class GarbageChallengeActivity : AppCompatActivity() {
         )
         GarbageRecordMMKV.saveChallengeRecord(record)
         val maxScore = totalQuestions * scorePerQuestion
-        if (currentScore == maxScore) {
+        if (currentScore >10) {
             // 满分，弹窗提示是否挑战高阶
             AlertDialog.Builder(this)
                 .setTitle("挑战完成！")
                 .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n恭喜你全部答对！要不要尝试更高阶的分类挑战？")
                 .setPositiveButton("去试试") { _, _ ->
-                    val intent = Intent(this, HigherSortGameActivity::class.java)
+                    val intent = Intent(this, GameMenuActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -260,10 +273,10 @@ class GarbageChallengeActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        if (::textToSpeech.isInitialized) {
-            textToSpeech.stop()
-            textToSpeech.shutdown()
-        }
+//        if (::textToSpeech.isInitialized) {
+//            textToSpeech.stop()
+//            textToSpeech.shutdown()
+//        }
         super.onDestroy()
     }
 } 
