@@ -29,7 +29,7 @@ class GameMenuActivity : AppCompatActivity() {
     // ======================== 仅初始化背景音乐 ========================
     private fun initBackgroundMusic() {
         try {
-            bgmPlayer = MediaPlayer.create(this, R.raw.music1)
+            bgmPlayer = MediaPlayer.create(this, R.raw.music3)
             bgmPlayer.isLooping = true
             bgmPlayer.start()
         } catch (e: Exception) {

@@ -241,10 +241,10 @@ class CarbonFootprintActivity : AppCompatActivity() {
      */
     private fun fetchRankingFromServer(): List<FriendRanking> {
         return listOf(
-            FriendRanking(id = 1, nickname = "小明", avatarResId = R.drawable.ic_profile, step = 12000),
-            FriendRanking(id = 2, nickname = "小红", avatarResId = R.drawable.ic_profile, step = 8000),
-            FriendRanking(id = 3, nickname = "小刚", avatarResId = R.drawable.ic_profile, step = 15000),
-            FriendRanking(id = 4, nickname = "小美", avatarResId = R.drawable.ic_profile, step = 6000)
+            FriendRanking(id = 1, nickname = "小明", avatarResId = R.drawable.default_avatar, step = 12000),
+            FriendRanking(id = 2, nickname = "小红", avatarResId = R.drawable.default_avatar, step = 8000),
+            FriendRanking(id = 3, nickname = "小刚", avatarResId = R.drawable.default_avatar, step = 15000),
+            FriendRanking(id = 4, nickname = "小美", avatarResId = R.drawable.default_avatar, step = 6000)
         )
     }
 

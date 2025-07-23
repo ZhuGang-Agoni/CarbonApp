@@ -103,10 +103,32 @@ class GarbageHistoryActivity : AppCompatActivity() {
             rvRecords.visibility = View.VISIBLE
             
             recordAdapter = GarbageRecordAdapter(recordList) { record ->
+                // 判断是否为挑战记录
+                if (record.garbageName == "挑战记录") {
+                    // 找到原始 ChallengeRecord
+                    val challengeRecords = com.zg.carbonapp.MMKV.GarbageRecordMMKV.getChallengeRecords()
+                    val original = challengeRecords.find {
+                        "得分: ${it.totalScore}，正确${it.correctCount}/${it.totalQuestions}" == record.categoryName &&
+                        java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(java.util.Date(it.timestamp)) == record.time
+                    }
+                    if (original != null && original.totalScore == original.totalQuestions * 10) {
+                        // 满分，弹窗跳转
+                        androidx.appcompat.app.AlertDialog.Builder(this)
+                            .setTitle("满分挑战记录")
+                            .setMessage("恭喜你满分！要不要试试更高级的挑战？")
+                            .setPositiveButton("去试试") { _, _ ->
+                                val intent = android.content.Intent(this, GameMenuActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .setNegativeButton("下次吧", null)
+                            .show()
+                        return@GarbageRecordAdapter
+                    }
+                }
                 // 查找对应的 RecognitionRecord 以获取 explanation
-                val recognition = GarbageRecordMMKV.getRecognitionRecords().find {
+                val recognition = com.zg.carbonapp.MMKV.GarbageRecordMMKV.getRecognitionRecords().find {
                     it.garbageName == record.garbageName &&
-                    java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(java.util.Date(it.timestamp)) == record.time
+                    java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(java.util.Date(it.timestamp)) == record.time
                 }
                 val explanation = recognition?.explanation ?: "暂无详细说明"
                 val message = "分类：${record.categoryName}\n\n时间：${record.time}\n\n说明：$explanation"
