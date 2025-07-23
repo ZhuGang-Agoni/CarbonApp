@@ -1,62 +1,47 @@
 package com.zg.carbonapp.Activity
 
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Service.MusicService
 
 class GameMenuActivity : AppCompatActivity() {
-
-    // 仅保留背景音乐播放器
-    private lateinit var bgmPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_menu)
 
+        // 1. 启动音乐服务（应用启动即播放，跨页面持续运行）
+        startService(Intent(this, MusicService::class.java))
 
-        initBackgroundMusic()
-
+        // 2. 初始化按钮 + 动画
         initButtons()
-
         animateUIElements()
     }
 
-    // ======================== 仅初始化背景音乐 ========================
-    private fun initBackgroundMusic() {
-        try {
-            bgmPlayer = MediaPlayer.create(this, R.raw.music3)
-            bgmPlayer.isLooping = true
-            bgmPlayer.start()
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        }
-    }
-
-
     private fun initButtons() {
-        // 开始游戏
+        // 开始游戏（跳转到游戏页，音乐继续播放）
         findViewById<Button>(R.id.btn_start).setOnClickListener {
             startActivity(Intent(this, HigherSortGameActivity::class.java))
         }
 
-        // 历史记录
+        // 历史记录（跳转到历史页，音乐继续播放）
         findViewById<Button>(R.id.btn_history).setOnClickListener {
             startActivity(Intent(this, GameHistoryActivity::class.java))
         }
 
-
+        // 设置（跳转到设置页，音乐继续播放）
         findViewById<Button>(R.id.btn_settings).setOnClickListener {
-//            startActivity(Intent(this, SettingsActivity::class.java))
+            // startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        // 退出游戏
+        // 退出游戏（停止音乐 + 关闭应用）
         findViewById<Button>(R.id.btn_exit).setOnClickListener {
+            stopService(Intent(this, MusicService::class.java)) // 停止音乐
             finish()
             System.exit(0)
         }
@@ -85,18 +70,16 @@ class GameMenuActivity : AppCompatActivity() {
         }
     }
 
+    // 以下生命周期方法无需处理媒体，交给Service管理
     override fun onPause() {
         super.onPause()
-        bgmPlayer.pause()  // 暂停音乐（切到后台）
     }
 
     override fun onResume() {
         super.onResume()
-        bgmPlayer.start()  // 恢复音乐（回到前台）
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        bgmPlayer.release()  // 释放播放器（防止内存泄漏）
     }
 }

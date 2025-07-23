@@ -5,6 +5,10 @@
 	<uses-feature
 		android:name="android.hardware.camera"
 		android:required="false" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission
@@ -38,6 +42,12 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CarbonApp"
 		tools:targetApi="31">
+
+		<service
+			android:name=".Service.MusicService"
+			android:foregroundServiceType="mediaPlayback"
+			tools:ignore="ForegroundServicePermission" />
+
 		<activity android:name=".Activity.GameHistoryActivity"
 			android:exported="false"/>
 		<activity

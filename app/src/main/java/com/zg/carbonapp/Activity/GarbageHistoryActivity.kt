@@ -111,11 +111,11 @@ class GarbageHistoryActivity : AppCompatActivity() {
                         "得分: ${it.totalScore}，正确${it.correctCount}/${it.totalQuestions}" == record.categoryName &&
                         java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(java.util.Date(it.timestamp)) == record.time
                     }
-                    if (original != null && original.totalScore == original.totalQuestions * 10) {
+                    if (original != null && original.totalScore >=(original.totalQuestions * 10*0.9).toInt()) {
                         // 满分，弹窗跳转
                         androidx.appcompat.app.AlertDialog.Builder(this)
                             .setTitle("满分挑战记录")
-                            .setMessage("恭喜你满分！要不要试试更高级的挑战？")
+                            .setMessage("你这次的挑战记录正确率高达百分之90！要不要试试更高级的挑战？")
                             .setPositiveButton("去试试") { _, _ ->
                                 val intent = android.content.Intent(this, GameMenuActivity::class.java)
                                 startActivity(intent)

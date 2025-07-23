@@ -2,7 +2,9 @@ package com.zg.carbonapp.Tool
 
 import com.tencent.mmkv.MMKV
 import android.app.Application
+import android.content.Intent
 import com.amap.api.location.AMapLocationClient
+import com.zg.carbonapp.Service.MusicService
 
 class AppApplication:Application() {
 
@@ -18,5 +20,6 @@ class AppApplication:Application() {
 
         // 🔥 设置API Key（替换成你在高德平台申请的Key）
         AMapLocationClient.setApiKey("77760b774a262e67ef6ea8ce75a6701d")
+        startService(Intent(this, MusicService::class.java))
     }
 }
