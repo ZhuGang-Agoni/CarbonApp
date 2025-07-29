@@ -16,7 +16,7 @@ import com.zg.carbonapp.MMKV.RankingItemMMKV
 import com.zg.carbonapp.MMKV.TokenManager
 import com.zg.carbonapp.Tool.MyToast
 import com.zg.carbonapp.databinding.FragmentRankingBinding
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout // 新增：下拉刷新依赖
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class CommunityRankingFragment: Fragment() {
     private lateinit var  binding:FragmentRankingBinding

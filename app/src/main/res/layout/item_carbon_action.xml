@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="16dp"
+	android:background="@android:color/white"
+	android:layout_marginBottom="8dp"
+	android:elevation="2dp">
+
+	<TextView
+		android:id="@+id/tvProductName"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="产品名称"
+		android:textSize="16sp"
+		android:textStyle="bold"/>
+
+	<TextView
+		android:id="@+id/tvAction"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="行为描述"
+		android:textSize="14sp"
+		android:layout_marginTop="4dp"/>
+
+	<TextView
+		android:id="@+id/tvReducedCarbon"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="减碳: 0.00 kg"
+		android:textSize="14sp"
+		android:textColor="@android:color/holo_green_dark"
+		android:layout_marginTop="4dp"/>
+
+	<TextView
+		android:id="@+id/tvTime"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="2023-01-01 12:00"
+		android:textSize="12sp"
+		android:textColor="@android:color/darker_gray"
+		android:layout_marginTop="4dp"/>
+
+</LinearLayout>

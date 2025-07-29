@@ -111,7 +111,7 @@ class ImFragment : Fragment() {
         if (currentUser == null) {
             // 创建默认用户  由于后端还没有搭建起来 所以这个是个麻烦
             currentUser = User(
-                userId = "123456",
+                userId = "1",
                 userName = "Agoni",
                 signature = "点击编辑个性签名",
                 userQQ = "1693573616@qq.com",

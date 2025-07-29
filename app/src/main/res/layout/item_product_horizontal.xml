@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="12dp"
+	app:cardBackgroundColor="@color/card_background"
+	app:cardCornerRadius="12dp"
+	app:cardElevation="2dp">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<ImageView
+			android:id="@+id/productImage"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:scaleType="centerCrop"
+			android:src="@drawable/tree" />
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical"
+			android:padding="12dp">
+
+			<TextView
+				android:id="@+id/productName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="太阳能充电宝"
+				android:textColor="@color/primary_text"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:id="@+id/productDescription"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:text="太阳能充电，环保便携"
+				android:textColor="@color/secondary_text"
+				android:textSize="12sp" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:orientation="horizontal"
+				android:gravity="center_vertical">
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:gravity="center_vertical">
+
+					<ImageView
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						android:src="@drawable/ic_points_small" />
+
+					<TextView
+						android:id="@+id/productPoints"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="4dp"
+						android:text="500"
+						android:textColor="@color/primary"
+						android:textSize="14sp"
+						android:textStyle="bold" />
+				</LinearLayout>
+
+				<TextView
+					android:id="@+id/exchangeCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="16dp"
+					android:text="已兑换 238"
+					android:textColor="@color/secondary_text"
+					android:textSize="10sp" />
+			</LinearLayout>
+		</LinearLayout>
+
+		<Button
+			android:id="@+id/exchangeButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="12dp"
+			android:backgroundTint="@color/primary"
+			android:text="兑换"
+			android:textColor="@color/white"
+			android:textSize="12sp"
+			app:cornerRadius="12dp" />
+	</LinearLayout>
+</androidx.cardview.widget.CardView>

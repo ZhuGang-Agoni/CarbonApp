@@ -2,34 +2,74 @@ package com.zg.carbonapp.MMKV
 
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.tencent.mmkv.MMKV
 import com.zg.carbonapp.Dao.TravelRecord
 
 object TravelRecordManager {
-    private val mmkv by lazy { MMKV.mmkvWithID("travel_record") }  // 单独的存储空间
-    private val gson = Gson()  // JSON解析工具
+    private val mmkv by lazy {
+        // 确保MMKV已初始化（添加错误处理）
+        try {
+            MMKV.mmkvWithID("travel_record") ?: throw Exception("MMKV初始化失败")
+        } catch (e: Exception) {
+            Log.e("TravelRecordManager", "MMKV初始化失败: ${e.message}")
+            throw e
+        }
+    }
+    private val gson = Gson()
 
-    // 保存出行记录 列表是封装在这里面的
+    // 保存出行记录
     fun saveRecord(records: TravelRecord) {
-        val json = gson.toJson(records)
-        mmkv.encode("record_list", json)  // 存储JSON字符串
+        try {
+            val json = gson.toJson(records)
+            mmkv.encode("record_list", json)
+            Log.d("TravelRecordManager", "记录保存成功: $json")
+
+            // 用户碳积分更新（保留原有逻辑，但添加错误处理）
+            updateUserCarbonPoints(records.carbonPoint)
+        } catch (e: Exception) {
+            Log.e("TravelRecordManager", "保存记录失败: ${e.message}", e)
+            throw e
+        }
     }
 
-    // 获取出行记录 出行纪录的列表是封装在这里面的
+    // 获取出行记录
     fun getRecords(): TravelRecord {
-        val json = mmkv.decodeString("record_list")
-        return try {
-            // 若 json 为 null，用空 JSON 字符串 "{}" 兜底
-            gson.fromJson(json ?: "{}", TravelRecord::class.java)
+        try {
+            val json = mmkv.decodeString("record_list")
+            Log.d("TravelRecordManager", "获取记录: $json")
+
+            return if (json.isNullOrEmpty()) {
+                // 返回默认记录（userId设为默认值，避免空值）
+                TravelRecord(userId = "default_user", list = emptyList())
+            } else {
+                gson.fromJson(json, TravelRecord::class.java)
+            }
         } catch (e: Exception) {
-            e.printStackTrace()
-            TravelRecord(userId="1234",list= emptyList()) // 解析失败时返回默认实例
+            Log.e("TravelRecordManager", "解析记录失败: ${e.message}", e)
+            // 返回默认记录，确保不会崩溃
+            return TravelRecord(userId = "default_user", list = emptyList())
         }
     }
 
     // 清除所有记录
     fun clearRecords() {
         mmkv.remove("record_list")
+        Log.d("TravelRecordManager", "记录已清除")
+    }
+
+    // 独立方法更新用户碳积分（减少耦合）
+    private fun updateUserCarbonPoints(carbonPoints: String) {
+        try {
+            // 保留原有逻辑，但添加空值检查和错误处理
+            val user = UserMMKV.getUser()
+            user?.let {
+                val newUser = it.copy(carbonCount = carbonPoints.toIntOrNull() ?: 0)
+                UserMMKV.saveUser(newUser)
+                Log.d("TravelRecordManager", "用户碳积分更新为: $carbonPoints")
+            }
+        } catch (e: Exception) {
+            Log.e("TravelRecordManager", "更新用户碳积分失败: ${e.message}", e)
+            // 积分更新失败不影响主流程
+        }
     }
 }

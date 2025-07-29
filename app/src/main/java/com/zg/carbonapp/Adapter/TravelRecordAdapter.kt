@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TravelRecordAdapter(
-    private val recordList: List<ItemTravelRecord>,
+    private var recordList: List<ItemTravelRecord>,
     private val context: Context
 ) : RecyclerView.Adapter<TravelRecordAdapter.ViewHolder>() {
 
@@ -41,18 +41,57 @@ class TravelRecordAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recordList[position]
 
-        // 修复图片加载：直接使用资源ID，无需Glide
-        holder.ivModeIcon.setImageResource(item.modelRavel)
+        // 设置出行方式图标
+        holder.ivModeIcon.setImageResource(
+            item.modelRavel)
 
-        holder.tvModeName.text = item.travelModel
-        holder.tvCarbonCount.text = item.carbonCount
-        holder.tvDistance.text = item.distance
+        holder.tvModeName.text = getTravelModeName(item.travelModel)
+        holder.tvCarbonCount.text = "${item.carbonCount} g"
+        holder.tvDistance.text = "${item.distance} km"
 
-        // 修复时间显示：将时间戳格式化为"2025-07-11 10:11"
+        // 格式化时间显示
         holder.tvTime.text = dateFormat.format(Date(item.time))
 
         // 显示路线（起点→终点）
         holder.tvAddress.text = item.travelRoute
+    }
+
+    // 将出行方式代码转换为中文名称
+    private fun getTravelModeName(modeCode: String): String {
+        return when (modeCode) {
+            "walk" -> "步行"
+            "ride" -> "骑行"
+            "bus" -> "公交"
+            "subway" -> "地铁"
+            else -> modeCode
+        }
+    }
+
+    // 更新数据列表
+    fun updateList(newList: List<ItemTravelRecord>) {
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = recordList.size
+            override fun getNewListSize(): Int = newList.size
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                // 使用时间戳作为唯一标识判断是否是同一个Item
+                return recordList[oldItemPosition].time == newList[newItemPosition].time
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val oldItem = recordList[oldItemPosition]
+                val newItem = newList[newItemPosition]
+                // 比较所有字段是否相同
+                return oldItem.travelModel == newItem.travelModel &&
+                        oldItem.carbonCount == newItem.carbonCount &&
+                        oldItem.distance == newItem.distance &&
+                        oldItem.travelRoute == newItem.travelRoute
+            }
+        })
+
+        // 更新数据并应用差异
+        recordList = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = recordList.size

@@ -2,18 +2,22 @@ package com.zg.carbonapp.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -22,13 +26,7 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
 import com.amap.api.maps.MapsInitializer
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.Marker
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.MyLocationStyle
-import com.amap.api.maps.model.Polyline
-import com.amap.api.maps.model.PolylineOptions
+import com.amap.api.maps.model.*
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.core.PoiItem
@@ -38,373 +36,743 @@ import com.amap.api.services.geocoder.RegeocodeQuery
 import com.amap.api.services.geocoder.RegeocodeResult
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
-import com.amap.api.services.route.BusRouteResult
-import com.amap.api.services.route.DriveRouteResult
-import com.amap.api.services.route.RideRouteResult
-import com.amap.api.services.route.RouteResult
-import com.amap.api.services.route.RouteSearch
-import com.amap.api.services.route.WalkRouteResult
+import com.amap.api.services.route.*
+import com.tencent.mmkv.MMKV
 import com.zg.carbonapp.Adapter.TravelRecordAdapter
 import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.Dao.TravelRecord
 import com.zg.carbonapp.MMKV.TravelRecordManager
+import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.R
-import com.zg.carbonapp.Tool.AnimationFlashing
-import com.zg.carbonapp.Tool.MyToast
 import com.zg.carbonapp.databinding.ActivityGreenTravelBinding
-import java.text.SimpleDateFormat
-import java.util.*
+import com.zg.carbonapp.databinding.DialogPoiListBinding
+import com.zg.carbonapp.databinding.DialogRouteDetailBinding
+import java.lang.Math.*
+import kotlin.math.roundToInt
 
 class GreenTravelActivity : AppCompatActivity(),
     AMapLocationListener,
-    PoiSearch.OnPoiSearchListener,
     RouteSearch.OnRouteSearchListener {
 
     private lateinit var binding: ActivityGreenTravelBinding
-    private lateinit var travelRecord: TravelRecord
-    private var travelList = listOf<ItemTravelRecord>()
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA)
+    private lateinit var travelAdapter: TravelRecordAdapter // 列表适配器
 
-    // 高德API相关
+    // 定位、地图相关
     private var locationClient: AMapLocationClient? = null
     private var poiSearch: PoiSearch? = null
     private var routeSearch: RouteSearch? = null
     private var startPoint: LatLonPoint? = null
     private var endPoint: LatLonPoint? = null
-    private var realDistance = 0.0
-    private var startAddress = "当前位置"
-    private var endAddress = "未知终点"
-
-    // 地图相关
     private lateinit var mapView: MapView
     private var aMap: AMap? = null
-    private var currentLocation: LatLng? = null
-
-    // 出行方式管理
-    private enum class RouteType { BUS, RIDE, WALK }
-    private var currentMode: RouteType = RouteType.BUS
-    private var currentCity = "岳阳市"
-
-    // 路线覆盖物
+    private lateinit var geocodeSearch: GeocodeSearch
     private var routePolyline: Polyline? = null
     private var startMarker: Marker? = null
     private var endMarker: Marker? = null
-    private lateinit var geocodeSearch: GeocodeSearch
+    private var currentCity: String? = null
 
+    private val AMAP_KEY = "77760b774a262e67ef6ea8ce75a6701d"
+    private val TAG = "GreenTravelActivity"
+
+    private enum class RouteType { WALK, RIDE, BUS, SUBWAY }
+    private var currentRouteType: RouteType = RouteType.WALK // 默认步行
+
+    private var poiList: List<PoiItem> = emptyList()
+    private var currentUserId = "default_user" // 默认用户ID
+
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            if (p0.isNullOrEmpty() || p1 > 0) {
+                endPoint = null
+                binding.cardResult.visibility = View.GONE
+            }
+        }
+        override fun afterTextChanged(p0: Editable?) {}
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGreenTravelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         // 初始化地图
         initMap(savedInstanceState)
-        initListener()
-        initTravelRecords()
+        // 初始化视图（含RecyclerView）
+        initViews()
+        // 初始化监听器
+        initListeners()
+        // 初始化出行记录
+        initTravelRecord()
     }
 
-    // ====================== 1. 地图初始化 ======================
+    private fun initViews() {
+        // 初始化RecyclerView
+        travelAdapter = TravelRecordAdapter( emptyList<ItemTravelRecord>(),this)
+        binding.recyclerViewTravelRecord.apply {
+            layoutManager = LinearLayoutManager(this@GreenTravelActivity)
+            adapter = travelAdapter
+            setHasFixedSize(true)
+        }
+    }
+
     private fun initMap(savedInstanceState: Bundle?) {
         AMapLocationClient.updatePrivacyShow(this, true, true)
         AMapLocationClient.updatePrivacyAgree(this, true)
+        MapsInitializer.setApiKey(AMAP_KEY)
 
-        //
-        AMapLocationClient.setApiKey("77760b774a262e67ef6ea8ce75a6701d")
-        // 初始化逆地理编码
+        mapView = binding.mapView
+        mapView.onCreate(savedInstanceState)
+        aMap = mapView.map?.apply {
+            uiSettings.apply {
+                isZoomGesturesEnabled = true
+                isScrollGesturesEnabled = true
+                isZoomControlsEnabled = true
+            }
+            myLocationStyle = MyLocationStyle().showMyLocation(true)
+            isMyLocationEnabled = true
+        }
+
         geocodeSearch = GeocodeSearch(this).apply {
             setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
-                override fun onGeocodeSearched(result: GeocodeResult?, errorCode: Int) {
-                    // 正向编码（根据地址查经纬度），此处无需处理
-                }
-
+                override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {}
                 override fun onRegeocodeSearched(result: RegeocodeResult?, errorCode: Int) {
                     if (errorCode == AMapException.CODE_AMAP_SUCCESS && result != null) {
-                        val detailedAddress = result.regeocodeAddress.formatAddress
-                        // 更新起点地址为精确地址
-                        startAddress = detailedAddress
-                        binding.etStart.setText(detailedAddress)
-                        // 更新标记的snippet
-                        startMarker?.snippet = detailedAddress
+                        binding.etStart.setText(result.regeocodeAddress.formatAddress)
                     }
                 }
             })
         }
-        mapView = binding.mapView
-        mapView.onCreate(savedInstanceState)
-        aMap = mapView.map
-
-        // 配置地图UI
-        aMap?.apply {
-            uiSettings.apply {
-                isZoomGesturesEnabled = true
-                isScrollGesturesEnabled = true
-                isTiltGesturesEnabled = true
-                isRotateGesturesEnabled = true
-                isZoomControlsEnabled = true
-            }
-
-            // 配置定位图层
-            val locationStyle = MyLocationStyle().apply {
-                myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
-                showMyLocation(true)
-                interval(2000)
-                strokeColor(Color.TRANSPARENT)
-                radiusFillColor(Color.argb(100, 0, 145, 255))
-            }
-
-            this.myLocationStyle = locationStyle
-            isMyLocationEnabled = true
-            moveCamera(CameraUpdateFactory.zoomTo(16f))
-
-            // 地图加载完成后尝试定位
-            setOnMapLoadedListener {
-                if (ContextCompat.checkSelfPermission(
-                        this@GreenTravelActivity,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    startLocation()
-                }
-            }
-        }
     }
 
-    // ====================== 2. 初始化数据 ======================
-    private fun initTravelRecords() {
-        val cacheRecord = TravelRecordManager.getRecords()
-        travelRecord = cacheRecord ?: getData()
-
-        // 确保数据完整
-        travelRecord = travelRecord.copy(
-            userId = travelRecord.userId ?: "DEFAULT_USER",
-            totalCarbon = travelRecord.totalCarbon ?: "0.0",
-            todayCarbon = travelRecord.todayCarbon ?: "0.0",
-            carbonPoint = travelRecord.carbonPoint ?: "0",
-            list = travelRecord.list ?: emptyList()
-        )
-
-        // 排序并更新UI
-        travelList = travelRecord.list.sortedByDescending { it.time }
-        updateRecyclerView()
-        updateUI()
-    }
-
-    private fun updateRecyclerView() {
-        val adapter = TravelRecordAdapter(travelList, this)
-        binding.recyclerViewTravelRecord.adapter = adapter
-        binding.recyclerViewTravelRecord.layoutManager = LinearLayoutManager(this)
-    }
-
-    // ====================== 3. 事件监听 ======================
-    private fun initListener() {
-        // 返回按钮
-        binding.btnBack.setOnClickListener { finish() }
-
-        // 碳积分
-        binding.cardCarbonAccount.setOnClickListener {
-            MyToast.sendToast("此功能开发中", this)
-        }
-
-        // 刷新按钮
-        binding.ivRefresh.setOnClickListener {
-            travelRecord = TravelRecordManager.getRecords() ?: getData()
-            travelList = travelRecord.list.sortedByDescending { it.time }
-            updateRecyclerView()
-            updateUI()
-            Toast.makeText(this, "数据已刷新", Toast.LENGTH_SHORT).show()
-        }
-
+    private fun initListeners() {
         // 定位按钮
         binding.btnLocate.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    100
-                )
-            } else {
-                startLocation()
-            }
+            if (hasLocationPermission()) startLocation()
+            else requestLocationPermission()
         }
 
-        // 终点搜索
-        binding.etEnd.setOnEditorActionListener { v, _, _ ->
-            val keyword = v.text.toString().trim()
+        // 终点输入框监听
+        binding.etEnd.addTextChangedListener(textWatcher)
+        binding.etEnd.setOnEditorActionListener { _, _, _ ->
+            val keyword = binding.etEnd.text.toString().trim()
             if (keyword.isNotEmpty()) {
                 searchPOI(keyword)
+                true
+            } else false
+        }
+        binding.etEnd.setOnClickListener {
+            val keyword = binding.etEnd.text.toString().trim()
+            if (poiList.isNotEmpty() && keyword.isNotEmpty()) {
+                showPoiListDialog()
+            } else if (keyword.isNotEmpty()) {
+                searchPOI(keyword)
             }
-            true
         }
 
         // 计算路线按钮
         binding.btnCalculate.setOnClickListener {
-            val endKeyword = binding.etEnd.text.toString().trim()
-            if (endKeyword.isEmpty()) {
-                Toast.makeText(this, "请输入目的地", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            calculateRouteWithCheck()
+        }
 
-            if (startPoint == null) {
-                Toast.makeText(this, "请先定位起点", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            binding.btnCalculate.text = "计算中..."
-            binding.btnCalculate.isEnabled = false
-
-            if (endPoint == null) {
-                searchPOI(endKeyword)
-                binding.root.postDelayed({
-                    if (endPoint != null) {
-                        calculateRoute()
-                    } else {
-                        binding.btnCalculate.text = "计算路线"
-                        binding.btnCalculate.isEnabled = true
-                        Toast.makeText(this, "终点搜索失败，请重试", Toast.LENGTH_SHORT).show()
-                    }
-                }, 1500)
-            } else {
-                calculateRoute()
+        // 出行方式选择
+        binding.travelModeGroup.setOnCheckedChangeListener { _, checkedId ->
+            currentRouteType = when (checkedId) {
+                binding.walkRadio.id -> RouteType.WALK
+                binding.bikeRadio.id -> RouteType.RIDE
+                binding.busRadio.id -> RouteType.BUS
+                binding.subwayRadio.id -> RouteType.SUBWAY
+                else -> RouteType.WALK
             }
         }
 
-        // 出行方式按钮
-        binding.cardBus.setOnClickListener {
-            currentMode = RouteType.BUS
-            AnimationFlashing.flashView(binding.cardBus, Color.BLUE)
-            binding.root.postDelayed({ recordTravel("公交") }, 500)
+        // 刷新按钮（更新出行记录）
+        binding.ivRefresh.setOnClickListener {
+            refreshTravelRecordUI()
+            Toast.makeText(this, "已刷新最新记录", Toast.LENGTH_SHORT).show()
         }
 
-        binding.cardBike.setOnClickListener {
-            currentMode = RouteType.RIDE
-            AnimationFlashing.flashView(binding.cardBike, Color.BLUE)
-            binding.root.postDelayed({ recordTravel("骑行") }, 500)
+        // 结果卡片点击显示路线详情
+        binding.cardResult.setOnClickListener {
+            // 实际应传入当前路线描述，这里简化处理
         }
-
-        binding.cardWalk.setOnClickListener {
-            currentMode = RouteType.WALK
-            AnimationFlashing.flashView(binding.cardWalk, Color.BLUE)
-            binding.root.postDelayed({ recordTravel("步行") }, 500)
-        }
-
-        binding.cardMetro.setOnClickListener {
-            MyToast.sendToast("地铁功能开发中", this)
-        }
-
-        // 分享按钮
-        binding.btnShare.setOnClickListener { shareCarbonAchievement() }
     }
 
-    // ====================== 4. 定位功能 ======================
+    private fun initTravelRecord() {
+
+        // 首次加载数据
+        refreshTravelRecordUI()
+    }
+
+    // 刷新出行记录UI（含RecyclerView）
+    private fun refreshTravelRecordUI() {
+        try {
+            val record = TravelRecordManager.getRecords()
+            // 更新碳账户信息 这里很细节
+            val user=UserMMKV.getUser()
+            if (user!=null){
+                val points=user.carbonCount
+                binding.tvCarbonPoints.text = "${points} 积分" // 碳积分
+            }
+            binding.tvTotalCarbon.text = "${record.totalCarbon} kg" // 累计减碳
+            binding.tvTodayCarbon.text = "今日减碳 ${record.todayCarbon} kg" // 今日减碳
+
+            // 更新RecyclerView数据
+            travelAdapter.updateList(record.list.sortedByDescending { it.time }) // 按时间倒序
+        } catch (e: Exception) {
+            Log.e(TAG, "刷新出行记录失败: ${e.message}")
+            Toast.makeText(this, "获取记录失败", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // 显示POI选择对话框
+    private fun showPoiListDialog() {
+        if (poiList.isEmpty()) {
+            Toast.makeText(this, "没有可选择的地点", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val inflater = LayoutInflater.from(this)
+        val dialogBinding = DialogPoiListBinding.inflate(inflater)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setTitle("选择目的地")
+            .setCancelable(true)
+            .create()
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            poiList.map { "${it.title} - ${it.snippet ?: "未知地址"}" }
+        )
+        dialogBinding.listView.adapter = adapter
+
+        dialogBinding.listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val selectedPoi = poiList[position]
+            val selectedPoint = selectedPoi.latLonPoint ?: run {
+                Toast.makeText(this, "该地点无坐标", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                return@OnItemClickListener
+            }
+
+            // 校验坐标
+            if (selectedPoint.latitude == 0.0 || selectedPoint.longitude == 0.0 ||
+                selectedPoint.latitude !in -90.0..90.0 || selectedPoint.longitude !in -180.0..180.0
+            ) {
+                Toast.makeText(this, "坐标无效", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                return@OnItemClickListener
+            }
+
+            // 更新终点
+            endPoint = selectedPoint
+            binding.etEnd.setText(selectedPoi.title)
+            // 添加终点标记
+            val endLatLng = LatLng(selectedPoint.latitude, selectedPoint.longitude)
+            endMarker?.remove()
+            endMarker = aMap?.addMarker(
+                MarkerOptions()
+                    .position(endLatLng)
+                    .title("终点")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            )
+            aMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(endLatLng, 16f))
+
+            dialog.dismiss()
+            calculateRouteWithCheck()
+        }
+
+        dialog.show()
+    }
+
+    // 路线计算前校验
+    private fun calculateRouteWithCheck() {
+        if (!isValidPoint(startPoint)) {
+            Toast.makeText(this, "请先定位获取起点", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (endPoint == null) {
+            Toast.makeText(this, "请选择终点", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (!isValidPoint(endPoint)) {
+            Toast.makeText(this, "终点无效", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // 计算直线距离（小于50米提示过近）
+        val distance = calculateDistance(
+            startPoint!!.latitude, startPoint!!.longitude,
+            endPoint!!.latitude, endPoint!!.longitude
+        )
+        if (distance < 50) {
+            Toast.makeText(this, "起终点过近", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (currentCity.isNullOrEmpty()) {
+            Toast.makeText(this, "请先定位获取城市", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // 开始计算路线
+        calculateRoute()
+    }
+
+    // 检查坐标有效性
+    private fun isValidPoint(point: LatLonPoint?): Boolean {
+        return point != null &&
+                point.latitude != 0.0 && point.longitude != 0.0 &&
+                point.latitude in -90.0..90.0 && point.longitude in -180.0..180.0
+    }
+
+    // 开始定位
     @SuppressLint("MissingPermission")
     private fun startLocation() {
-        if (locationClient == null) {
-            locationClient = AMapLocationClient(this).apply {
-                val option = AMapLocationClientOption().apply {
-                    locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-                    isOnceLocation = true
-                    isOnceLocationLatest = true
-                    isNeedAddress = true
-                    httpTimeOut = 10000
-                    isGpsFirst = true
-                }
-                setLocationOption(option)
-                setLocationListener(this@GreenTravelActivity)
-            }
-        }
-
         binding.btnLocate.text = "定位中..."
-        locationClient?.startLocation()
+
+        locationClient = AMapLocationClient(this).apply {
+            setLocationOption(AMAP_LOCATION_OPTION)
+            setLocationListener(this@GreenTravelActivity)
+            startLocation()
+        }
     }
+
+    // 定位参数
+    private val AMAP_LOCATION_OPTION by lazy {
+        AMapLocationClientOption().apply {
+            locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+            isOnceLocation = true
+            isNeedAddress = true
+            httpTimeOut = 10000
+        }
+    }
+
+    // 定位结果回调
     override fun onLocationChanged(location: AMapLocation?) {
         binding.btnLocate.text = "重新定位"
+
         location?.let {
             if (it.errorCode == 0) {
-                // 1. 记录经纬度
-                val latLng = LatLng(it.latitude, it.longitude)
                 startPoint = LatLonPoint(it.latitude, it.longitude)
-                currentLocation = latLng
+                currentCity = it.city
+                Log.d(TAG, "定位成功: ${it.latitude}, ${it.longitude}，城市: $currentCity")
 
-                // 2. 发起逆地理编码请求（获取精确地址）
-                val regeocodeQuery = RegeocodeQuery(startPoint, 200f, GeocodeSearch.AMAP)
-                geocodeSearch.getFromLocationAsyn(regeocodeQuery)
-
-                // 3. 字段拼接作为兜底（逆地理编码失败时用）
-                val addressBuilder = StringBuilder()
-                if (!it.province.isNullOrEmpty()) addressBuilder.append(it.province)
-                if (!it.city.isNullOrEmpty()) addressBuilder.append(it.city)
-                if (!it.district.isNullOrEmpty()) addressBuilder.append(it.district)
-                if (!it.street.isNullOrEmpty()) addressBuilder.append(it.street)
-                if (!it.streetNum.isNullOrEmpty()) addressBuilder.append(it.streetNum)
-                val fallbackAddress = if (addressBuilder.isNotEmpty()) {
-                    addressBuilder.toString()
-                } else {
-                    "当前位置（定位信息不足）" // 避免空地址
+                if (!isValidPoint(startPoint)) {
+                    Toast.makeText(this, "定位坐标无效", Toast.LENGTH_SHORT).show()
+                    return
                 }
 
-                // 4. 先显示兜底地址，逆地理编码结果回来后自动更新
-                startAddress = fallbackAddress
-                binding.etStart.setText(fallbackAddress)
-
-                // 5. 添加/更新起点标记
+                // 添加起点标记
+                val latLng = LatLng(it.latitude, it.longitude)
                 startMarker?.remove()
-                startMarker = aMap?.addMarker(MarkerOptions()
-                    .position(latLng)
-                    .title("当前位置")
-                    .snippet(fallbackAddress)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
-
-                Toast.makeText(this, "定位成功（逆地理编码中...）", Toast.LENGTH_SHORT).show()
+                aMap?.addMarker(
+                    MarkerOptions()
+                        .position(latLng)
+                        .title("起点")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                )
+                aMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f))
+                // 反向地理编码获取地址
+                geocodeSearch.getFromLocationAsyn(RegeocodeQuery(startPoint, 200f, GeocodeSearch.AMAP))
             } else {
-                Toast.makeText(this, "定位失败：码${it.errorCode}，原因${it.errorInfo}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "定位失败: ${it.errorInfo}", Toast.LENGTH_SHORT).show()
+                startPoint = null
+            }
+        } ?: run {
+            Toast.makeText(this, "定位结果为空", Toast.LENGTH_SHORT).show()
+            startPoint = null
+        }
+    }
+
+    // POI搜索
+    private fun searchPOI(keyword: String) {
+        binding.etEnd.isEnabled = false
+        binding.btnCalculate.text = "搜索中..."
+        binding.btnCalculate.isEnabled = false
+
+        val query = PoiSearch.Query(keyword, "", currentCity).apply { // 限定当前城市搜索
+            pageSize = 20
+            pageNum = 1
+            cityLimit = true
+        }
+
+        poiSearch = PoiSearch(this, query).apply {
+            if (isValidPoint(startPoint)) {
+                bound = PoiSearch.SearchBound(startPoint, 50000) // 以起点为中心，5公里内搜索
+            }
+            setOnPoiSearchListener(poiSearchListener)
+            searchPOIAsyn()
+        }
+    }
+
+    // POI搜索监听器
+    private val poiSearchListener = object : PoiSearch.OnPoiSearchListener {
+        override fun onPoiSearched(result: PoiResult?, errorCode: Int) {
+            binding.etEnd.isEnabled = true
+            binding.btnCalculate.text = "计算路线"
+            binding.btnCalculate.isEnabled = true
+
+            if (errorCode != AMapException.CODE_AMAP_SUCCESS) {
+                val errorMsg = when (errorCode) {
+                    10001 -> "Key无效"
+                    12 -> "网络错误"
+                    27 -> "无搜索结果"
+                    else -> "错误码: $errorCode"
+                }
+                Toast.makeText(this@GreenTravelActivity, "搜索失败: $errorMsg", Toast.LENGTH_SHORT).show()
+                poiList = emptyList()
+                return
+            }
+
+            if (result == null || result.pois.isEmpty()) {
+                Toast.makeText(this@GreenTravelActivity, "未找到地点", Toast.LENGTH_SHORT).show()
+                poiList = emptyList()
+                return
+            }
+
+            // 过滤无效坐标的POI
+            poiList = result.pois.filter { poi ->
+                val point = poi.latLonPoint
+                point != null && point.latitude != 0.0 && point.longitude != 0.0
+            }
+
+            if (poiList.isNotEmpty()) {
+                showPoiListDialog()
+            } else {
+                Toast.makeText(this@GreenTravelActivity, "无有效地点", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {}
+    }
+
+    // 计算路线
+    private fun calculateRoute() {
+        if (!isValidPoint(startPoint) || !isValidPoint(endPoint)) {
+            Toast.makeText(this, "起点或终点无效", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val fromAndTo = RouteSearch.FromAndTo(startPoint, endPoint)
+        routeSearch = RouteSearch(this).apply {
+            setRouteSearchListener(this@GreenTravelActivity)
+            when (currentRouteType) {
+                RouteType.WALK -> calculateWalkRouteAsyn(RouteSearch.WalkRouteQuery(fromAndTo))
+                RouteType.RIDE -> calculateRideRouteAsyn(RouteSearch.RideRouteQuery(fromAndTo))
+                RouteType.BUS, RouteType.SUBWAY -> {
+                    val busMode =  RouteSearch.BUS_DEFAULT
+                    val busPolicy = RouteSearch.BUS_LEASE_CHANGE // 时间优先策略
+                    calculateBusRouteAsyn(
+                        RouteSearch.BusRouteQuery(fromAndTo, busMode, currentCity!!, busPolicy)
+                    )
+                }
             }
         }
     }
-//    override fun onLocationChanged(location: AMapLocation?) {
-//        binding.btnLocate.text = "重新定位"
-//        location?.let {
-//            if (it.errorCode == 0) {
-//                // 构建详细地址
-//                val addressBuilder = StringBuilder()
-//                if (!it.province.isNullOrEmpty()) addressBuilder.append(it.province)
-//                if (!it.city.isNullOrEmpty()) addressBuilder.append(it.city)
-//                if (!it.district.isNullOrEmpty()) addressBuilder.append(it.district)
-//                if (!it.street.isNullOrEmpty()) addressBuilder.append(it.street)
-//                if (!it.streetNum.isNullOrEmpty()) addressBuilder.append(it.streetNum)
-//
-//                val address = if (addressBuilder.isNotEmpty()) addressBuilder.toString() else "当前地址"
-//
-//                startPoint = LatLonPoint(it.latitude, it.longitude)
-//                startAddress = address
-//                currentLocation = LatLng(it.latitude, it.longitude)
-//
-//                // 更新UI显示具体位置
-//                binding.etStart.setText(address)
-//                binding.etStart.isEnabled = false
-//
-//                // 地图定位中心点移动
-//                aMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                    LatLng(it.latitude, it.longitude),
-//                    16f
-//                ))
-//
-//                // 添加起点标记
-//                startMarker?.remove()
-//                startMarker = aMap?.addMarker(MarkerOptions()
-//                    .position(currentLocation!!)
-//                    .title("起点")
-//                    .snippet(address)
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
-//
-//                Toast.makeText(this, "定位成功：$address", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(this, "定位失败：码${it.errorCode}，原因${it.errorInfo}", Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
 
+    // 计算两点距离（米）
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val earthRadius = 6371000.0
+        val dLat = toRadians(lat2 - lat1)
+        val dLon = toRadians(lon2 - lon1)
+        val a = sin(dLat / 2) * sin(dLat / 2) +
+                cos(toRadians(lat1)) * cos(toRadians(lat2)) *
+                sin(dLon / 2) * sin(dLon / 2)
+        return earthRadius * 2 * atan2(sqrt(a), sqrt(1 - a))
+    }
+
+    // 步行路线回调
+    override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
+        handleRouteError(errorCode) {
+            if (result?.paths?.isNotEmpty() == true) {
+                val path = result.paths[0]
+                drawWalkRoute(path)
+                showRouteInfo("步行", path.distance, path.duration)
+                // 生成路线描述
+                val description = generateWalkRouteDescription(path)
+                showRouteDetailDialog(description)
+                // 保存记录
+                saveTravelRecord(path.distance, path.duration, "walk")
+            } else {
+                Toast.makeText(this, "无步行路线", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // 骑行路线回调
+    override fun onRideRouteSearched(result: RideRouteResult?, errorCode: Int) {
+        handleRouteError(errorCode) {
+            if (result?.paths?.isNotEmpty() == true) {
+                val path = result.paths[0]
+                drawRideRoute(path)
+                showRouteInfo("骑行", path.distance, path.duration)
+                val description = generateRideRouteDescription(path)
+                showRouteDetailDialog(description)
+                saveTravelRecord(path.distance, path.duration, "ride")
+            } else {
+                Toast.makeText(this, "无骑行路线", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // 公交路线回调
+    override fun onBusRouteSearched(result: BusRouteResult?, errorCode: Int) {
+        handleRouteError(errorCode) {
+            if (result?.paths?.isNotEmpty() == true) {
+                val path = result.paths[0]
+                drawBusRoute(path)
+                val mode = if (currentRouteType == RouteType.SUBWAY) "地铁" else "公交"
+                showRouteInfo(mode, path.distance, path.duration)
+                val description = generateBusRouteDescription(path)
+                showRouteDetailDialog(description)
+                saveTravelRecord(path.distance, path.duration, if (currentRouteType == RouteType.SUBWAY) "subway" else "bus")
+            } else {
+                Toast.makeText(this, "无${if (currentRouteType == RouteType.SUBWAY) "地铁" else "公交"}路线", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onDriveRouteSearched(p0: DriveRouteResult?, p1: Int) {}
+
+    // 路线错误处理
+    private fun handleRouteError(errorCode: Int, onSuccess: () -> Unit) {
+        if (errorCode != AMapException.CODE_AMAP_SUCCESS) {
+            val errorMsg = when (errorCode) {
+                1201 -> "参数错误（缺少城市/策略）"
+                1901 -> "坐标无效"
+                1902 -> "无权限（检查Key）"
+                32 -> "无此路线"
+                else -> "错误码: $errorCode"
+            }
+            Toast.makeText(this, "${currentRouteType.name}路线失败: $errorMsg", Toast.LENGTH_SHORT).show()
+            return
+        }
+        onSuccess()
+    }
+
+    // 生成步行路线描述
+    private fun generateWalkRouteDescription(path: WalkPath): String {
+        val steps = path.steps
+        val description = StringBuilder("步行路线（${formatDistance(path.distance)}，${formatDuration(path.duration)}）\n\n")
+        steps.forEachIndexed { index, step ->
+            description.append("${index + 1}. ${getDirectionDescription(step.action)}，沿${step.road.ifEmpty { "当前道路" }}步行${formatDistance(step.distance)}\n")
+        }
+        description.append("${steps.size + 1}. 到达终点")
+        return description.toString()
+    }
+
+    // 生成骑行路线描述
+    private fun generateRideRouteDescription(path: RidePath): String {
+        val steps = path.steps
+        val description = StringBuilder("骑行路线（${formatDistance(path.distance)}，${formatDuration(path.duration)}）\n\n")
+        steps.forEachIndexed { index, step ->
+            description.append("${index + 1}. ${getDirectionDescription(step.action)}，沿${step.road.ifEmpty { "当前道路" }}骑行${formatDistance(step.distance)}\n")
+        }
+        description.append("${steps.size + 1}. 到达终点")
+        return description.toString()
+    }
+
+    // 生成公交路线描述
+    private fun generateBusRouteDescription(path: BusPath): String {
+        val steps = path.steps
+        val description = StringBuilder("${if (currentRouteType == RouteType.SUBWAY) "地铁" else "公交"}路线（${formatDistance(path.distance)}，${formatDuration(path.duration)}）\n\n")
+        steps.forEachIndexed { index, step ->
+            description.append("${index + 1}. ")
+            if (step is BusStep) {
+                step.walk?.let {
+                    description.append("步行${formatDistance(it.distance)}（${getDirectionDescription(it.toString())}），")
+                }
+                step.busLine?.let {
+                    description.append("乘坐${it.busLineName}，从${it.departureBusStation.busStationName}到${it.arrivalBusStation.busStationName}（${it.passStations.size + 1}站）\n")
+                }
+            }
+        }
+        description.append("${steps.size + 1}. 到达终点")
+        return description.toString()
+    }
+
+    // 方向描述转换
+    private fun getDirectionDescription(actionCode: String): String {
+        return when (actionCode) {
+            "0" -> "直行"
+            "1" -> "左转"
+            "2" -> "右转"
+            "3" -> "左前方转弯"
+            "4" -> "右前方转弯"
+            "5" -> "左后方转弯"
+            "6" -> "右后方转弯"
+            "7" -> "掉头"
+            else -> "直行"
+        }
+    }
+
+    // 格式化距离（米→公里）
+    private fun formatDistance(distance: Float): String {
+        return if (distance < 1000) "${distance.roundToInt()}米" else "${"%.1f".format(distance / 1000)}公里"
+    }
+
+    // 格式化时长（秒→分/小时）
+    private fun formatDuration(duration: Long): String {
+        val minutes = duration / 60
+        return if (minutes < 60) "${minutes}分钟" else "${minutes / 60}小时${minutes % 60}分钟"
+    }
+
+    // 显示路线详情对话框
+    private fun showRouteDetailDialog(description: String) {
+        val inflater = LayoutInflater.from(this)
+        val dialogBinding = DialogRouteDetailBinding.inflate(inflater)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setTitle("路线详情")
+            .setPositiveButton("确定") { d, _ -> d.dismiss() }
+            .create()
+        dialogBinding.routeDescription.text = description
+        dialog.show()
+    }
+
+    // 绘制步行路线
+    private fun drawWalkRoute(path: WalkPath) {
+        val points = mutableListOf<LatLng>()
+        path.steps.forEach { parsePolyline(it.polyline, points) }
+        drawPolyline(points, Color.BLUE)
+    }
+
+    // 绘制骑行路线
+    private fun drawRideRoute(path: RidePath) {
+        val points = mutableListOf<LatLng>()
+        path.steps.forEach { parsePolyline(it.polyline, points) }
+        drawPolyline(points, Color.GREEN)
+    }
+
+    // 绘制公交路线
+    private fun drawBusRoute(path: BusPath) {
+        val points = mutableListOf<LatLng>()
+        path.steps.forEach { step ->
+            if (step is BusStep) {
+                step.walk?.let { parsePolyline(it.polyline, points) }
+                step.busLine?.let { parsePolyline(it.polyline, points) }
+            }
+        }
+        drawPolyline(points, if (currentRouteType == RouteType.SUBWAY) Color.YELLOW else Color.RED)
+    }
+
+    // 绘制路线折线
+    private fun drawPolyline(points: List<LatLng>, color: Int) {
+        if (aMap == null || points.size < 2) return
+        routePolyline?.remove()
+        routePolyline = aMap!!.addPolyline(
+            PolylineOptions()
+                .addAll(points)
+                .width(12f)
+                .color(color)
+                .geodesic(true)
+        )
+        // 调整地图视角
+        val bounds = LatLngBounds.Builder().apply { points.forEach { include(it) } }.build()
+        aMap!!.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+    }
+
+    // 解析坐标点
+    private fun parsePolyline(polyline: List<LatLonPoint>, points: MutableList<LatLng>) {
+        polyline.forEach { points.add(LatLng(it.latitude, it.longitude)) }
+    }
+
+    // 显示路线信息（距离、耗时）
+    private fun showRouteInfo(mode: String, distance: Float, duration: Long) {
+        binding.cardResult.visibility = View.VISIBLE
+        binding.tvDistanceResult.text = "距离：${"%.2f".format(distance / 1000)} 公里"
+        binding.tvCarbonResult.text = "${mode}耗时：${formatDuration(duration)}"
+    }
+
+    // 保存出行记录、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+    private fun saveTravelRecord(distance: Float, duration: Long, mode: String) {
+        try {
+            val currentRecord = TravelRecordManager.getRecords()
+            val carbonCount = calculateCarbon(mode, distance)
+
+            // 创建新记录项
+            val newItem = ItemTravelRecord(
+                travelModel = mode,
+                travelRoute = "${binding.etStart.text} → ${binding.etEnd.text}",
+                carbonCount = carbonCount.toString(),
+                distance = "%.2f".format(distance / 1000),
+                time = System.currentTimeMillis(),
+                modelRavel = when (mode) {
+                    "walk" -> R.drawable.walk
+                    "ride" -> R.drawable.bike
+                    "bus" -> R.drawable.bus
+                    "subway" -> R.drawable.subway
+                    else -> R.drawable.walk
+                }
+            )
+
+            // 计算总碳减排（安全转换）
+            val currentTotalCarbon = currentRecord.totalCarbon.toDoubleOrNull() ?: 0.0
+            val newTotalCarbon = currentTotalCarbon + carbonCount
+
+            // 计算今日碳减排（安全转换）
+            val todayCarbon = calculateTodayCarbon(currentRecord, newItem, carbonCount)
+
+            // 计算碳积分（安全转换）
+            val newPoints = (newTotalCarbon / 100).toInt().toString()
+
+            // 更新记录（确保userId不为空）
+            val updatedRecord = currentRecord.copy(
+                userId = currentRecord.userId.ifEmpty { "default_user" },
+                totalCarbon = "%.2f".format(newTotalCarbon),
+                todayCarbon = todayCarbon,
+                carbonPoint = newPoints,
+                list = listOf(newItem) + currentRecord.list.take(19)
+            )
+
+            // 保存记录
+            TravelRecordManager.saveRecord(updatedRecord)
+            refreshTravelRecordUI()
+        } catch (e: Exception) {
+            Log.e(TAG, "保存记录失败: ${e.message}", e)
+            Toast.makeText(this, "记录保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // 计算碳减排量（g）
+    private fun calculateCarbon(mode: String, distance: Float): Int {
+        // 参考值：不同出行方式相比自驾的碳减排量（每公里）
+        return when (mode) {
+            "walk", "ride" -> (distance * 150).roundToInt() // 步行/骑行：约150g/公里
+            "bus" -> (distance * 80).roundToInt() // 公交：约80g/公里
+            "subway" -> (distance * 100).roundToInt() // 地铁：约100g/公里
+            else -> 0
+        }
+    }
+
+    // 计算今日碳减排
+    private fun calculateTodayCarbon(
+        currentRecord: TravelRecord,
+        newItem: ItemTravelRecord,
+        newCarbon: Int
+    ): String {
+        val todayStart = System.currentTimeMillis() - (System.currentTimeMillis() % (24 * 60 * 60 * 1000))
+        val todayTotal = currentRecord.list
+            .filter { it.time >= todayStart }
+            .sumOf { it.carbonCount.toIntOrNull() ?: 0 } + newCarbon
+        return "%.2f".format(todayTotal.toDouble())
+    }
+
+    // 权限检查
+    private fun hasLocationPermission() = ContextCompat.checkSelfPermission(
+        this, Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+
+    // 请求权限
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
+    }
+
+    // 权限回调
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -414,335 +782,11 @@ class GreenTravelActivity : AppCompatActivity(),
         if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startLocation()
         } else {
-            Toast.makeText(this, "需要定位权限才能获取精确起点", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "需要定位权限", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // ====================== 5. POI搜索 ======================
-    private fun searchPOI(keyword: String) {
-        val query = PoiSearch.Query(keyword, "", currentCity)
-        query.pageSize = 10
-        query.pageNum = 1
-
-        poiSearch = PoiSearch(this, query).apply {
-            setOnPoiSearchListener(this@GreenTravelActivity)
-            searchPOIAsyn()
-        }
-    }
-
-    override fun onPoiSearched(result: PoiResult?, errorCode: Int) {
-        if (errorCode == AMapException.CODE_AMAP_SUCCESS && result != null && result.pois.isNotEmpty()) {
-            val firstPoi = result.pois[0]
-            endPoint = firstPoi.latLonPoint
-            endAddress = firstPoi.title
-            binding.etEnd.setText(firstPoi.title)
-
-            // 添加终点标记
-            endMarker?.remove()
-            endMarker = aMap?.addMarker(MarkerOptions()
-                .position(LatLng(firstPoi.latLonPoint.latitude, firstPoi.latLonPoint.longitude))
-                .title("目的地")
-                .snippet(endAddress)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-
-            // 地图移动到终点
-            aMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                LatLng(firstPoi.latLonPoint.latitude, firstPoi.latLonPoint.longitude),
-                16f
-            ))
-
-            Toast.makeText(this, "搜索成功：${firstPoi.title}", Toast.LENGTH_SHORT).show()
-        } else {
-            val errorMsg = when(errorCode) {
-                10001 -> "Key无效（检查高德配置）"
-                12 -> "网络错误（请检查网络）"
-                27 -> "无搜索结果（尝试更精确的关键词）"
-                else -> "搜索失败：错误码$errorCode"
-            }
-            Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {}
-
-    // ====================== 6. 路线规划 ======================
-    private fun calculateRoute() {
-        if (startPoint == null || endPoint == null) return
-
-        // 清除旧路线
-        clearRoute()
-
-        val fromAndTo = RouteSearch.FromAndTo(startPoint, endPoint)
-
-        try {
-            when (currentMode) {
-                RouteType.BUS -> {
-                    val query = RouteSearch.BusRouteQuery(fromAndTo, RouteSearch.BUS_DEFAULT, currentCity, 0)
-                    routeSearch = RouteSearch(this).apply {
-                        setRouteSearchListener(this@GreenTravelActivity)
-                        calculateBusRouteAsyn(query)
-                    }
-                }
-                RouteType.RIDE -> {
-                    val query = RouteSearch.RideRouteQuery(fromAndTo)
-                    routeSearch = RouteSearch(this).apply {
-                        setRouteSearchListener(this@GreenTravelActivity)
-                        calculateRideRouteAsyn(query)
-                    }
-                }
-                RouteType.WALK -> {
-                    val query = RouteSearch.WalkRouteQuery(fromAndTo)
-                    routeSearch = RouteSearch(this).apply {
-                        setRouteSearchListener(this@GreenTravelActivity)
-                        calculateWalkRouteAsyn(query)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            binding.btnCalculate.text = "计算路线"
-            binding.btnCalculate.isEnabled = true
-            Toast.makeText(this, "路线计算失败：${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // 清除旧路线
-    private fun clearRoute() {
-        routePolyline?.remove()
-        routePolyline = null
-    }
-
-    // ====================== 7. 路线回调处理 ======================
-    override fun onBusRouteSearched(result: BusRouteResult?, errorCode: Int) {
-        handleRouteResult(result, errorCode, "公交")
-    }
-
-    override fun onRideRouteSearched(result: RideRouteResult?, errorCode: Int) {
-        handleRouteResult(result, errorCode, "骑行")
-    }
-
-    override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
-        handleRouteResult(result, errorCode, "步行")
-    }
-
-    override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {}
-
-    private fun <T : RouteResult> handleRouteResult(result: T?, errorCode: Int, mode: String) {
-        binding.btnCalculate.text = "计算路线"
-        binding.btnCalculate.isEnabled = true
-
-        if (errorCode == AMapException.CODE_AMAP_SUCCESS && result != null) {
-            when (result) {
-                is BusRouteResult -> {
-                    if (result.paths.isNotEmpty()) {
-                        realDistance = result.paths[0].distance / 1000.0
-                        showRouteResult(mode, realDistance)
-
-                        // 绘制两点连线
-                        drawStraightLine(
-                            start = LatLng(startPoint!!.latitude, startPoint!!.longitude),
-                            end = LatLng(endPoint!!.latitude, endPoint!!.longitude),
-                            color = Color.BLUE
-                        )
-                    } else {
-                        Toast.makeText(this, "未找到${mode}路线", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is RideRouteResult -> {
-                    if (result.paths.isNotEmpty()) {
-                        realDistance = result.paths[0].distance / 1000.0
-                        showRouteResult(mode, realDistance)
-
-                        // 绘制两点连线
-                        drawStraightLine(
-                            start = LatLng(startPoint!!.latitude, startPoint!!.longitude),
-                            end = LatLng(endPoint!!.latitude, endPoint!!.longitude),
-                            color = Color.GREEN
-                        )
-                    } else {
-                        Toast.makeText(this, "未找到${mode}路线", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is WalkRouteResult -> {
-                    if (result.paths.isNotEmpty()) {
-                        realDistance = result.paths[0].distance / 1000.0
-                        showRouteResult(mode, realDistance)
-
-                        // 绘制两点连线
-                        drawStraightLine(
-                            start = LatLng(startPoint!!.latitude, startPoint!!.longitude),
-                            end = LatLng(endPoint!!.latitude, endPoint!!.longitude),
-                            color = Color.MAGENTA
-                        )
-                    } else {
-                        Toast.makeText(this, "未找到${mode}路线", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        } else {
-            val errorMsg = when(errorCode) {
-                10001 -> "Key无效（检查高德配置）"
-                12 -> "网络错误（请检查网络）"
-                32 -> "无此路线（尝试更短距离或更换目的地）"
-                else -> "${mode}路线规划失败：错误码$errorCode"
-            }
-            Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // 绘制两点间的直线
-    private fun drawStraightLine(start: LatLng, end: LatLng, color: Int) {
-        routePolyline?.remove()
-
-        val polylineOptions = PolylineOptions()
-            .add(start)
-            .add(end)
-            .color(color)
-            .width(10f)
-            .geodesic(true)
-        routePolyline = aMap?.addPolyline(polylineOptions)
-    }
-
-    private fun showRouteResult(mode: String, distance: Double) {
-        binding.cardResult.visibility = View.VISIBLE
-        binding.tvDistanceResult.text = "距离：${String.format("%.2f", distance)} km"
-        val carbon = calculateCarbonEmission(mode, distance)
-        binding.tvCarbonResult.text = "预计减碳：${String.format("%.2f", carbon)} kg"
-    }
-
-    // ====================== 8. 记录出行 ======================
-    @SuppressLint("NewApi")
-    private fun recordTravel(mode: String) {
-        if (realDistance == 0.0) {
-            Toast.makeText(this, "请先计算路线", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val carbonEmission = calculateCarbonEmission(mode, realDistance)
-        val newRecord = ItemTravelRecord(
-            travelModel = mode,
-            travelRoute = "$startAddress→$endAddress",
-            carbonCount = "${String.format("%.2f", carbonEmission)} kg",
-            distance = "${String.format("%.2f", realDistance)} km",
-            time = System.currentTimeMillis(), // 使用当前时间戳
-            modelRavel = getIconResId(mode)
-        )
-
-        saveToCache(newRecord, carbonEmission)
-        updateUI()
-
-        // 清空搜索状态
-        binding.etEnd.setText("")
-        endPoint = null
-        endAddress = "未知终点"
-        binding.cardResult.visibility = View.GONE
-        realDistance = 0.0
-
-        // 清除地图标记
-        clearRoute()
-        endMarker?.remove()
-        endMarker = null
-
-        Toast.makeText(
-            this,
-            "记录成功：${mode} ${String.format("%.2f", realDistance)}km 减碳${String.format("%.2f", carbonEmission)}kg",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    // ====================== 9. 辅助方法 ======================
-    private fun calculateCarbonEmission(mode: String, distance: Double): Double {
-        return when (mode) {
-            "公交" -> distance * 0.12
-            "骑行", "步行" -> 0.0
-            else -> distance * 0.1
-        }
-    }
-
-    private fun getIconResId(mode: String): Int {
-        return when (mode) {
-            "公交" -> R.drawable.ic_bus
-            "骑行" -> R.drawable.ic_bike
-            "步行" -> R.drawable.ic_walk
-            else -> R.drawable.green_go_navigation
-        }
-    }
-
-    private fun updateUI() {
-        // 更新列表
-        travelList = travelRecord.list.sortedByDescending { it.time }
-        (binding.recyclerViewTravelRecord.adapter as? TravelRecordAdapter)?.notifyDataSetChanged()
-
-        val totalCarbon = travelRecord.totalCarbon.toDoubleOrNull() ?: 0.0
-        binding.tvTotalCarbon.text = String.format("%.1f kg", totalCarbon)
-        binding.tvCarbonPoints.text = "${(totalCarbon * 10).toInt()} 积分"
-
-        val todayCarbon = travelRecord.todayCarbon.toDoubleOrNull() ?: 0.0
-        binding.tvTodayCarbon.text = String.format("今日减碳 %.1f kg", todayCarbon)
-    }
-
-    private fun isToday(timestamp: Long): Boolean {
-        val cal = Calendar.getInstance().apply { timeInMillis = timestamp }
-        val today = Calendar.getInstance()
-        return cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-                cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
-    }
-
-    private fun saveToCache(newRecord: ItemTravelRecord, carbonEmission: Double) {
-        val oldTotal = travelRecord.totalCarbon.toDoubleOrNull() ?: 0.0
-        val newTotal = oldTotal + carbonEmission
-        val newPoints = "${(newTotal * 10).toInt()}"
-
-        val oldToday = travelRecord.todayCarbon.toDoubleOrNull() ?: 0.0
-        val newToday = if (isToday(newRecord.time)) oldToday + carbonEmission else oldToday
-
-        val newList = mutableListOf(newRecord).apply { addAll(travelRecord.list) }
-
-        travelRecord = TravelRecord(
-            userId = travelRecord.userId,
-            totalCarbon = String.format("%.1f", newTotal),
-            todayCarbon = String.format("%.1f", newToday),
-            carbonPoint = newPoints,
-            list = newList
-        )
-
-        TravelRecordManager.saveRecord(travelRecord)
-    }
-
-    private fun getData(): TravelRecord {
-        // 使用示例时间（2025-07-11 10:11）
-        val sampleTime = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA)
-            .parse("2025-07-11 10:11")?.time ?: System.currentTimeMillis()
-
-        return TravelRecord(
-            userId = "USER_001",
-            totalCarbon = "3.3",
-            todayCarbon = "2.1",
-            carbonPoint = "33",
-            list = listOf(
-                ItemTravelRecord(
-                    travelModel = "公交",
-                    travelRoute = "湖南省岳阳市XX路→长沙理工大学",
-                    carbonCount = "2.1 kg",
-                    distance = "17.5 km",
-                    time = sampleTime,
-                    modelRavel = R.drawable.ic_bus
-                )
-            )
-        )
-    }
-
-    private fun shareCarbonAchievement() {
-        val totalCarbon = binding.tvTotalCarbon.text.toString()
-        val shareText = "我已减少${totalCarbon}碳排放，一起环保！"
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("share_content", shareText)
-            putExtra("navigate_to_community", true)
-        }
-        startActivity(intent)
-        finish()
-    }
-
-    // ====================== 10. 生命周期管理 ======================
+    // 生命周期管理
     override fun onResume() {
         super.onResume()
         mapView.onResume()

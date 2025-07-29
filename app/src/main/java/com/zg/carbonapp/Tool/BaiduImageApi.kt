@@ -41,7 +41,7 @@ object BaiduImageApi {
                 callback(null)
             }
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()
+                val body = response.body
                 if (body == null) {
                     Log.e(TAG, "accessToken响应体为空")
                     callback(null)
@@ -87,7 +87,7 @@ object BaiduImageApi {
                     callback(null)
                 }
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body()
+                    val body = response.body
                     if (body == null) {
                         Log.e(TAG, "识别响应体为空")
                         callback(null)

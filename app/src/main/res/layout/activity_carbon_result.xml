@@ -2,83 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:orientation="vertical"
-	android:padding="16dp"
-	android:background="@color/white">
+	android:padding="16dp">
 
-	<!-- 商品信息卡片 -->
-	<com.google.android.material.card.MaterialCardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="16dp"
-		app:cardCornerRadius="12dp"
-		app:cardElevation="4dp"
-		>
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:padding="16dp">
-
-			<TextView
-				android:id="@+id/tvProductName"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="蒙牛纯牛奶"
-				android:textColor="@color/green_dark"
-				android:textSize="20sp"
-				android:textStyle="bold"/>
-
-			<TextView
-				android:id="@+id/tvProductCategory"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="类别：乳制品"
-				android:textColor="@color/green_dark"
-				android:textSize="14sp"
-				android:layout_marginTop="4dp"/>
-
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:layout_marginTop="12dp"
-				android:gravity="center_vertical">
-
-				<ImageView
-					android:layout_width="24dp"
-					android:layout_height="24dp"
-					android:src="@drawable/x1_carbon_footprint"
-					android:contentDescription="碳足迹图标"/>
-
-				<TextView
-					android:id="@+id/tvCarbonFootprint"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="碳足迹：1.2 kgCO₂e/kg"
-					android:textColor="@color/green_dark"
-					android:textSize="18sp"
-					android:layout_marginStart="8dp"/>
-			</LinearLayout>
-		</LinearLayout>
-	</com.google.android.material.card.MaterialCardView>
-
-	<!-- 低碳替代推荐 -->
 	<TextView
+		android:id="@+id/tvProductName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="低碳替代推荐"
-		android:textColor="@color/green_dark"
-		android:textSize="18sp"
+		android:text="产品名称"
+		android:textSize="24sp"
 		android:textStyle="bold"
-		android:layout_marginBottom="8dp"/>
+		android:layout_marginBottom="16dp"/>
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/rvAlternatives"
+	<TextView
+		android:id="@+id/tvCarbonEmission"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"/>
+		android:layout_height="wrap_content"
+		android:text="碳排放量: 0.00 kg"
+		android:textSize="18sp"
+		android:layout_marginBottom="16dp"/>
+
+	<TextView
+		android:id="@+id/tvLifecycle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="生命周期: ..."
+		android:textSize="16sp"
+		android:layout_marginBottom="16dp"/>
+
+	<TextView
+		android:id="@+id/tvSource"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="数据来源: ..."
+		android:textSize="16sp"
+		android:layout_marginBottom="16dp"/>
+
+	<TextView
+		android:id="@+id/tvSuggestion"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="减碳建议: ..."
+		android:textSize="16sp"
+		android:layout_marginBottom="32dp"/>
+
+	<Button
+		android:id="@+id/btnAddToLedger"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:text="加入碳账本"
+		android:textSize="18sp"
+		android:backgroundTint="@color/purple_500"
+		android:textColor="@android:color/white"/>
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
+import com.zg.carbonapp.Entity.CarbonFootprint
 import java.util.Calendar
 
 class CarbonFootprintActivity : AppCompatActivity() {
@@ -182,7 +183,7 @@ class CarbonFootprintActivity : AppCompatActivity() {
             
             // 设置树木数量点击事件，跳转到种树页面
             binding.tvTreeCount.setOnClickListener {
-                val intent = Intent(this, PlantTreeActivity::class.java)
+                val intent = Intent(this,CarbonFootprintActivity::class.java)
                 startActivity(intent)
             }
             
@@ -248,9 +249,6 @@ class CarbonFootprintActivity : AppCompatActivity() {
         )
     }
 
-    /**
-     * 界面销毁时释放传感器资源
-     */
     override fun onDestroy() {
         super.onDestroy()
         sensorManager.releaseSensors()

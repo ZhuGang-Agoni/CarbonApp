@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zg.carbonapp.Activity.BarcodeScannerActivity
 import com.zg.carbonapp.R
 import com.zg.carbonapp.Activity.CarbonFootprintActivity
 import com.zg.carbonapp.Activity.ElectricitySavingActivity
 import com.zg.carbonapp.Activity.GreenTravelActivity
 import com.zg.carbonapp.Activity.GarbageSortActivity
+import com.zg.carbonapp.Activity.SortLabelActivity
 
 import com.zg.carbonapp.Adapter.ChallengeCardAdapter
 
@@ -48,7 +48,7 @@ class ChallengeFragment : Fragment() {
                 1 -> Intent(requireContext(), GreenTravelActivity::class.java)
                 2 -> Intent(requireContext(), GarbageSortActivity::class.java)
                 3 -> Intent(requireContext(), ElectricitySavingActivity::class.java)
-                4 -> Intent(requireContext(), BarcodeScannerActivity::class.java)
+                4 -> Intent(requireContext(),SortLabelActivity::class.java)
                 else -> null
             }
             intent?.let { startActivity(it) }

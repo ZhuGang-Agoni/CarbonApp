@@ -55,10 +55,10 @@
                     android:id="@+id/ivRefresh"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/refresh"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/refresh" />
             </RelativeLayout>
 
             <!-- 碳账户概览卡片 -->
@@ -307,145 +307,195 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- 四个出行方式卡片按钮 -->
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/travelModeGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardBus"
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/walkRadio"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/green_dark"
-                    app:strokeWidth="1dp">
+                    android:checked="true"
+                    android:text="步行"
+                    android:textColor="@color/text_primary"
+                    app:icon="@drawable/walk"
+                    app:iconGravity="top"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:src="@drawable/ic_bus" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="公交"
-                            android:textColor="@color/green_dark"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardBike"
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/bikeRadio"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/green_dark"
-                    app:strokeWidth="1dp">
+                    android:text="骑行"
+                    android:textColor="@color/text_primary"
+                    app:icon="@drawable/bike"
+                    app:iconGravity="top"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:src="@drawable/ic_bike" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="骑行"
-                            android:textColor="@color/green_dark"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardMetro"
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/busRadio"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/green_dark"
-                    app:strokeWidth="1dp">
+                    android:text="公交"
+                    android:textColor="@color/text_primary"
+                    app:icon="@drawable/bus"
+                    app:iconGravity="top"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:src="@drawable/ic_metro" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="地铁"
-                            android:textColor="@color/green_dark"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardWalk"
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/subwayRadio"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="@android:color/white"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/green_dark"
-                    app:strokeWidth="1dp">
+                    android:text="地铁"
+                    android:textColor="@color/text_primary"
+                    app:icon="@drawable/subway"
+                    app:iconGravity="top"/>
+            </RadioGroup>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:src="@drawable/ic_walk" />
+    <!-- 四个出行方式卡片按钮 -->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="步行"
-                            android:textColor="@color/green_dark"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/cardBus"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="@android:color/white"-->
+<!--                    app:cardCornerRadius="12dp"-->
+<!--                    app:cardElevation="4dp"-->
+<!--                    app:strokeColor="@color/green_dark"-->
+<!--                    app:strokeWidth="1dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="36dp"-->
+<!--                            android:layout_height="36dp"-->
+<!--                            android:src="@drawable/ic_bus" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="4dp"-->
+<!--                            android:text="公交"-->
+<!--                            android:textColor="@color/green_dark"-->
+<!--                            android:textSize="14sp" />-->
+<!--                    </LinearLayout>-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/cardBike"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="@android:color/white"-->
+<!--                    app:cardCornerRadius="12dp"-->
+<!--                    app:cardElevation="4dp"-->
+<!--                    app:strokeColor="@color/green_dark"-->
+<!--                    app:strokeWidth="1dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="36dp"-->
+<!--                            android:layout_height="36dp"-->
+<!--                            android:src="@drawable/ic_bike" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="4dp"-->
+<!--                            android:text="骑行"-->
+<!--                            android:textColor="@color/green_dark"-->
+<!--                            android:textSize="14sp" />-->
+<!--                    </LinearLayout>-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/cardMetro"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="@android:color/white"-->
+<!--                    app:cardCornerRadius="12dp"-->
+<!--                    app:cardElevation="4dp"-->
+<!--                    app:strokeColor="@color/green_dark"-->
+<!--                    app:strokeWidth="1dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="36dp"-->
+<!--                            android:layout_height="36dp"-->
+<!--                            android:src="@drawable/ic_metro" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="4dp"-->
+<!--                            android:text="地铁"-->
+<!--                            android:textColor="@color/green_dark"-->
+<!--                            android:textSize="14sp" />-->
+<!--                    </LinearLayout>-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/cardWalk"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="@android:color/white"-->
+<!--                    app:cardCornerRadius="12dp"-->
+<!--                    app:cardElevation="4dp"-->
+<!--                    app:strokeColor="@color/green_dark"-->
+<!--                    app:strokeWidth="1dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="36dp"-->
+<!--                            android:layout_height="36dp"-->
+<!--                            android:src="@drawable/ic_walk" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="4dp"-->
+<!--                            android:text="步行"-->
+<!--                            android:textColor="@color/green_dark"-->
+<!--                            android:textSize="14sp" />-->
+<!--                    </LinearLayout>-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+<!--            </LinearLayout>-->
 
             <!-- 出行记录标题 -->
             <TextView

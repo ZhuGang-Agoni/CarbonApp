@@ -9,6 +9,7 @@ import com.zg.carbonapp.Fragment.ChallengeFragment
 import com.zg.carbonapp.Fragment.CommunityFragment
 import com.zg.carbonapp.Fragment.DataAnalyseFragment
 import com.zg.carbonapp.Fragment.ImFragment
+import com.zg.carbonapp.Fragment.MainHomeFragment
 import com.zg.carbonapp.R
 import com.zg.carbonapp.databinding.ActivityMainBinding
 
@@ -50,13 +51,13 @@ class MainActivity : AppCompatActivity() {
     private fun initTableLayout() {
         // 动态添加 tabs
         val askTab = tabLayout.newTab().setIcon(R.drawable.ic_ai_assistant).setText("低碳ai助手")
-        val challengeTab = tabLayout.newTab().setIcon(R.drawable.ic_challenge).setText("减排挑战")
+        val mainHomeTab = tabLayout.newTab().setIcon(R.drawable.main_home2).setText("主页")
         val communityTab = tabLayout.newTab().setIcon(R.drawable.ic_community).setText("碳社区")
-        val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的主页")
+        val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的")
         val dataTab = tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
 
         // 按指定顺序添加Tabs
-        tabLayout.addTab(challengeTab)  // position 0
+        tabLayout.addTab(mainHomeTab)  // position 0
         tabLayout.addTab(dataTab)       // position 1
         tabLayout.addTab(askTab)        // position 2 (默认选中)
         tabLayout.addTab(communityTab)  // position 3
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
                 val fragment = fragments.getOrPut(tab.position) {
                     when (tab.position) {
-                        0 -> ChallengeFragment()
+                        0 -> MainHomeFragment()
                         1 -> DataAnalyseFragment()
                         2 -> AskFragment()
                         3 -> CommunityFragment()
