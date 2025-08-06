@@ -321,7 +321,31 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="碳足迹计算"
-						android:layout_marginTop="8dp"/>
+						android:layout_marginTop="8dp"
+						android:textColor="@color/primary_text"
+						android:textSize="14sp"/>
+				</LinearLayout>
+
+				<!-- 新增：低碳VR场景功能 -->
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:orientation="vertical"
+					android:padding="8dp">
+					<ImageView
+						android:layout_width="48dp"
+						android:layout_height="48dp"
+						android:src="@drawable/vr"
+					android:contentDescription="低碳VR场景"/>
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="低碳VR场景"
+						android:layout_marginTop="8dp"
+						android:textColor="@color/primary_text"
+						android:textSize="14sp"/>
 				</LinearLayout>
 
 				<LinearLayout
@@ -339,18 +363,12 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="更多功能"
-						android:layout_marginTop="8dp"/>
+						android:layout_marginTop="8dp"
+						android:textColor="@color/primary_text"
+						android:textSize="14sp"/>
 				</LinearLayout>
 
-				<!-- 空白占位，保持4列结构 -->
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:gravity="center"
-					android:orientation="vertical"
-					android:padding="8dp"/>
-
+				<!-- 保留一个空白占位，维持4列结构 -->
 				<LinearLayout
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -361,20 +379,37 @@
 			</LinearLayout>
 		</LinearLayout>
 
-		<!-- 推荐内容标题 -->
-		<TextView
-			android:id="@+id/recommendationTitle"
-			android:layout_width="wrap_content"
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/knowledgeHeader"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="16dp"
 			android:layout_marginTop="24dp"
-			android:text="低碳知识"
-			android:textColor="@color/primary_text"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/functionGrid"
-			/>
+			app:layout_constraintTop_toBottomOf="@id/functionGrid">
+
+			<TextView
+				android:id="@+id/recommendationTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="低碳知识"
+				android:textColor="@color/primary_text"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"/>
+
+			<ImageView
+				android:id="@+id/updateIcon"
+				android:layout_width="24dp"
+				android:layout_height="24dp"
+				android:layout_marginStart="280dp"
+				android:src="@drawable/refresh"
+				app:layout_constraintStart_toEndOf="@id/recommendationTitle"
+				app:layout_constraintTop_toTopOf="@id/recommendationTitle"
+				app:layout_constraintBottom_toBottomOf="@id/recommendationTitle"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 		<!-- 低碳知识滚动区域，用RecyclerView -->
@@ -386,7 +421,7 @@
 			android:paddingStart="16dp"
 			android:paddingEnd="16dp"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-			app:layout_constraintTop_toBottomOf="@id/recommendationTitle" />
+			app:layout_constraintTop_toBottomOf="@+id/knowledgeHeader" />
 
 		<!-- 活动推荐标题 -->
 		<TextView
@@ -402,6 +437,7 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/lowCarbonKnowledgeRv" />
 
+
 		<!-- 活动推荐卡片 -->
 		<androidx.cardview.widget.CardView
 			android:id="@+id/activityCard"
@@ -411,72 +447,72 @@
 			android:layout_marginEnd="16dp"
 			android:layout_marginTop="16dp"
 			android:layout_marginBottom="32dp"
-		app:cardBackgroundColor="@color/card_background"
-		app:cardCornerRadius="16dp"
-		app:cardElevation="4dp"
-		app:layout_constraintTop_toBottomOf="@id/activityTitle">
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
-
-			<ImageView
-				android:layout_width="match_parent"
-				android:layout_height="160dp"
-				android:scaleType="centerCrop"
-				android:src="@drawable/go" />
+			app:cardBackgroundColor="@color/card_background"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="4dp"
+			app:layout_constraintTop_toBottomOf="@id/activityTitle">
 
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:padding="16dp">
+				android:orientation="vertical">
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="160dp"
+					android:scaleType="centerCrop"
+					android:src="@drawable/go" />
 
 				<LinearLayout
-					android:layout_width="0dp"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:orientation="vertical">
+					android:orientation="horizontal"
+					android:padding="16dp">
 
-					<TextView
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="城市骑行日"
+							android:textColor="@color/primary_text"
+							android:textSize="16sp"
+							android:textStyle="bold" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="8dp"
+							android:text="3月22日 | 9:00-16:00"
+							android:textColor="@color/secondary_text"
+							android:textSize="14sp" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="4dp"
+							android:text="市中心集合点"
+							android:textColor="@color/secondary_text"
+							android:textSize="14sp" />
+					</LinearLayout>
+
+					<Button
+						android:id="@+id/registerButton"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="城市骑行日"
-						android:textColor="@color/primary_text"
-						android:textSize="16sp"
-						android:textStyle="bold" />
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="8dp"
-						android:text="3月22日 | 9:00-16:00"
-						android:textColor="@color/secondary_text"
-						android:textSize="14sp" />
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="4dp"
-						android:text="市中心集合点"
-						android:textColor="@color/secondary_text"
-						android:textSize="14sp" />
+						android:layout_gravity="center_vertical"
+						android:backgroundTint="@color/blue"
+						android:text="报名参加"
+						android:textColor="@color/white"
+						android:textSize="14sp"
+						app:cornerRadius="16dp" />
 				</LinearLayout>
-
-				<Button
-					android:id="@+id/registerButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:backgroundTint="@color/blue"
-				android:text="报名参加"
-				android:textColor="@color/white"
-				android:textSize="14sp"
-				app:cornerRadius="16dp" />
 			</LinearLayout>
-		</LinearLayout>
-	</androidx.cardview.widget.CardView>
+		</androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-	</ScrollView>
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

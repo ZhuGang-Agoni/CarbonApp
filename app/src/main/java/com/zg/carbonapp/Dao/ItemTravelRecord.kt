@@ -4,7 +4,7 @@ package com.zg.carbonapp.Dao
 data class ItemTravelRecord(
     val travelModel:String,
     val travelRoute:String,
-    val carbonCount:String,//这个是碳排放量
+    val carbonCount:String,//这个是当天碳排放量
     val distance:String,
     val time:Long,
     val modelRavel:Int)

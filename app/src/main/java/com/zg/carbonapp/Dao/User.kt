@@ -10,7 +10,7 @@ data class User(val userId:String,
                 val userQQ:String,
                 val userTelephone:String,
                 var signature: String="",
-                val carbonCount:Int,
+                var carbonCount:Int,
                 val surePassword:Int=1234
 ){
     fun copy(): User {

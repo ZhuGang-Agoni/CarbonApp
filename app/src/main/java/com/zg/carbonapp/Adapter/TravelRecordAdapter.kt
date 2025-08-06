@@ -18,7 +18,7 @@ class TravelRecordAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<TravelRecordAdapter.ViewHolder>() {
 
-    // 时间格式化工具（优化为单例模式，线程安全）
+    // 时间格式化工具
     private val dateFormat by lazy {
         SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA)
     }
@@ -41,30 +41,20 @@ class TravelRecordAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recordList[position]
 
-        // 设置出行方式图标
-        holder.ivModeIcon.setImageResource(
-            item.modelRavel)
-
-        holder.tvModeName.text = getTravelModeName(item.travelModel)
-        holder.tvCarbonCount.text = "${item.carbonCount} g"
-        holder.tvDistance.text = "${item.distance} km"
-
-        // 格式化时间显示
-        holder.tvTime.text = dateFormat.format(Date(item.time))
-
-        // 显示路线（起点→终点）
-        holder.tvAddress.text = item.travelRoute
-    }
-
-    // 将出行方式代码转换为中文名称
-    private fun getTravelModeName(modeCode: String): String {
-        return when (modeCode) {
-            "walk" -> "步行"
-            "ride" -> "骑行"
-            "bus" -> "公交"
-            "subway" -> "地铁"
-            else -> modeCode
+        // 关键修复：设置图片前先校验资源有效性
+        try {
+            // 使用保存的图片资源ID设置图标
+            holder.ivModeIcon.setImageResource(item.modelRavel)
+        } catch (e: Exception) {
+            // 异常处理：如果资源无效，使用默认图标
+            holder.ivModeIcon.setImageResource(R.drawable.walk)
         }
+
+        holder.tvModeName.text = item.travelModel // 直接使用已转换的中文名称
+        holder.tvCarbonCount.text = "减碳 ${item.carbonCount}g"
+        holder.tvDistance.text = item.distance // 直接使用格式化好的距离（如"1.2公里"）
+        holder.tvTime.text = dateFormat.format(Date(item.time))
+        holder.tvAddress.text = item.travelRoute
     }
 
     // 更新数据列表
@@ -74,14 +64,12 @@ class TravelRecordAdapter(
             override fun getNewListSize(): Int = newList.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                // 使用时间戳作为唯一标识判断是否是同一个Item
                 return recordList[oldItemPosition].time == newList[newItemPosition].time
             }
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val oldItem = recordList[oldItemPosition]
                 val newItem = newList[newItemPosition]
-                // 比较所有字段是否相同
                 return oldItem.travelModel == newItem.travelModel &&
                         oldItem.carbonCount == newItem.carbonCount &&
                         oldItem.distance == newItem.distance &&
@@ -89,7 +77,6 @@ class TravelRecordAdapter(
             }
         })
 
-        // 更新数据并应用差异
         recordList = newList
         diffResult.dispatchUpdatesTo(this)
     }

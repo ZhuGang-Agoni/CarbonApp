@@ -7,13 +7,11 @@
     android:orientation="vertical"
     android:background="@color/gray_light">
 
-
-    <com.amap.api.maps.MapView
-        android:id="@+id/mapView"
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:visibility="visible"
-	  />
+        android:visibility="visible" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -242,6 +240,7 @@
                         android:backgroundTint="@color/green_dark"
                         android:text="计算路线"
                         android:textColor="@android:color/white" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -346,13 +345,13 @@
                     app:iconGravity="top"/>
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/subwayRadio"
+                    android:id="@+id/driveRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="地铁"
+                    android:text="自驾"
                     android:textColor="@color/text_primary"
-                    app:icon="@drawable/subway"
+                    app:icon="@drawable/drive_eta"
                     app:iconGravity="top"/>
             </RadioGroup>
 

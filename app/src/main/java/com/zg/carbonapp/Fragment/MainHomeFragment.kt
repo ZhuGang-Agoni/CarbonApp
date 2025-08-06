@@ -9,9 +9,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zg.carbonapp.Activity.CarbonFootprintActivity
+import com.zg.carbonapp.Activity.EnergyAssistantActivity
 import com.zg.carbonapp.Activity.GarbageSortActivity
 import com.zg.carbonapp.Activity.GreenTravelActivity
 import com.zg.carbonapp.Activity.ShoppingActivity
+import com.zg.carbonapp.Activity.TravelStatisticActivity
 import com.zg.carbonapp.Adapter.LowCarbonKnowledgeAdapter
 import com.zg.carbonapp.Dao.LowCarbonKnowledge
 import com.zg.carbonapp.MMKV.CarbonFootprintDataMMKV
@@ -30,7 +32,7 @@ class MainHomeFragment : Fragment() {
     private var _binding: FragmentMainHomeBinding? = null
     private val binding get() = _binding!!
     private val knowledgeList:List<LowCarbonKnowledge> by lazy {
-        LowCarbonKnowledgeRepository.getLowCarbonKnowledgeList()
+        LowCarbonKnowledgeRepository.getRandomLowCarbonKnowledge()
     }
 
     override fun onCreateView(
@@ -109,6 +111,21 @@ class MainHomeFragment : Fragment() {
         binding.activityCard.findViewById<Button>(R.id.registerButton).setOnClickListener {
             registerForActivity()
         }
+
+        binding.updateIcon.setOnClickListener{
+            val newKnowledgeList = LowCarbonKnowledgeRepository.getRandomLowCarbonKnowledge()
+
+            // 更新适配器
+            binding.lowCarbonKnowledgeRv.adapter?.let { adapter ->
+                if (adapter is LowCarbonKnowledgeAdapter) {
+                    adapter.updateData(newKnowledgeList)
+                    adapter.notifyDataSetChanged()
+                }
+            }
+
+            // 添加平滑滚动效果
+            binding.lowCarbonKnowledgeRv.smoothScrollToPosition(0)
+        }
     }
 
     private fun setupFunctionGridClickListeners() {
@@ -126,10 +143,17 @@ class MainHomeFragment : Fragment() {
             val secondRow = binding.functionGrid.getChildAt(1) as ViewGroup
             secondRow.getChildAt(0).setOnClickListener { navigateToCarbonFootprint() }
             secondRow.getChildAt(1).setOnClickListener { navigateToMoreFunctions() }
+            secondRow.getChildAt(2).setOnClickListener{navigateToVRScene()}
             // 空白占位项不设置点击事件
         }
     }
 
+
+    private fun navigateToVRScene(){
+        // 这里实际一点还要那个啥 等待接进来
+
+        Toast.makeText(requireContext(),"点击了低碳VR场景体验",Toast.LENGTH_SHORT).show()
+    }
     // 用户相关导航
     private fun navigateToUserProfile() {
         // 示例：跳转到用户个人资料页
@@ -150,6 +174,7 @@ class MainHomeFragment : Fragment() {
 
     private fun navigateToEnergyStatistics() {
         // 示例：跳转到节能统计页
+       IntentHelper.goIntent(requireContext(),TravelStatisticActivity::class.java)
         showToast("跳转到节能统计页")
     }
 

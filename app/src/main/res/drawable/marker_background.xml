@@ -1,0 +1,26 @@
+<!-- res/drawable/marker_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- 阴影层 -->
+	<item>
+		<shape android:shape="rectangle">
+			<solid android:color="#40000000" /> <!-- 半透明黑色阴影 -->
+			<corners android:radius="8dp" />
+			<padding
+				android:bottom="2dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+		</shape>
+	</item>
+
+	<!-- 前景层 -->
+	<item>
+		<shape android:shape="rectangle">
+			<solid android:color="#FF4CAF50" /> <!-- 绿色背景（可替换为你的主题色） -->
+			<corners android:radius="8dp" />
+			<stroke
+				android:width="1dp"
+				android:color="#FFFFFFFF" /> <!-- 白色边框 -->
+		</shape>
+	</item>
+</layer-list>
