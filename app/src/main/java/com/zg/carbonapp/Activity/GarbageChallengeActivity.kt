@@ -42,9 +42,18 @@ class GarbageChallengeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garbage_challenge)
         
+        // 设置状态栏透明
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.decorView.systemUiVisibility = (android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+        
         initViews()
         initChallenges()
         startChallenge()
+        
+        // 启动卡片动画
+        startCardAnimations()
 //        // 在你的GarbageChallengeActivity中，找到TTS初始化的代码（类似下面的结构）
 //        textToSpeech = TextToSpeech(this, object : TextToSpeech.OnInitListener {
 //            override fun onInit(status: Int) {
@@ -72,8 +81,36 @@ class GarbageChallengeActivity : AppCompatActivity() {
 
     }
     // 辅助方法：显示Toast
-    private fun showToast(message: String) {
+    private     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+    
+    // 启动卡片动画
+    private fun startCardAnimations() {
+        val slideUpAnimation = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.slide_up_fade_in)
+        val breathAnimation = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.breath_animation)
+        
+        // 为选项卡片添加动画
+        btnRecyclable.startAnimation(slideUpAnimation)
+        btnHazardous.startAnimation(slideUpAnimation)
+        btnKitchen.startAnimation(slideUpAnimation)
+        btnOther.startAnimation(slideUpAnimation)
+        
+        // 为图标添加呼吸动画 - 使用更安全的方式查找ImageView
+        try {
+            val recyclableIcon = btnRecyclable.getChildAt(0) as? android.widget.ImageView
+            val hazardousIcon = btnHazardous.getChildAt(0) as? android.widget.ImageView
+            val kitchenIcon = btnKitchen.getChildAt(0) as? android.widget.ImageView
+            val otherIcon = btnOther.getChildAt(0) as? android.widget.ImageView
+            
+            recyclableIcon?.startAnimation(breathAnimation)
+            hazardousIcon?.startAnimation(breathAnimation)
+            kitchenIcon?.startAnimation(breathAnimation)
+            otherIcon?.startAnimation(breathAnimation)
+        } catch (e: Exception) {
+            // 如果动画失败，不影响主要功能
+            android.util.Log.e("GarbageChallengeActivity", "Animation failed: ${e.message}")
+        }
     }
     private fun initViews() {
         ivGarbageImage = findViewById(R.id.iv_garbage_image)
@@ -84,6 +121,10 @@ class GarbageChallengeActivity : AppCompatActivity() {
         tvProgress = findViewById(R.id.tv_progress)
         tvScore = findViewById(R.id.tv_score)
         progressBar = findViewById(R.id.progress_bar)
+        
+        // 设置返回按钮
+        findViewById<android.widget.ImageView>(R.id.btn_back).setOnClickListener { finish() }
+        
         // 设置按钮点击事件
         btnRecyclable.setOnClickListener { checkAnswer("可回收物") }
         btnHazardous.setOnClickListener { checkAnswer("有害垃圾") }

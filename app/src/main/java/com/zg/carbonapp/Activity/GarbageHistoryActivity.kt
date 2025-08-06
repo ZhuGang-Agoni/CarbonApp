@@ -2,7 +2,7 @@ package com.zg.carbonapp.Activity
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
+
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,10 +18,10 @@ import android.widget.Button
 
 class GarbageHistoryActivity : AppCompatActivity() {
     
-    private lateinit var btnBack: ImageButton
+    private lateinit var btnBack: android.widget.ImageView
     private lateinit var tvTitle: TextView
     private lateinit var rvRecords: RecyclerView
-    private lateinit var tvEmpty: LinearLayout
+    private lateinit var tvEmpty: com.google.android.material.card.MaterialCardView
     private lateinit var btnClear: Button
     
     private lateinit var recordAdapter: GarbageRecordAdapter
@@ -30,6 +30,12 @@ class GarbageHistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garbage_history)
+        
+        // 设置状态栏透明
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.decorView.systemUiVisibility = (android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         
         initViews()
         initListeners()
@@ -69,7 +75,7 @@ class GarbageHistoryActivity : AppCompatActivity() {
                     garbageName = "挑战记录",
                     categoryName = "得分: ${record.totalScore}，正确${record.correctCount}/${record.totalQuestions}",
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(record.timestamp)),
-                    categoryIcon = R.drawable.ic_leaf // 或其它icon
+                    categoryIcon = R.drawable.ic_challenge_trophy // 使用奖杯图标
                 )
             )
         }
@@ -81,7 +87,7 @@ class GarbageHistoryActivity : AppCompatActivity() {
                     garbageName = record.garbageName,
                     categoryName = record.category,
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(record.timestamp)),
-                    categoryIcon = getCategoryIcon(record.category)
+                    categoryIcon = R.drawable.ic_ai_recognition // 使用AI识别图标
                 )
             )
         }
@@ -143,13 +149,5 @@ class GarbageHistoryActivity : AppCompatActivity() {
         }
     }
     
-    private fun getCategoryIcon(category: String): Int {
-        return when (category) {
-            "可回收物" -> R.drawable.ic_recyclable
-            "有害垃圾" -> R.drawable.ic_hazardous
-            "厨余垃圾" -> R.drawable.ic_kitchen
-            "其他垃圾" -> R.drawable.ic_other
-            else -> R.drawable.ic_other
-        }
-    }
+
 } 

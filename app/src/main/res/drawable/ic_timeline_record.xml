@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- 时间轴线 -->
+    <path
+        android:strokeColor="#9C27B0"
+        android:strokeWidth="2"
+        android:pathData="M12,2L12,22" />
+    
+    <!-- 时间点1 -->
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M12,4A2,2 0 1,1 12,8A2,2 0 1,1 12,4Z" />
+    
+    <!-- 时间点2 -->
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M12,10A2,2 0 1,1 12,14A2,2 0 1,1 12,10Z" />
+    
+    <!-- 时间点3 -->
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M12,16A2,2 0 1,1 12,20A2,2 0 1,1 12,16Z" />
+    
+    <!-- 记录图标 -->
+    <path
+        android:fillColor="#E1BEE7"
+        android:pathData="M14,2H6C4.9,2 4,2.9 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2Z" />
+    
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M14,2V8H20L14,2Z" />
+</vector> 

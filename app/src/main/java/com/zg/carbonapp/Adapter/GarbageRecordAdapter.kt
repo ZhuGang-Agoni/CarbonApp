@@ -15,25 +15,25 @@ class GarbageRecordAdapter(
 ) : RecyclerView.Adapter<GarbageRecordAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivCategoryIcon: ImageView = itemView.findViewById(R.id.iv_category_icon)
-        val tvGarbageName: TextView = itemView.findViewById(R.id.tv_garbage_name)
-        val tvCategoryName: TextView = itemView.findViewById(R.id.tv_category_name)
-        val tvTime: TextView = itemView.findViewById(R.id.tv_time)
+        val ivRecordIcon: ImageView = itemView.findViewById(R.id.iv_record_icon)
+        val tvRecordTitle: TextView = itemView.findViewById(R.id.tv_record_title)
+        val tvRecordDetail: TextView = itemView.findViewById(R.id.tv_record_detail)
+        val tvRecordTime: TextView = itemView.findViewById(R.id.tv_record_time)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_garbage_record, parent, false)
+            .inflate(R.layout.item_garbage_record_timeline, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
         
-        holder.ivCategoryIcon.setImageResource(record.categoryIcon)
-        holder.tvGarbageName.text = record.garbageName
-        holder.tvCategoryName.text = record.categoryName
-        holder.tvTime.text = record.time
+        holder.ivRecordIcon.setImageResource(record.categoryIcon)
+        holder.tvRecordTitle.text = record.garbageName
+        holder.tvRecordDetail.text = record.categoryName
+        holder.tvRecordTime.text = record.time
 
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(record)

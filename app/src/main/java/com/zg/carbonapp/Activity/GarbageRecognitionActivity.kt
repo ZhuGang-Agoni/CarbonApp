@@ -33,7 +33,7 @@ import com.zg.carbonapp.Dao.UserChallengePhoto
 class GarbageRecognitionActivity : AppCompatActivity() {
 
     private lateinit var etSearch: EditText
-    private lateinit var btnBack: ImageButton
+    private lateinit var btnBack: android.widget.ImageView
     private lateinit var btnCamera: ImageButton
     private lateinit var btnSearch: ImageButton
     private lateinit var ivPreview: ImageView
@@ -49,6 +49,12 @@ class GarbageRecognitionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garbage_recognition)
+        
+        // 设置状态栏透明
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.decorView.systemUiVisibility = (android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         
         initViews()
         initListeners()

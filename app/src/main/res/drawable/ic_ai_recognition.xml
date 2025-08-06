@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- 摄像头主体 -->
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M12,2C13.1,2 14,2.9 14,4V6H16V8H18V10H20V12H18V14H16V16H14V18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18V16H8V14H6V12H4V10H6V8H8V6H10V4C10,2.9 10.9,2 12,2Z" />
+    
+    <!-- 镜头 -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M12,8C9.8,8 8,9.8 8,12C8,14.2 9.8,16 12,16C14.2,16 16,14.2 16,12C16,9.8 14.2,8 12,8Z" />
+    
+    <!-- 扫描线 -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M2,12L22,12"
+        android:strokeWidth="2"
+        android:strokeColor="#4CAF50" />
+    
+    <!-- AI标识 -->
+    <path
+        android:fillColor="#FF9800"
+        android:pathData="M12,4L13,6L15,6L13.5,7.5L14,9.5L12,8.5L10,9.5L10.5,7.5L9,6L11,6Z" />
+</vector> 
