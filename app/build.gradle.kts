@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -49,6 +48,17 @@ android {
     viewBinding {
         enable = true
     }
+
+    packagingOptions {
+        // 方法1：保留其中一个库的文件（推荐，需确认保留哪个）
+        pickFirst ("lib/arm64-v8a/libc++_shared.so")  // 只保留第一个找到的文件
+        // 如果有其他架构（如armeabi-v7a、x86等）也冲突，需一并添加
+        pickFirst ("lib/armeabi-v7a/libc++_shared.so")
+        pickFirst ("lib/x86/libc++_shared.so")
+        pickFirst ("lib/x86_64/libc++_shared.so")
+    }
+
+
 }
 
 dependencies {
@@ -84,6 +94,10 @@ dependencies {
         exclude(group = "androidx.core") // 额外排除 androidx.core
     }
 
+
+// 通知和工作管理
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
+    implementation("androidx.core:core-ktx:1.8.0")
     // Google 服务
     implementation(libs.play.services.fitness)
     implementation("com.google.android.gms:play-services-auth:21.2.0")
@@ -117,6 +131,16 @@ dependencies {
         exclude(group = "androidx.core") // 额外排除 androidx.core
     }
     implementation("com.google.zxing:core:3.5.3")
+    // 百度地图 的 依赖
+//    implementation("com.baidu.lbsyun:BaiduMapSDK_Map:7.6.4")
+
+    implementation("com.baidu.lbsyun:BaiduMapSDK_Search:7.6.4")
+    implementation("com.baidu.lbsyun:BaiduMapSDK_Location:9.6.4")
+    implementation("com.baidu.lbsyun:BaiduMapSDK_Util:7.6.4")
+    implementation ("com.baidu.lbsyun:NaviTts:3.2.13")
+
+    implementation("com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:7.6.4")
+
 
     // 测试
     testImplementation(libs.junit)
@@ -128,6 +152,11 @@ dependencies {
     // 强制使用特定版本的 core 库
     implementation("androidx.core:core:1.16.0")
     implementation("androidx.core:core-ktx:1.16.0")
+
+
+    // pytorch模型
+    implementation("org.pytorch:pytorch_android_lite:1.13.0")
+    implementation("org.pytorch:pytorch_android_torchvision_lite:1.13.0")
 }
 
 // 全局解决依赖冲突

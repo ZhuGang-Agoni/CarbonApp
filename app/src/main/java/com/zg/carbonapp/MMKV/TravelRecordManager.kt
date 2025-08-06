@@ -3,19 +3,36 @@ package com.zg.carbonapp.MMKV
 import android.util.Log
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
+import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.Dao.TravelRecord
+import java.util.Calendar
 
 object TravelRecordManager {
     private val mmkv by lazy {
         // 确保MMKV已初始化（添加错误处理）
         try {
-            MMKV.mmkvWithID("travel_record") ?: throw Exception("MMKV初始化失败")
+            MMKV.mmkvWithID("travel_record1") ?: throw Exception("MMKV初始化失败")
         } catch (e: Exception) {
             Log.e("TravelRecordManager", "MMKV初始化失败: ${e.message}")
             throw e
         }
     }
     private val gson = Gson()
+
+//    fun getLastSevenDaysRecords(): List<ItemTravelRecord> {
+//        val calendar = Calendar.getInstance().apply {
+//            add(Calendar.DAY_OF_YEAR, -6) // 获取最近7天（包括今天）
+//            set(Calendar.HOUR_OF_DAY, 0)
+//            set(Calendar.MINUTE, 0)
+//            set(Calendar.SECOND, 0)
+//            set(Calendar.MILLISECOND, 0)
+//        }
+//        val startTime = calendar.timeInMillis
+//
+//        return getRecords().list.filter { record ->
+//            record.time >= startTime
+//        }
+//    }
 
     // 保存出行记录
     fun saveRecord(records: TravelRecord) {
@@ -57,15 +74,15 @@ object TravelRecordManager {
         Log.d("TravelRecordManager", "记录已清除")
     }
 
-    // 独立方法更新用户碳积分（减少耦合）
+    // 独立方法更新用户碳积分（减少耦合），这里假设 UserMMKV 有对应的获取和保存用户方法
     private fun updateUserCarbonPoints(carbonPoints: String) {
         try {
-            // 保留原有逻辑，但添加空值检查和错误处理
             val user = UserMMKV.getUser()
             user?.let {
-                val newUser = it.copy(carbonCount = carbonPoints.toIntOrNull() ?: 0)
+                val newCarbonCount = carbonPoints.toIntOrNull() ?: 0
+                val newUser = it.copy(carbonCount = newCarbonCount)
                 UserMMKV.saveUser(newUser)
-                Log.d("TravelRecordManager", "用户碳积分更新为: $carbonPoints")
+                Log.d("TravelRecordManager", "用户碳积分更新为: $newCarbonCount")
             }
         } catch (e: Exception) {
             Log.e("TravelRecordManager", "更新用户碳积分失败: ${e.message}", e)

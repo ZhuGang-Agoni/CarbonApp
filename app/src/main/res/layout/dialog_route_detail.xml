@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:padding="16dp">
 
-	<ScrollView
+	<TextView
+		android:id="@+id/route_title"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:maxHeight="400dp">
+		android:textSize="18sp"
+		android:textStyle="bold"
+		android:textColor="@color/green_dark"
+		android:layout_marginBottom="12dp"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+		android:layout_marginBottom="12dp">
 
 		<TextView
-			android:id="@+id/routeDescription"
+			android:id="@+id/route_description"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:textSize="16sp"
-			android:lineSpacingExtra="6dp"/>
+			android:lineSpacingExtra="4dp"/>
 	</ScrollView>
+
 </LinearLayout>

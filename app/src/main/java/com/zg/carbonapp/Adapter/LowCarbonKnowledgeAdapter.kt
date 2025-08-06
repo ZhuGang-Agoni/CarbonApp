@@ -14,7 +14,7 @@ import com.zg.carbonapp.R
 
 class LowCarbonKnowledgeAdapter(
     private val context: Context,
-    private val dataList: List<LowCarbonKnowledge>
+    private var dataList: List<LowCarbonKnowledge>
 ) : RecyclerView.Adapter<LowCarbonKnowledgeAdapter.ViewHolder>() {
 
     // 子项ViewHolder
@@ -57,4 +57,9 @@ class LowCarbonKnowledgeAdapter(
             }
             .show()
     }
+
+    fun updateData(newData: List<LowCarbonKnowledge>) {
+        dataList = newData
+    }
+
 }

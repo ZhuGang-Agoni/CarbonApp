@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/color_bg">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="16dp">
+
+		<!-- 标题栏 -->
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="环境节能助手"
+			android:textSize="22sp"
+			android:textStyle="bold"
+			android:textColor="@color/color_text_primary"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"/>
+
+		<!-- 电池信息卡片（原有内容完整保留） -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_battery"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="4dp"
+			app:cardBackgroundColor="@color/color_card_bg"
+			app:layout_constraintTop_toBottomOf="@id/title"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="电池状态"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="@color/color_text_secondary"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="电池温度"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/batteryTempValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="32℃"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="电池电量"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/batteryLevelValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="75%"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="是否充电"
+						android:textSize="14sp"
+						android:textColor="@color/color_text_hint"
+						android:layout_marginEnd="16dp"/>
+
+					<TextView
+						android:id="@+id/chargingStatus"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="否"
+						android:textSize="18sp"
+						android:textColor="@color/color_text_primary"/>
+				</LinearLayout>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 环境与设备信息卡片（保留原有特征，新增特征控件） -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_environment"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="4dp"
+			app:cardBackgroundColor="@color/color_card_bg"
+			app:layout_constraintTop_toBottomOf="@id/card_battery"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="环境与设备数据"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="@color/color_text_secondary"/>
+
+				<!-- 原有特征：光线强度 + 温度变化率 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="光线强度"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/lightLevelValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="650lx"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="温度变化率"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/tempChangeRateValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="-0.3℃/min"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+				</LinearLayout>
+
+				<!-- 原有特征：是否夜间 + 新增特征：气压 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="是否夜间"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/isNightStatus"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="否"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="气压"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/pressureValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="1013.25hPa"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+				</LinearLayout>
+
+				<!-- 新增特征：屏幕亮度 + 屏幕状态 -->
+
+
+
+
+
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 预测数据卡片（原有内容完整保留） -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_prediction"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="4dp"
+			app:cardBackgroundColor="@color/color_card_bg"
+			app:layout_constraintTop_toBottomOf="@id/card_environment"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="模型预测"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="@color/color_text_secondary"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="环境温度"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/predictedTempValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="26℃"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:orientation="vertical">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="环境湿度"
+							android:textSize="14sp"
+							android:textColor="@color/color_text_hint"/>
+
+						<TextView
+							android:id="@+id/predictedHumidityValue"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="45%"
+							android:textSize="18sp"
+							android:textColor="@color/color_text_primary"
+							android:layout_marginTop="4dp"/>
+					</LinearLayout>
+				</LinearLayout>
+
+
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 生成建议按钮（原有内容完整保留） -->
+		<Button
+			android:id="@+id/generateBtn"
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:layout_marginTop="16dp"
+			android:text="生成节能建议"
+			android:textSize="16sp"
+			android:textColor="@color/white"
+			android:backgroundTint="@color/color_primary"
+			app:layout_constraintTop_toBottomOf="@id/card_prediction"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"/>
+
+		<!-- 建议内容卡片（原有内容完整保留） -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_suggestion"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="32dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="4dp"
+			app:cardBackgroundColor="@color/color_card_bg"
+			app:layout_constraintTop_toBottomOf="@id/generateBtn"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="节能建议"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="@color/color_text_secondary"/>
+
+				<TextView
+					android:id="@+id/suggestionText"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="点击上方按钮生成节能建议"
+					android:textSize="15sp"
+					android:textColor="@color/color_text_primary"
+					android:layout_marginTop="12dp"
+					android:lineSpacingExtra="4dp"/>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

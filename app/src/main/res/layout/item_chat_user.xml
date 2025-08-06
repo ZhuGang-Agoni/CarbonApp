@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="end"
-    android:padding="8dp">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@drawable/chat_bubble_user"
+    android:layout_marginEnd="48dp">
 
     <TextView
-        android:id="@+id/tvUserContent"
+        android:id="@+id/chat_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_chat_user"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:maxWidth="260dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="0dp"/>
+        android:text="用户消息示例"
+        android:textColor="@color/on_surface"
+        android:textSize="16sp" />
+
 </LinearLayout>

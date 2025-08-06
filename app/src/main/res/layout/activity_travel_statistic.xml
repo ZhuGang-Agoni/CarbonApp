@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_green"
+	android:padding="16dp">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<!-- 标题 -->
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="每周碳足迹分析"
+			android:textColor="@color/primary_dark_green"
+			android:textSize="24sp"
+			android:textStyle="bold"
+			android:gravity="center"
+			android:layout_marginBottom="16dp"/>
+
+		<!-- 折线图卡片 -->
+		<androidx.cardview.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="300dp"
+			android:layout_marginBottom="16dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="8dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:padding="8dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="近7日碳排放趋势"
+					android:textColor="@color/primary_dark_green"
+					android:textSize="18sp"
+					android:textStyle="bold"
+					android:gravity="center"
+					android:layout_marginBottom="8dp"/>
+
+				<com.github.mikephil.charting.charts.LineChart
+					android:id="@+id/lineChart"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"/>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 饼图卡片 -->
+		<androidx.cardview.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="300dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="8dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:padding="8dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="出行方式碳排放占比"
+					android:textColor="@color/primary_dark_green"
+					android:textSize="18sp"
+					android:textStyle="bold"
+					android:gravity="center"
+					android:layout_marginBottom="8dp"/>
+
+				<com.github.mikephil.charting.charts.PieChart
+					android:id="@+id/pieChart"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"/>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 数据摘要 -->
+		<androidx.cardview.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="8dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="本周碳足迹摘要"
+					android:textColor="@color/primary_dark_green"
+					android:textSize="18sp"
+					android:textStyle="bold"
+					android:layout_marginBottom="8dp"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="总减碳排放量:"
+						android:textColor="@color/text_dark_gray"/>
+
+					<TextView
+						android:id="@+id/tvTotalCarbon"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="25.6 kg"
+						android:textColor="@color/primary_dark_green"
+						android:textStyle="bold"/>
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="最常用出行方式:"
+						android:textColor="@color/text_dark_gray"/>
+
+					<TextView
+						android:id="@+id/tvMostUsedMode"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="公交"
+						android:textColor="@color/primary_dark_green"
+						android:textStyle="bold"/>
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginBottom="8dp">
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="今日累计减碳:"
+						android:textColor="@color/text_dark_gray"/>
+
+					<TextView
+						android:id="@+id/tvTotayCarbonSaved"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="5.2"
+						android:textColor="@color/primary_dark_green"
+						android:textStyle="bold"/>
+				</LinearLayout>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- AI智能分析报告卡片 -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/aiAnalysisCard"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="8dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="AI智能分析报告"
+					android:textColor="@color/primary_dark_green"
+					android:textSize="18sp"
+					android:textStyle="bold"
+					android:layout_marginBottom="8dp"/>
+
+				<com.google.android.material.progressindicator.CircularProgressIndicator
+					android:id="@+id/progressBar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:indeterminate="true"
+					android:visibility="visible"/>
+
+				<TextView
+					android:id="@+id/aiAnalysisText"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@color/text_dark_gray"
+					android:textIsSelectable="true"
+					android:lineSpacingMultiplier="1.2"
+					android:visibility="gone"/>
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+	</LinearLayout>
+</ScrollView>
