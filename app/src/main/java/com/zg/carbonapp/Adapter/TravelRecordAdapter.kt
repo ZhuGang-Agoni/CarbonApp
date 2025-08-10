@@ -1,5 +1,6 @@
 package com.zg.carbonapp.Adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.R
+import com.zg.carbonapp.databinding.DialogRouteDetailBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TravelRecordAdapter(
     private var recordList: List<ItemTravelRecord>,
-    private val context: Context
+    private val context: Context // 持有上下文，用于创建对话框
 ) : RecyclerView.Adapter<TravelRecordAdapter.ViewHolder>() {
 
     // 时间格式化工具
@@ -30,6 +32,7 @@ class TravelRecordAdapter(
         val tvCarbonCount: TextView = itemView.findViewById(R.id.tvCarbon)
         val tvTime: TextView = itemView.findViewById(R.id.tvTime)
         val tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
+        val ivArrow: ImageView = itemView.findViewById(R.id.ivArrow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,20 +44,43 @@ class TravelRecordAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recordList[position]
 
-        // 关键修复：设置图片前先校验资源有效性
+        // 设置图标
         try {
-            // 使用保存的图片资源ID设置图标
             holder.ivModeIcon.setImageResource(item.modelRavel)
         } catch (e: Exception) {
-            // 异常处理：如果资源无效，使用默认图标
             holder.ivModeIcon.setImageResource(R.drawable.walk)
         }
 
-        holder.tvModeName.text = item.travelModel // 直接使用已转换的中文名称
+        // 绑定数据
+        holder.tvModeName.text = item.travelModel
         holder.tvCarbonCount.text = "减碳 ${item.carbonCount}g"
-        holder.tvDistance.text = item.distance // 直接使用格式化好的距离（如"1.2公里"）
+        holder.tvDistance.text = item.distance
         holder.tvTime.text = dateFormat.format(Date(item.time))
-        holder.tvAddress.text = item.travelRoute
+        holder.tvAddress.text = item.travelRoute // 地址会多行完全显示
+
+        // 点击事件：在Adapter内部处理，直接弹出对话框
+        holder.itemView.setOnClickListener {
+            showRouteDetailDialog(item)
+        }
+    }
+
+    // 显示路线详情对话框（Adapter内部实现）
+    private fun showRouteDetailDialog(record: ItemTravelRecord) {
+        // 加载对话框布局
+        val inflater = LayoutInflater.from(context)
+        val dialogBinding = DialogRouteDetailBinding.inflate(inflater)
+
+        // 设置对话框内容（使用记录中保存的路线标题和描述）
+        dialogBinding.routeTitle.text = record.routeTitle
+        dialogBinding.routeDescription.text = record.routeDescription
+
+        // 创建并显示对话框
+        AlertDialog.Builder(context)
+            .setView(dialogBinding.root)
+            .setPositiveButton("确定") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     // 更新数据列表
@@ -73,7 +99,9 @@ class TravelRecordAdapter(
                 return oldItem.travelModel == newItem.travelModel &&
                         oldItem.carbonCount == newItem.carbonCount &&
                         oldItem.distance == newItem.distance &&
-                        oldItem.travelRoute == newItem.travelRoute
+                        oldItem.travelRoute == newItem.travelRoute &&
+                        oldItem.routeTitle == newItem.routeTitle &&
+                        oldItem.routeDescription == newItem.routeDescription
             }
         })
 
