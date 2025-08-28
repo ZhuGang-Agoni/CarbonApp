@@ -1,0 +1,39 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="64dp"
+	android:height="64dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+
+	<!-- 赛博基底 -->
+	<path
+		android:pathData="M50,10 Q30,30 40,60 Q50,50 60,60 Q70,30 50,10 Z"
+		android:strokeWidth="2"
+		android:strokeColor="#1976D2"> <!-- 科技蓝边框 -->
+		<aapt:attr name="android:fillColor">
+			<gradient
+				android:type="linear"
+				android:angle="45"
+				android:startX="30"
+				android:startY="30"
+				android:endX="70"
+				android:endY="70">
+				<item android:color="#2196F3" android:offset="0"/> <!-- 亮蓝 -->
+				<item android:color="#388E3C" android:offset="1"/> <!-- 森林绿 -->
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 锁具造型 -->
+	<path
+		android:pathData="M40,50 L45,55 L55,55 L60,50 M45,55 L45,65 M55,55 L55,65"
+		android:strokeWidth="1.5"
+		android:strokeColor="#BBDEFB"/> <!-- 浅蓝锁链 -->
+
+	<!-- 能量路径 -->
+	<path
+		android:pathData="M30,40 L35,35 M70,40 L65,35"
+		android:strokeWidth="1"
+		android:strokeColor="#43A047"
+		android:strokeAlpha="0.6"/> <!-- 中绿路径 -->
+</vector>

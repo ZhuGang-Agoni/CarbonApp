@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:paddingBottom="24dp">
+
+	<!-- 时间轴线条和圆点 -->
+	<LinearLayout
+		android:layout_width="40dp"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:gravity="center_horizontal">
+
+		<!-- 圆点 -->
+		<View
+			android:id="@+id/view_dot"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:background="@drawable/dot_normal"/>
+
+		<!-- 线条 -->
+		<View
+			android:id="@+id/view_line"
+			android:layout_width="2dp"
+			android:layout_height="match_parent"/>
+	</LinearLayout>
+
+	<!-- 内容区 -->
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<ImageView
+			android:id="@+id/iv_stage"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:contentDescription="@string/app_name"/>
+
+		<TextView
+			android:id="@+id/tv_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:textColor="@color/forest_text"
+			android:textSize="16sp"
+			android:textStyle="bold"/>
+
+		<TextView
+			android:id="@+id/tv_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:textColor="@color/forest_text"
+			android:textSize="12sp"/>
+
+		<TextView
+			android:id="@+id/tv_desc"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:background="@color/forest_primary_light"
+			android:padding="8dp"
+			android:textColor="@color/white"
+			android:textSize="14sp"
+			android:visibility="gone"/>
+	</LinearLayout>
+
+</LinearLayout>

@@ -1,282 +1,158 @@
 package com.zg.carbonapp.Activity
 
-// CarbonMallActivity.kt
 import android.os.Bundle
-import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zg.carbonapp.Adapter.HotProductAdapter
 import com.zg.carbonapp.Adapter.NewProductAdapter
-import com.zg.carbonapp.Adapter.ShopExchangeRecordAdapter
-import com.zg.carbonapp.Dao.ExchangeProduct
-import com.zg.carbonapp.Dao.ShopRecord
-import com.zg.carbonapp.Dao.User
-import com.zg.carbonapp.Fragment.MainHomeFragment
-import com.zg.carbonapp.MMKV.ShopRecordMMKV
-import com.zg.carbonapp.MMKV.TravelRecordManager
+import com.zg.carbonapp.Dao.ProductType
+import com.zg.carbonapp.Dao.ShopRecord // 新增：导入ShopRecord
+import com.zg.carbonapp.Dao.VirtualProduct
+import com.zg.carbonapp.MMKV.ShopRecordMMKV // 新增：导入ShopRecordMMKV
+import com.zg.carbonapp.MMKV.UserAssetsManager
 import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Repository.VirtualProductRepository
 import com.zg.carbonapp.Tool.IntentHelper
 import com.zg.carbonapp.databinding.ActivityShoppingBinding
 
-
 class ShoppingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShoppingBinding
-    // 热门推荐适配器
-    private lateinit var hotAdapter: HotProductAdapter
-    // 最新上架适配器
-    private lateinit var newAdapter: NewProductAdapter
 
-    private val shopRecordAdapter=ShopExchangeRecordAdapter(this, emptyList<ShopRecord>())
-    // 热门商品列表
-    private val hotProductList = mutableListOf<ExchangeProduct>()
-    // 最新上架商品列表
-    private val newProductList = mutableListOf<ExchangeProduct>()
+    private lateinit var binding: ActivityShoppingBinding
+    private lateinit var hotAdapter: HotProductAdapter
+    private lateinit var newAdapter: NewProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShoppingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 初始化商品数据
-        initProductData()
-        // 初始化视图
+        window.statusBarColor = ContextCompat.getColor(this, R.color.primary_dark)
+
         initViews()
-        // 设置所有点击事件
         setupAllListeners()
+        loadUserPoints()
     }
 
-    // 初始化热门和最新商品数据
-    private fun initProductData() {
-        // 热门推荐商品
-        hotProductList.apply {
-            add(
-                ExchangeProduct(
-                    id = 1,
-                    name = "环保购物袋",
-                    description = "可重复使用，减少塑料污染",
-                    points = 250,
-                    imageRes = R.drawable.tree
-                )
-            )
-            add(
-                ExchangeProduct(
-                    id = 2,
-                    name = "竹制餐具套装",
-                    description = "天然竹制，可降解材质",
-                    points = 350,
-                    imageRes = R.drawable.tree
-                )
-            )
-            add(
-                ExchangeProduct(
-                    id = 3,
-                    name = "可降解垃圾袋",
-                    description = "全降解材料，环保无害",
-                    points = 180,
-                    imageRes = R.drawable.tree
-                )
-            )
-            add(
-                ExchangeProduct(
-                    id = 4,
-                    name = "太阳能小夜灯",
-                    description = "太阳能充电，节能省电",
-                    points = 420,
-                    imageRes = R.drawable.tree
-                )
-            )
-        }
-
-        // 最新上架商品
-        newProductList.apply {
-            add(
-                ExchangeProduct(
-                    id = 101,
-                    name = "太阳能充电宝",
-                    description = "太阳能充电，环保便携",
-                    points = 500,
-                    imageRes = R.drawable.tree,
-                    exchangeCount = 238
-                )
-            )
-            add(
-                ExchangeProduct(
-                    id = 102,
-                    name = "植树证书",
-                    description = "捐赠1棵树，电子证书",
-                    points = 1000,
-                    imageRes = R.drawable.tree,
-                    exchangeCount = 89
-                )
-            )
-            add(
-                ExchangeProduct(
-                    id = 103,
-                    name = "环保洗衣液",
-                    description = "无磷配方，生物降解",
-                    points = 320,
-                    imageRes = R.drawable.tree,
-                    exchangeCount = 156
-                )
-            )
+    private fun loadUserPoints() {
+        UserMMKV.getUser()?.let { user ->
+            binding.carbonPoint.text = user.carbonCount.toString()
         }
     }
 
-    // 初始化视图（绑定适配器）
     private fun initViews() {
-
-        val user=UserMMKV.getUser()
-//         反正就是要及时的更新数据
-        if (user!=null){
-            binding.carbonPoint.text=user.carbonCount.toString()
-        }
-        // 热门推荐适配器（网格布局）
-        hotAdapter = HotProductAdapter(this, hotProductList) { product ->
-            // 热门商品点击事件（示例：跳转详情）
-            val needPoint=product.points
-            if (needPoint.toInt()<binding.carbonPoint.text.toString().toInt()) {
-                AlertDialog.Builder(this)
-                    .setTitle("兑换商品")
-                    .setMessage("确定要兑换这件商品吗")
-                    .setPositiveButton("确定"){_,_->
-                         Toast.makeText(this,"兑换成功",Toast.LENGTH_SHORT).show()
-                         binding.carbonPoint.text=(binding.carbonPoint.text.toString().toInt()-needPoint).toString()
-                         if (user!=null){
-                             val newUser= User(
-                                 userId = user.userId,
-                                 userName = user.userName,
-                                 userEvator = user.userEvator,
-                                 userPassword = user.userPassword,
-                                 userQQ = user.userQQ,
-                                 userTelephone=user.userTelephone,
-                                 signature=user.signature,
-                                 carbonCount = binding.carbonPoint.text.toString().toInt(),
-                                 surePassword=user.surePassword
-                             )
-                             UserMMKV.saveUser(newUser)
-//             这里还有一个逻辑是留给后端的 暂时先不管 这个逻辑是根据 积分更新数据
-                         }
-//                        处理兑换记录的逻辑 要及时的更新 兑换纪录
-                    val shopRecord=ShopRecord(
-                        System.currentTimeMillis(),
-                        product.name.toString(),
-                        product.points
-                    )
-                        ShopRecordMMKV.saveShopRecord(shopRecord)
-//                        val list=ShopRecordMMKV.getShopRecordItem()
-//                        shopRecordAdapter.updateList(list)
-
-                    }
-                    .setNegativeButton("再想想"){_,_->{
-
-                    }}
-                    .show()
-                Toast.makeText(this, "点击热门商品：${product.name}", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(this,"很抱歉，您的积分不足，快去做任务赚取积分吧",Toast.LENGTH_SHORT).show()
-            }
+        hotAdapter = HotProductAdapter(this, VirtualProductRepository.hotProducts) {
+            handleProductExchange(it)
         }
         binding.hotProductsRecyclerView.apply {
-            layoutManager = GridLayoutManager(this@ShoppingActivity, 2) // 2列网格
+            layoutManager = GridLayoutManager(this@ShoppingActivity, 2)
             adapter = hotAdapter
+            setHasFixedSize(true)
         }
 
-        // 最新上架适配器（线性布局）
-        newAdapter = NewProductAdapter(this, newProductList) { product ->
-            // 最新商品点击事件（示例：跳转详情）
-            val needPoint=product.points
-            if (needPoint.toInt()<binding.carbonPoint.text.toString().toInt()) {
-                AlertDialog.Builder(this)
-                    .setTitle("兑换商品")
-                    .setMessage("确定要兑换这件商品吗")
-                    .setPositiveButton("确定") { _, _ ->
-                        Toast.makeText(this, "兑换成功", Toast.LENGTH_SHORT).show()
-                        binding.carbonPoint.text =
-                            (binding.carbonPoint.text.toString().toInt() - needPoint).toString()
-                        if (user != null) {
-                            val newUser = User(
-                                userId = user.userId,
-                                userName = user.userName,
-                                userEvator = user.userEvator,
-                                userPassword = user.userPassword,
-                                userQQ = user.userQQ,
-                                userTelephone = user.userTelephone,
-                                signature = user.signature,
-                                carbonCount = binding.carbonPoint.text.toString().toInt(),
-                                surePassword = user.surePassword
-                            )
-                            UserMMKV.saveUser(newUser)
-// 更新 Travelrecord
-//             这里还有一个逻辑是留给后端的 暂时先不管 这个逻辑是根据 积分更新数据
-                            }
-//                        处理兑换记录的逻辑 要及时的更新 兑换纪录
-                            val shopRecord = ShopRecord(
-                                System.currentTimeMillis(),
-                                product.name.toString(),
-                                product.points
-                            )
-                            ShopRecordMMKV.saveShopRecord(shopRecord)
-//                        val list=ShopRecordMMKV.getShopRecordItem()
-//                        shopRecordAdapter.updateList(list)
-
-                        }
-
-                    .setNegativeButton("再想想"){_,_->{
-
-                    }}
-                    .show()
-                Toast.makeText(this, "点击最新商品：${product.name}", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(this,"很抱歉，您的积分不足，快去做任务赚取积分吧",Toast.LENGTH_SHORT).show()
-            }
+        newAdapter = NewProductAdapter(this, VirtualProductRepository.newProducts) {
+            handleProductExchange(it)
         }
         binding.newProductsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@ShoppingActivity) // 线性布局
+            layoutManager = LinearLayoutManager(this@ShoppingActivity)
             adapter = newAdapter
+            setHasFixedSize(true)
         }
     }
 
-    // 设置所有点击事件（完全对应布局ID）
+    // 处理商品兑换逻辑（核心修复：添加记录保存）
+    private fun handleProductExchange(product: VirtualProduct) {
+        val user = UserMMKV.getUser()?: run {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val userId = user.userId?: return
+
+        if (UserAssetsManager.isItemUnlocked(userId, product.id)) {
+            Toast.makeText(this, "您已拥有该物品", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (user.carbonCount < product.points) {
+            Toast.makeText(this, "积分不足，快去完成任务吧", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("兑换确认")
+            .setMessage("确定要消耗 ${product.points} 积分兑换 ${product.name} 吗？")
+            .setPositiveButton("确认") { _, _ ->
+                // 1. 更新用户积分
+                val updatedUser = user.copy(carbonCount = user.carbonCount - product.points)
+                UserMMKV.saveUser(updatedUser)
+                binding.carbonPoint.text = updatedUser.carbonCount.toString()
+
+                // 2. 解锁物品
+                UserAssetsManager.unlockItem(userId, product.id)
+                // 3. 关键修复：立即保存兑换记录（确保记录不丢失）
+                val exchangeRecord = ShopRecord(
+                    time = System.currentTimeMillis(), // 记录兑换时间（毫秒级）
+                    shopName =product.type.toString()+" "+product.name,
+                    shopPoint = product.points
+                )
+                ShopRecordMMKV.saveShopRecord(exchangeRecord) // 调用保存方法
+
+                // 4. 显示动画和提示
+                showUnlockAnimation()
+                Toast.makeText(this, "成功解锁 ${product.name}！", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
+
+    private fun showUnlockAnimation() {
+        val anim = AnimationUtils.loadAnimation(this, R.anim.unlock_success)
+        binding.pointsCard.startAnimation(anim)
+    }
+
     private fun setupAllListeners() {
-        binding.exchangeHistoryButton.setOnClickListener{
-             IntentHelper.goIntent(this,ShopExchangeRecordActivity::class.java)
-        }
-//        获取更多的碳积分
-        binding.earnMoreButton.setOnClickListener{
-            IntentHelper.goIntent(this,MainHomeFragment::class.java)
-        }
-        // 顶部导航栏点击
-        binding.backButton.setOnClickListener { finish() } // 返回
+        binding.toolbar.setNavigationOnClickListener { finish() }
+
         binding.searchButton.setOnClickListener {
-            Toast.makeText(this, "搜索功能", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "搜索功能开发中", Toast.LENGTH_SHORT).show()
         }
 
+        binding.exchangeHistoryButton.setOnClickListener {
+            IntentHelper.goIntent(this, ShopExchangeRecordActivity::class.java)
+        }
 
-        // 分类导航点击（切换选中状态）
-        val categoryButtons = listOf(
+        binding.earnMoreButton.setOnClickListener {
+            finish()
+        }
+
+        val categories = listOf(
             binding.categoryAll,
-            binding.categoryEco,
-            binding.categoryPlant,
-            binding.categoryExperience,
-            binding.categoryService
+            binding.categoryBadges,
+            binding.categoryFrames,
+            binding.categoryItems
         )
-        categoryButtons.forEach { btn ->
-            btn.setOnClickListener {
-                // 重置所有按钮样式
-                categoryButtons.forEach {
-                    it.backgroundTintList = getColorStateList(R.color.button_background)
-                    it.setTextColor(getColorStateList(R.color.primary_text))
+        categories.forEach { button ->
+            button.setOnClickListener {
+                categories.forEach { btn ->
+                    btn.setBackgroundColor(ContextCompat.getColor(this, R.color.button_background))
+                    btn.setTextColor(ContextCompat.getColor(this, R.color.primary_text))
                 }
-                // 设置当前按钮为选中样式
-                btn.backgroundTintList = getColorStateList(R.color.primary)
-                btn.setTextColor(getColorStateList(R.color.white))
-                // 实际项目中可添加分类筛选逻辑
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
+                button.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+                val filteredList = when (button) {
+                    binding.categoryBadges -> VirtualProductRepository.getProductsByType(ProductType.BADGE)
+                    binding.categoryFrames -> VirtualProductRepository.getProductsByType(ProductType.AVATAR_FRAME)
+                    binding.categoryItems -> VirtualProductRepository.getProductsByType(ProductType.AVATAR_ITEM)
+                    else -> VirtualProductRepository.allProducts
+                }
+                hotAdapter.updateList(filteredList.take(4))
+                newAdapter.updateList(filteredList.takeLast(3))
             }
         }
     }

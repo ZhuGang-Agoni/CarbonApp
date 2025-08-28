@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+	<!-- 叶子阴影 -->
+	<path
+		android:fillColor="@color/accessory_leaf_shadow"
+		android:pathData="M12,3c-4.97,0 -9,4.03 -9,9c0,2.4 1.04,4.56 2.74,6.14c0.36,0.36 0.92,0.36 1.28,0c0.36,-0.36 0.36,-0.92 0,-1.28C5.14,14.56 4,12.85 4,11c0,-3.87 3.13,-7 7,-7s7,3.13 7,7c0,1.85 -1.14,3.56 -2.96,4.86c-0.36,0.36 -0.36,0.92 0,1.28c0.36,0.36 0.92,0.36 1.28,0C20.96,16.56 22,14.4 22,12C22,7.03 17.97,3 12,3z"/>
+	<!-- 叶子主体 -->
+	<path
+		android:fillColor="@color/accessory_leaf"
+		android:pathData="M12,5c-3.87,0 -7,3.13 -7,7c0,1.63 0.68,3.16 1.86,4.27c0.28,0.26 0.74,0.28 1.02,0.05c0.27,-0.23 0.29,-0.65 0.05,-0.92C7.26,14.5 6,12.89 6,11c0,-3.31 2.69,-6 6,-6s6,2.69 6,6c0,1.89 -1.26,3.5 -3.01,4.41c-0.24,0.27 -0.21,0.69 0.05,0.92c0.28,0.23 0.74,0.21 1.02,-0.05C18.32,15.16 19,13.63 19,12C19,8.13 15.87,5 12,5z"/>
+</vector>

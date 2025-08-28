@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+	<size
+		android:height="1dp" /> <!-- 只指定高度，宽度会自动匹配父布局 -->
+	<solid android:color="@color/gray_eee" /> <!-- 灰色分割线 -->
+</shape>

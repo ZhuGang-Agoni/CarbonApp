@@ -3,18 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="start"
-    android:background="@drawable/chat_bubble_user"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tvAiContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_chat_ai"
-        android:textColor="@color/on_surface"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:maxWidth="260dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="0dp"/>
-</LinearLayout> 
+    <!-- 气泡容器：宽度自适应内容，左侧对齐 -->
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:background="@drawable/chat_bubble_user"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:maxWidth="260dp">
+
+<TextView
+android:id="@+id/tvAiContent"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textColor="@color/on_surface"
+android:textSize="16sp"
+android:lineSpacingExtra="4dp"
+   />
+
+    </LinearLayout>
+
+    </LinearLayout>

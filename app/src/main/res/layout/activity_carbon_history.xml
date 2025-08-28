@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/gray_f5"
+	android:orientation="vertical">
+
+	<!-- 标题栏 -->
+	<com.google.android.material.appbar.MaterialToolbar
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="@color/green_primary"
+		app:title="历史数据"
+		android:id="@+id/toolbar"
+		app:titleTextColor="@android:color/white"
+		app:navigationIcon="@drawable/ic_back"/>
+
+	<!-- 时间段筛选 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_marginBottom="0dp"
+		android:background="@drawable/bg_white_radius"
+		android:padding="12dp"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="数据周期："
+			android:textColor="@color/gray_600"
+			android:textSize="14sp"
+			android:layout_marginEnd="12dp"/>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_week"
+			android:layout_width="wrap_content"
+			android:layout_height="36dp"
+			android:text="本周"
+			android:textSize="14sp"
+			app:cornerRadius="18dp"
+			app:backgroundTint="@color/green_primary"
+			android:textColor="@android:color/white"/>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_month"
+			android:layout_width="wrap_content"
+			android:layout_height="36dp"
+			android:layout_marginStart="8dp"
+			android:text="本月"
+			android:textSize="14sp"
+			app:cornerRadius="18dp"
+			app:backgroundTint="@color/gray_200"
+			android:textColor="@color/gray_600"/>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_year"
+			android:layout_width="wrap_content"
+			android:layout_height="36dp"
+			android:layout_marginStart="8dp"
+			android:text="全年"
+			android:textSize="14sp"
+			app:cornerRadius="18dp"
+			app:backgroundTint="@color/gray_200"
+			android:textColor="@color/gray_600"/>
+	</LinearLayout>
+
+	<!-- 总数据卡片 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/bg_white_radius"
+		android:padding="16dp"
+		android:orientation="horizontal"
+		android:weightSum="3">
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="总步数"
+				android:textColor="@color/gray_500"
+				android:textSize="12sp"/>
+
+			<TextView
+				android:id="@+id/tvTotalSteps"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="25,600 步"
+				android:textColor="@color/gray_800"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="总减排"
+				android:textColor="@color/gray_500"
+				android:textSize="12sp"/>
+
+			<TextView
+				android:id="@+id/tvTotalCarbon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="4.35 kg"
+				android:textColor="@color/green_primary"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="总积分"
+				android:textColor="@color/gray_500"
+				android:textSize="12sp"/>
+
+			<TextView
+				android:id="@+id/tvTotalPoints"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="435 分"
+				android:textColor="@color/blue_primary"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+		</LinearLayout>
+	</LinearLayout>
+
+	<!-- 图表 -->
+	<com.github.mikephil.charting.charts.CombinedChart
+		android:id="@+id/combinedChart"
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+		android:layout_margin="16dp"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/bg_white_radius" />
+
+	<!-- 趋势分析 -->
+	<com.google.android.material.card.MaterialCardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_marginTop="8dp"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="4dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="数据趋势分析"
+				android:textColor="@color/gray_800"
+				android:textSize="16sp"
+				android:textStyle="bold"
+				android:layout_marginBottom="8dp"/>
+
+			<TextView
+				android:id="@+id/tvTrend"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="您本周的步数呈现逐步上升趋势，周三达到峰值（8,200步）。碳减排量与步数呈正相关，建议继续保持每日步行习惯，可尝试在工作日增加午休后的短距离步行。"
+				android:textColor="@color/gray_600"
+				android:textSize="14sp"
+				android:lineSpacingExtra="4dp"/>
+		</LinearLayout>
+	</com.google.android.material.card.MaterialCardView>
+
+	<!-- 说明 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="24dp"
+		android:gravity="center"
+		android:orientation="horizontal">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<View
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:background="@color/blue_primary" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="4dp"
+				android:text="步数"
+				android:textColor="@color/gray_600"
+				android:textSize="12sp" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<View
+				android:layout_width="12dp"
+				android:layout_height="12dp"
+				android:background="@color/green_primary" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="4dp"
+				android:text="碳减排(kg)"
+				android:textColor="@color/gray_600"
+				android:textSize="12sp" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

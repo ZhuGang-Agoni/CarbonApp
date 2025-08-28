@@ -1,5 +1,8 @@
 package com.zg.carbonapp.Dao
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class GarbageRecord(
     val garbageName: String,
     val categoryName: String,
@@ -25,6 +28,7 @@ data class ChallengeRecord(
     val isFinished: Boolean // 只保存完整挑战
 )
 
+@Parcelize
 data class RecognitionRecord(
     val id: String,
     val garbageName: String,
@@ -33,7 +37,7 @@ data class RecognitionRecord(
     val imageUrl: String?,
     val recognitionMethod: String, // "search" 或 "camera"
     val timestamp: Long
-)
+):Parcelable
 
 data class GarbageKnowledge(
     val name: String,

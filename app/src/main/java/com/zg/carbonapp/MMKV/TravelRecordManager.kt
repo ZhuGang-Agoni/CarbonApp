@@ -11,7 +11,7 @@ object TravelRecordManager {
     private val mmkv by lazy {
         // 确保MMKV已初始化（添加错误处理）
         try {
-            MMKV.mmkvWithID("travel_record1") ?: throw Exception("MMKV初始化失败")
+            MMKV.mmkvWithID("travel_record2") ?: throw Exception("MMKV初始化失败")
         } catch (e: Exception) {
             Log.e("TravelRecordManager", "MMKV初始化失败: ${e.message}")
             throw e
@@ -19,20 +19,7 @@ object TravelRecordManager {
     }
     private val gson = Gson()
 
-//    fun getLastSevenDaysRecords(): List<ItemTravelRecord> {
-//        val calendar = Calendar.getInstance().apply {
-//            add(Calendar.DAY_OF_YEAR, -6) // 获取最近7天（包括今天）
-//            set(Calendar.HOUR_OF_DAY, 0)
-//            set(Calendar.MINUTE, 0)
-//            set(Calendar.SECOND, 0)
-//            set(Calendar.MILLISECOND, 0)
-//        }
-//        val startTime = calendar.timeInMillis
-//
-//        return getRecords().list.filter { record ->
-//            record.time >= startTime
-//        }
-//    }
+
 
     // 保存出行记录
     fun saveRecord(records: TravelRecord) {

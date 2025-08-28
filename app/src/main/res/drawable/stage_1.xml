@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="60dp"
+	android:height="60dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+	<!-- 土壤 -->
+	<path
+		android:fillColor="#8D6E63"
+		android:pathData="M0,60 L100,60 L100,100 L0,100 Z"/>
+	<!-- 茎 -->
+	<path
+		android:fillColor="#795548"
+		android:pathData="M50,60 L50,40"/>
+	<!-- 叶子 -->
+	<path
+		android:fillColor="#4CAF50"
+		android:pathData="M50,40 Q40,30 35,40"
+		android:strokeWidth="2"
+		android:fillType="evenOdd"/>
+	<path
+		android:fillColor="#4CAF50"
+		android:pathData="M50,40 Q60,30 65,40"
+		android:strokeWidth="2"
+		android:fillType="evenOdd"/>
+</vector>

@@ -1,0 +1,53 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="48dp"
+	android:height="48dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+
+	<!-- 动态基底 -->
+	<path
+		android:pathData="M50,20 L50,50 Q40,70 60,70 Q70,50 50,20 Z"
+		android:strokeWidth="2">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="sweep"
+				android:centerX="50"
+				android:centerY="50">
+				<item android:color="#FF00FF" android:offset="0"/>
+				<item android:color="#00FFFF" android:offset="0.5"/>
+				<item android:color="#FF00FF" android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+		<aapt:attr name="android:fillColor">
+			<gradient
+				android:type="radial"
+				android:centerX="50"
+				android:centerY="50"
+				android:gradientRadius="30">
+				<item android:color="#FF69B4" android:offset="0"/>
+				<item android:color="#40E0D0" android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 发光核心 -->
+	<path
+		android:pathData="M50,50 L45,60 L55,60 Z"
+		android:fillColor="#FFFFFF"
+		android:fillAlpha="0.9"/>
+
+	<!-- 粒子特效 -->
+	<path
+		android:pathData="M40,40 L42,38 M60,40 L58,38"
+		android:strokeWidth="1"
+		android:strokeColor="#FFFFFF"
+		android:strokeAlpha="0.7"/>
+
+	<!-- 能量光束 -->
+	<path
+		android:pathData="M50,30 L50,25"
+		android:strokeWidth="1"
+		android:strokeColor="#FF00FF"
+		android:strokeAlpha="0.8"/>
+</vector>

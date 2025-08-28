@@ -45,30 +45,6 @@ class GarbageChallengeActivity : AppCompatActivity() {
         initViews()
         initChallenges()
         startChallenge()
-//        // 在你的GarbageChallengeActivity中，找到TTS初始化的代码（类似下面的结构）
-//        textToSpeech = TextToSpeech(this, object : TextToSpeech.OnInitListener {
-//            override fun onInit(status: Int) {
-//                if (status == TextToSpeech.SUCCESS) {
-//                    // TTS初始化成功，正常使用
-//                    val result = textToSpeech.setLanguage(Locale.CHINESE)
-//                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-//                        // 语言数据缺失或不支持，尝试提示用户
-//                        showToast("不支持中文TTS，请检查TTS引擎")
-//                    }
-//                } else {
-//                    // TTS初始化失败，尝试安装TTS数据（关键修改处）
-//                    val installIntent = Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)
-//                    // 检查是否有Activity能处理这个意图
-//                    if (installIntent.resolveActivity(packageManager) != null) {
-//                        startActivity(installIntent) // 有则启动
-//                    } else {
-//                        // 没有则提示，不崩溃
-//                        showToast("无法安装TTS数据，请确保设备支持文本转语音功能")
-//                    }
-//                }
-//            }
-//        })
-
 
     }
     // 辅助方法：显示Toast

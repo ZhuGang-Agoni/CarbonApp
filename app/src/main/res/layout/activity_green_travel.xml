@@ -1,542 +1,414 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/gray_light">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@color/gray_light">
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:visibility="visible" />
+	<com.baidu.mapapi.map.MapView
+		android:id="@+id/bmapView"
+		android:layout_width="match_parent"
+		android:layout_height="250dp"
+		android:visibility="visible" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="20dp">
 
-            <!-- 顶部标题和返回、叶子图标 -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
+			<!-- 顶部标题和返回、叶子图标 -->
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="12dp">
 
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="返回"
-                    android:src="@drawable/ic_back" />
+				<ImageButton
+					android:id="@+id/btn_back"
+					android:layout_width="32dp"
+					android:layout_height="32dp"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:contentDescription="返回"
+					android:src="@drawable/ic_back" />
 
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="绿色出行"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/green_dark"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true" />
+				<TextView
+					android:id="@+id/tvTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="绿色出行"
+					android:textSize="26sp"
+					android:textStyle="bold"
+					android:textColor="@color/green_dark"
+					android:layout_centerHorizontal="true"
+					android:layout_alignParentTop="true" />
 
-                <ImageView
-                    android:id="@+id/ivRefresh"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="2dp"
-                    android:src="@drawable/refresh" />
-            </RelativeLayout>
+				<ImageView
+					android:id="@+id/ivRefresh"
+					android:layout_width="32dp"
+					android:layout_height="32dp"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:layout_marginTop="2dp"
+					android:src="@drawable/refresh" />
+			</RelativeLayout>
 
-            <!-- 碳账户概览卡片 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardCarbonAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp">
+			<!-- 碳账户概览卡片 -->
+			<com.google.android.material.card.MaterialCardView
+				android:id="@+id/cardCarbonAccount"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				android:backgroundTint="@android:color/white"
+				app:cardCornerRadius="12dp"
+				app:cardElevation="6dp"
+				app:strokeColor="@color/green_dark"
+				app:strokeWidth="1dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="我的碳账户"
-                        android:textColor="@color/green_dark"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="我的碳账户"
+						android:textColor="@color/green_dark"
+						android:textSize="18sp"
+						android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:gravity="center_vertical"
+						android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+						<LinearLayout
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:gravity="center"
+							android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvTotalCarbon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0.0 kg"
-                                android:textColor="@color/green_dark"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
+							<TextView
+								android:id="@+id/tvTotalCarbon"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0.0 kg"
+								android:textColor="@color/green_dark"
+								android:textSize="24sp"
+								android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="累计减碳"
-                                android:textColor="@color/green_500"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="累计减碳"
+								android:textColor="@color/green_500"
+								android:textSize="14sp" />
+						</LinearLayout>
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="@color/gray_light" />
+						<View
+							android:layout_width="1dp"
+							android:layout_height="40dp"
+							android:background="@color/gray_light" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+						<LinearLayout
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:gravity="center"
+							android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvCarbonPoints"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0 积分"
-                                android:textColor="@color/green_dark"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
+							<TextView
+								android:id="@+id/tvCarbonPoints"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0 积分"
+								android:textColor="@color/green_dark"
+								android:textSize="24sp"
+								android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="可兑换奖励"
-                                android:textColor="@color/green_500"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                    </LinearLayout>
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="可兑换奖励"
+								android:textColor="@color/green_500"
+								android:textSize="14sp" />
+						</LinearLayout>
+					</LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvTodayCarbon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="今日减碳 0.0 kg"
-                        android:textColor="@color/green_light"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+					<TextView
+						android:id="@+id/tvTodayCarbon"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:text="今日减碳 0.0 kg"
+						android:textColor="@color/green_light"
+						android:textSize="14sp" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
 
-            <!-- 出行规划区域-->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp">
+			<!-- 出行规划区域-->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				android:backgroundTint="@android:color/white"
+				app:cardCornerRadius="12dp"
+				app:cardElevation="4dp"
+				app:strokeColor="@color/green_dark"
+				app:strokeWidth="1dp">
 
-                <!-- 出行规划模块 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+				<!-- 出行规划模块 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/chuxing_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="出行规划"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/green_dark" />
+					<!-- 天气提示文本（新增） -->
+					<TextView
+						android:id="@+id/tvWeatherTip"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:text="💡 提示：出行前建议查看天气预报，合理选择出行方式,点击跳转"
+						android:textColor="@color/text_primary"
+						android:textSize="14sp"
+						android:layout_marginBottom="12dp"
+						android:drawablePadding="8dp"
+						android:drawableStart="@drawable/ic_weather" />
 
-                    <!-- 起点：自动定位 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
+					<TextView
+						android:id="@+id/chuxing_title"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="出行规划"
+						android:textSize="18sp"
+						android:textStyle="bold"
+						android:textColor="@color/green_dark" />
 
-                        <ImageView
-                            android:src="@drawable/start_position"
-                            android:layout_width="24dp"
-                            android:layout_gravity="center"
-                            android:layout_height="24dp" />
-                        <EditText
-                            android:id="@+id/et_start"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:focusable="false"
-                            android:hint="当前位置(自动获取)" />
-                        <Button
-                            android:id="@+id/btn_locate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="获取定位" />
-                    </LinearLayout>
+					<!-- 起点：自动定位 -->
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:orientation="horizontal">
 
-                    <!-- 终点：搜索 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:src="@drawable/end_position"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp" />
-                        <EditText
-                            android:id="@+id/et_end"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:hint="搜索目的地" />
-                    </LinearLayout>
+						<ImageView
+							android:src="@drawable/start_position"
+							android:layout_width="24dp"
+							android:layout_gravity="center"
+							android:layout_height="24dp" />
+						<EditText
+							android:id="@+id/et_start"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="12dp"
+							android:layout_weight="1"
+							android:focusable="false"
+							android:hint="当前位置(自动获取)" />
+						<Button
+							android:id="@+id/btn_locate"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:text="获取定位" />
+					</LinearLayout>
 
-                    <!-- 计算路线按钮 -->
-                    <Button
-                        android:id="@+id/btn_calculate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:backgroundTint="@color/green_dark"
-                        android:text="计算路线"
-                        android:textColor="@android:color/white" />
+					<!-- 终点：搜索 -->
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:gravity="center_vertical"
+						android:orientation="horizontal">
+						<ImageView
+							android:src="@drawable/end_position"
+							android:layout_width="24dp"
+							android:layout_height="24dp" />
+						<EditText
+							android:id="@+id/et_end"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="12dp"
+							android:hint="搜索目的地" />
+					</LinearLayout>
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+					<!-- 计算路线按钮 -->
+					<Button
+						android:id="@+id/btn_calculate"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="16dp"
+						android:backgroundTint="@color/green_dark"
+						android:text="计算路线"
+						android:textColor="@android:color/white" />
 
-            <!-- 距离和碳排放结果显示 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp"
-                android:visibility="gone">
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+			<!-- 距离和碳排放结果显示 -->
+			<com.google.android.material.card.MaterialCardView
+				android:id="@+id/cardResult"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				android:backgroundTint="@android:color/white"
+				app:cardCornerRadius="12dp"
+				app:cardElevation="4dp"
+				app:strokeColor="@color/green_dark"
+				app:strokeWidth="1dp"
+				android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="出行信息"
-                        android:textColor="@color/green_dark"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/tvDistanceResult"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="距离：0.0 km"
-                        android:textSize="16sp" />
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="出行信息"
+						android:textColor="@color/green_dark"
+						android:textSize="16sp"
+						android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvCarbonResult"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="预计减碳：0.0 kg"
-                        android:textSize="16sp"
-                        android:textColor="@color/green_dark" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+					<TextView
+						android:id="@+id/tvDistanceResult"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						android:text="距离：0.0 km"
+						android:textSize="16sp" />
 
-            <!-- 出行方式选择标题 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="请选择出行方式"
-                    android:textColor="@color/green_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+					<TextView
+						android:id="@+id/tvCarbonResult"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						android:text="预计减碳：0.0 kg"
+						android:textSize="16sp"
+						android:textColor="@color/green_dark" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
 
-            <RadioGroup
-                android:id="@+id/travelModeGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
+			<!-- 出行方式选择标题 -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:paddingBottom="10dp"
+				android:paddingTop="10dp">
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="请选择出行方式"
+					android:textColor="@color/green_dark"
+					android:textSize="18sp"
+					android:textStyle="bold" />
+			</LinearLayout>
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/walkRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="步行"
-                    android:textColor="@color/text_primary"
-                    app:icon="@drawable/walk"
-                    app:iconGravity="top"/>
+			<RadioGroup
+				android:id="@+id/travelModeGroup"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:padding="8dp">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/bikeRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="骑行"
-                    android:textColor="@color/text_primary"
-                    app:icon="@drawable/bike"
-                    app:iconGravity="top"/>
+				<com.google.android.material.radiobutton.MaterialRadioButton
+					android:id="@+id/walkRadio"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:checked="true"
+					android:text="步行"
+					android:textColor="@color/text_primary"
+					app:icon="@drawable/walk"
+					app:iconGravity="top"/>
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/busRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="公交"
-                    android:textColor="@color/text_primary"
-                    app:icon="@drawable/bus"
-                    app:iconGravity="top"/>
+				<com.google.android.material.radiobutton.MaterialRadioButton
+					android:id="@+id/bikeRadio"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="骑行"
+					android:textColor="@color/text_primary"
+					app:icon="@drawable/bike"
+					app:iconGravity="top"/>
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/driveRadio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="自驾"
-                    android:textColor="@color/text_primary"
-                    app:icon="@drawable/drive_eta"
-                    app:iconGravity="top"/>
-            </RadioGroup>
+				<com.google.android.material.radiobutton.MaterialRadioButton
+					android:id="@+id/busRadio"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="公交"
+					android:textColor="@color/text_primary"
+					app:icon="@drawable/bus"
+					app:iconGravity="top"/>
 
+				<com.google.android.material.radiobutton.MaterialRadioButton
+					android:id="@+id/driveRadio"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="自驾"
+					android:textColor="@color/text_primary"
+					app:icon="@drawable/drive_eta"
+					app:iconGravity="top"/>
+			</RadioGroup>
 
-    <!-- 四个出行方式卡片按钮 -->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
+			<!-- 出行记录标题 -->
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="出行记录"
+				android:textColor="@color/green_dark"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				android:layout_marginTop="12dp"
+				android:layout_marginBottom="8dp" />
 
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardBus"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="@android:color/white"-->
-<!--                    app:cardCornerRadius="12dp"-->
-<!--                    app:cardElevation="4dp"-->
-<!--                    app:strokeColor="@color/green_dark"-->
-<!--                    app:strokeWidth="1dp">-->
+			<!-- 出行记录列表 -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="300dp"
+				app:cardCornerRadius="12dp"
+				app:cardElevation="4dp"
+				app:strokeColor="@color/green_dark"
+				app:strokeWidth="1dp"
+				android:backgroundTint="@android:color/white">
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:gravity="center"-->
-<!--                        android:orientation="vertical">-->
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/recyclerViewTravelRecord"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:padding="8dp"
+					android:clipToPadding="false"
+					android:background="@android:color/white" />
+			</com.google.android.material.card.MaterialCardView>
+		</LinearLayout>
+	</ScrollView>
 
-<!--                        <ImageView-->
-<!--                            android:layout_width="36dp"-->
-<!--                            android:layout_height="36dp"-->
-<!--                            android:src="@drawable/ic_bus" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="4dp"-->
-<!--                            android:text="公交"-->
-<!--                            android:textColor="@color/green_dark"-->
-<!--                            android:textSize="14sp" />-->
-<!--                    </LinearLayout>-->
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardBike"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="@android:color/white"-->
-<!--                    app:cardCornerRadius="12dp"-->
-<!--                    app:cardElevation="4dp"-->
-<!--                    app:strokeColor="@color/green_dark"-->
-<!--                    app:strokeWidth="1dp">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:gravity="center"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="36dp"-->
-<!--                            android:layout_height="36dp"-->
-<!--                            android:src="@drawable/ic_bike" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="4dp"-->
-<!--                            android:text="骑行"-->
-<!--                            android:textColor="@color/green_dark"-->
-<!--                            android:textSize="14sp" />-->
-<!--                    </LinearLayout>-->
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardMetro"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="@android:color/white"-->
-<!--                    app:cardCornerRadius="12dp"-->
-<!--                    app:cardElevation="4dp"-->
-<!--                    app:strokeColor="@color/green_dark"-->
-<!--                    app:strokeWidth="1dp">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:gravity="center"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="36dp"-->
-<!--                            android:layout_height="36dp"-->
-<!--                            android:src="@drawable/ic_metro" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="4dp"-->
-<!--                            android:text="地铁"-->
-<!--                            android:textColor="@color/green_dark"-->
-<!--                            android:textSize="14sp" />-->
-<!--                    </LinearLayout>-->
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardWalk"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="@android:color/white"-->
-<!--                    app:cardCornerRadius="12dp"-->
-<!--                    app:cardElevation="4dp"-->
-<!--                    app:strokeColor="@color/green_dark"-->
-<!--                    app:strokeWidth="1dp">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:gravity="center"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="36dp"-->
-<!--                            android:layout_height="36dp"-->
-<!--                            android:src="@drawable/ic_walk" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="4dp"-->
-<!--                            android:text="步行"-->
-<!--                            android:textColor="@color/green_dark"-->
-<!--                            android:textSize="14sp" />-->
-<!--                    </LinearLayout>-->
-<!--                </com.google.android.material.card.MaterialCardView>-->
-<!--            </LinearLayout>-->
-
-            <!-- 出行记录标题 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="出行记录"
-                android:textColor="@color/green_dark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp" />
-
-            <!-- 出行记录列表 -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="@color/green_dark"
-                app:strokeWidth="1dp"
-                android:backgroundTint="@android:color/white">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTravelRecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:clipToPadding="false"
-                    android:background="@android:color/white" />
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- 悬浮分享按钮 -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"
-        android:contentDescription="分享"
-        app:backgroundTint="@color/green_dark"
-        app:srcCompat="@drawable/ic_share"
-        app:tint="@color/white" />
+	<!-- 悬浮分享按钮 -->
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/btnShare"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_margin="24dp"
+		android:contentDescription="分享"
+		app:backgroundTint="@color/green_dark"
+		app:srcCompat="@drawable/ic_share"
+		app:tint="@color/white" />
 </LinearLayout>

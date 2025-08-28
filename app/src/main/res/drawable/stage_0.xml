@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="60dp"
+	android:height="60dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+	<!-- 土壤 -->
+	<path
+		android:fillColor="#8D6E63"
+		android:pathData="M0,60 L100,60 L100,100 L0,100 Z"/>
+	<!-- 种子 -->
+	<path
+		android:fillColor="#5D4037"
+		android:pathData="M40,50 A10,10 0 1,1 60,50 A10,10 0 1,1 40,50 Z"/>
+</vector>

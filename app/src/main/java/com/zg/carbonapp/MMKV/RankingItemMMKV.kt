@@ -22,7 +22,7 @@ object RankingItemMMKV {
             try {
                 // 使用 TypeToken 获取正确的类型信息
                 val type = object : TypeToken<List<RankingItem>>() {}.type
-                gson.fromJson(json, type)
+                gson.fromJson(json, type) ?: emptyList()
             } catch (e: Exception) {
                 e.printStackTrace()
                 emptyList()

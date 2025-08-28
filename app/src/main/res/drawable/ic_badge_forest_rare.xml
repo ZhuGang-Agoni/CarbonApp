@@ -1,0 +1,10 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:drawable="@drawable/ic_badge_forest_static">
+	<target
+		android:name="leaf"
+		android:animation="@anim/leaf_rotate"/>
+</animated-vector>
+
+
+
+	<!-- 动效：animator/leaf_rotate.xml -->

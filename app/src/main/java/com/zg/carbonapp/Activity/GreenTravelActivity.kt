@@ -35,12 +35,16 @@ import com.baidu.mapapi.search.sug.SuggestionSearchOption
 import com.zg.carbonapp.Adapter.TravelRecordAdapter
 import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.Dao.TravelRecord
+import com.zg.carbonapp.MMKV.CurrentWeatherMMKV
 import com.zg.carbonapp.MMKV.TravelRecordManager
 import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Tool.IntentHelper
+import com.zg.carbonapp.Tool.TravelRecommendationDialog
 import com.zg.carbonapp.com.baidu.mapapi.overlayutil.*
 import com.zg.carbonapp.databinding.ActivityGreenTravelBinding
 import com.zg.carbonapp.databinding.DialogRouteDetailBinding
+import com.zg.carbonapp.ui.weather.WeatherActivity
 import java.util.*
 import kotlin.math.max
 
@@ -134,6 +138,8 @@ class GreenTravelActivity : AppCompatActivity(),
             currentCity = it.city?.replace("市", "")
 
             binding.etStart.setText(it.addrStr)
+
+
             if (binding.etStart.text.isNotEmpty() && mBaiduMap.mapStatus.zoom < 10) {
                 mBaiduMap.animateMapStatus(
                     MapStatusUpdateFactory.newLatLngZoom(
@@ -156,6 +162,11 @@ class GreenTravelActivity : AppCompatActivity(),
         // 百度定位隐私政策
         LocationClient.setAgreePrivacy(true)
 
+
+
+        binding.tvWeatherTip.setOnClickListener{
+            IntentHelper.goIntent(this, WeatherActivity::class.java)
+        }
         // 初始化百度地图
         mMapView = findViewById(R.id.bmapView)
         mBaiduMap = mMapView?.map!!
@@ -179,6 +190,27 @@ class GreenTravelActivity : AppCompatActivity(),
 
         // 初始化出行记录
         initTravelRecord()
+    }
+
+    private fun checkIfCityHasSubway(city: String?): Boolean {
+        // 截至2025年已开通地铁的城市（含已运营线路）
+        return city in listOf(
+            // 一线及新一线城市
+            "北京", "上海", "广州", "深圳", "成都", "武汉", "重庆", "南京",
+            "杭州", "西安", "沈阳", "天津", "苏州", "郑州", "长沙", "大连",
+            "青岛", "宁波", "东莞", "无锡",
+
+            // 二线及省会城市
+            "合肥", "福州", "厦门", "哈尔滨", "长春", "济南", "太原", "石家庄",
+            "昆明", "南宁", "南昌", "贵阳", "兰州", "乌鲁木齐", "呼和浩特",
+            "海口", "西宁", "银川",
+
+            // 三线及经济发达城市
+            "徐州", "常州", "南通", "佛山", "东莞", "惠州", "珠海", "中山",
+            "温州", "绍兴", "嘉兴", "泉州", "烟台", "潍坊", "洛阳", "南通",
+            "扬州", "镇江", "唐山", "秦皇岛", "包头", "株洲", "湘潭", "盐城",
+            "绍兴", "湖州", "马鞍山", "安庆", "赣州", "上饶", "济宁", "威海"
+        )
     }
 
     // 初始化搜索组件
@@ -229,8 +261,36 @@ class GreenTravelActivity : AppCompatActivity(),
         binding.etEnd.addTextChangedListener(textWatcher)
 
         // 计算路线按钮
-        binding.btnCalculate.setOnClickListener { calculateRouteWithCheck() }
+        binding.btnCalculate.setOnClickListener {
+            val weather = CurrentWeatherMMKV.getWeatherInfo()
+            if (weather != null) {
+                // 计算直线距离（单位：米）
+                val distanceMeters = calculateStraightDistance()
+                val distanceKm = distanceMeters / 1000f // 转换为公里
 
+
+                val isSameCity = currentCity != null && endCity != null &&
+                        currentCity.equals(endCity, ignoreCase = true)
+                val hasSubway = checkIfCityHasSubway(currentCity)
+
+                // 判断是否是中午时段（11:00-14:00）
+                val calendar = Calendar.getInstance()
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                val isNoon = hour in 11..14 // 11点到14点视为中午
+
+                // 修改对话框调用，添加回调函数
+                TravelRecommendationDialog(weather, distanceKm, isNoon,
+                    isSameCity,hasSubway) {
+                    // 对话框确定按钮点击后执行
+                    calculateRouteWithCheck()
+                }.show(
+                    supportFragmentManager,
+                    "TravelRecommendationDialog"
+                )
+            } else {
+                Toast.makeText(this, "无可用天气信息，请先获取当前位置天气", Toast.LENGTH_SHORT).show()
+            }
+        }
         // 出行方式选择
         binding.travelModeGroup.setOnCheckedChangeListener { _, checkedId ->
             currentRouteType = when (checkedId) {
@@ -246,6 +306,14 @@ class GreenTravelActivity : AppCompatActivity(),
         binding.ivRefresh.setOnClickListener {
             refreshTravelRecordUI()
             Toast.makeText(this, "已刷新最新记录", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun calculateStraightDistance(): Float {
+        return if (currentLatLng != null && endLatLng != null) {
+            // 使用百度地图的距离计算工具
+            com.baidu.mapapi.utils.DistanceUtil.getDistance(currentLatLng, endLatLng).toFloat()
+        } else {
+            (-1).toFloat()
         }
     }
 
@@ -328,15 +396,15 @@ class GreenTravelActivity : AppCompatActivity(),
     // 计算路线
     private fun calculateRoute() {
         // 跨城判断：如果选择公交且是同市，则提示用户
-        if (currentRouteType == RouteType.BUS) {
-            if (currentCity!= null && endCity!= null &&
-                currentCity.equals(endCity, ignoreCase = true)) {
-                Toast.makeText(this, "同市建议选择其他出行方式（如驾车/骑行）", Toast.LENGTH_SHORT).show()
-                binding.btnCalculate.text = "计算路线"
-                binding.btnCalculate.isEnabled = true
-                return
-            }
-        }
+//        if (currentRouteType == RouteType.BUS) {
+//            if (currentCity!= null && endCity!= null &&
+//                currentCity.equals(endCity, ignoreCase = true)) {
+//                Toast.makeText(this, "同市建议选择其他出行方式（如驾车/骑行）", Toast.LENGTH_SHORT).show()
+//                binding.btnCalculate.text = "计算路线"
+//                binding.btnCalculate.isEnabled = true
+//                return
+//            }
+//        }
 
         binding.btnCalculate.text = "计算中..."
         binding.btnCalculate.isEnabled = false
@@ -352,6 +420,7 @@ class GreenTravelActivity : AppCompatActivity(),
             )
             RouteType.BUS -> routeSearch?.masstransitSearch(
                 MassTransitRoutePlanOption().from(startNode).to(endNode)
+
             )
             RouteType.DRIVE -> routeSearch?.drivingSearch(
                 DrivingRoutePlanOption().from(startNode).to(endNode)
@@ -393,7 +462,12 @@ class GreenTravelActivity : AppCompatActivity(),
                 carbonCount = carbonCount.toString(),
                 distance = formatDistance(currentDistance),
                 time = System.currentTimeMillis(),
-                modelRavel = getRouteIconResId(currentRouteType),
+                modelRavelTag = when (currentRouteType) {
+                    RouteType.WALK -> "walk"
+                    RouteType.RIDE -> "bike"
+                    RouteType.BUS -> "bus"
+                    RouteType.DRIVE -> "drive"
+                },
                 routeDescription = currentRouteDescription, // 保存路线描述
                 routeTitle = currentRouteTitle, // 保存路线标题
                 duration = formatDuration(currentDuration) // 保存时长

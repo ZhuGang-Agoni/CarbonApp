@@ -1,25 +1,33 @@
 package com.zg.carbonapp.Adapter
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.zg.carbonapp.Dao.RankingItem
 import com.zg.carbonapp.R
+import android.graphics.drawable.Drawable
+import androidx.fragment.app.FragmentActivity
 
 class RankingAdapter(
-    // 1. 改为接收不可变列表，内部转换为可变列表（核心修改）
     itemList: List<RankingItem>,
-    context: Context
+    private val context: Context
 ) : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 
-    // 2. 内部用可变列表存储数据（核心修改）
     private val itemList: MutableList<RankingItem> = itemList.toMutableList()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,58 +42,90 @@ class RankingAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.userId.text = item.rank.toString()
-
         holder.carbonCount.text = item.carbonCount.toString()
         holder.userName.text = item.userName
 
-//        Glide.with(holder.itemView.context)
-//            .load(item.userEvator)            // 加载头像（URL/资源ID）
-//            .error(R.drawable.default_avatar)       // 加载失败头像
-//
-//            .into(holder.userEvator)
-        try {
-            val parts = item.userEvator.split(".")
-            if (parts.size == 3 && parts[0] == "R" && parts[1] == "drawable") {
-                val resName = parts[2]
-                val resId = holder.itemView.context.resources.getIdentifier(
-                    resName, "drawable", holder.itemView.context.packageName
-                )
-                if (resId != 0) {
-                    holder.userEvator.setImageResource(resId)
-                    return
-                }
-            }
-        } catch (e: Exception) {
-            // 失败时显示默认头像
-            holder.userEvator.setImageResource(R.drawable.default_avatar)
-            Log.e("RankingAdapter", "解析资源失败: ${item.userEvator}", e)
-        }
+        // 加载用户头像（对齐 CommunityFeedAdapter 逻辑）
+        loadAvatar(holder.userEvator, item.userEvator, item.userName)
 
-
-
-        holder.itemView.setOnClickListener {
-            // 点击事件逻辑
-        }
-        // 在Adapter的onBindViewHolder中添加
+        // 排名颜色
         when (item.rank) {
-            1 -> holder.userId.setTextColor(holder.itemView.context.getColor(R.color.gold))
-            2 -> holder.userId.setTextColor(holder.itemView.context.getColor(R.color.silver))
-            3 -> holder.userId.setTextColor(holder.itemView.context.getColor(R.color.bronze))
-            else -> holder.userId.setTextColor(holder.itemView.context.getColor(R.color.black))
+            1 -> holder.userId.setTextColor(ContextCompat.getColor(context, R.color.gold))
+            2 -> holder.userId.setTextColor(ContextCompat.getColor(context, R.color.silver))
+            3 -> holder.userId.setTextColor(ContextCompat.getColor(context, R.color.bronze))
+            else -> holder.userId.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
     }
 
-    // 3. 修复更新数据方法（现在可修改内部可变列表）
+    // 与 CommunityFeedAdapter 对齐的头像加载逻辑
+    private fun loadAvatar(imageView: ImageView, avatarUrl: String?, username: String) {
+        // 先设置默认头像兜底
+        imageView.setImageResource(R.drawable.default_avatar)
+
+        if (avatarUrl.isNullOrEmpty()) {
+            Log.w("AvatarLoad", "用户[$username] - 头像URL为空，显示默认头像")
+            return
+        }
+
+        // 权限处理：针对 Android 13（TIRAMISU）以下版本，处理 READ_EXTERNAL_STORAGE 权限
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                // 若在 FragmentActivity 环境中，请求权限
+                if (context is FragmentActivity) {
+                    ActivityCompat.requestPermissions(
+                        context,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        10086
+                    )
+                } else {
+                    Log.w("AvatarLoad", "用户[$username] - 无读取存储权限且非 FragmentActivity 环境，无法加载头像")
+                    return
+                }
+            }
+        }
+
+        // 使用 Glide 加载，配置与 CommunityFeedAdapter 一致的监听
+        Glide.with(context)
+            .load(avatarUrl)
+            .circleCrop()
+            .placeholder(R.drawable.default_avatar)
+            .error(R.drawable.default_avatar)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Log.e("AvatarLoad", "用户[$username] - 头像加载失败: ${e?.message}", e)
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Log.d("AvatarLoad", "用户[$username] - 头像加载成功")
+                    return false
+                }
+            })
+            .into(imageView)
+    }
+
     fun updateData(newList: List<RankingItem>) {
-        itemList.clear() // 现在不会报错了
+        itemList.clear()
         itemList.addAll(newList)
         notifyDataSetChanged()
+        Log.d("RankingAdapter", "数据已更新，数量: ${itemList.size}")
     }
 }

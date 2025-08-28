@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="64dp"
+	android:height="64dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+
+	<!-- 赛博基底 -->
+	<path
+		android:pathData="M50,10 Q30,30 40,60 Q50,50 60,60 Q70,30 50,10 Z"
+		android:strokeWidth="2"
+		android:strokeColor="#2E7D32"> <!-- 深绿边框 -->
+		<aapt:attr name="android:fillColor">
+			<gradient
+				android:type="linear"
+				android:angle="45"
+				android:startX="30"
+				android:startY="30"
+				android:endX="70"
+				android:endY="70">
+				<item android:color="#388E3C" android:offset="0"/> <!-- 森林绿 -->
+				<item android:color="#1976D2" android:offset="1"/> <!-- 科技蓝 -->
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 能量核心 -->
+	<path
+		android:pathData="M30,50 Q20,30 35,20 Z"
+		android:fillColor="#43A047"/> <!-- 中绿 -->
+	<path
+		android:pathData="M70,50 Q80,30 65,20 Z"
+		android:fillColor="#2196F3"/> <!-- 亮蓝 -->
+
+	<!-- 数据干扰层 -->
+	<path
+		android:pathData="M40,40 L45,35 M60,40 L55,35"
+		android:strokeWidth="1"
+		android:strokeColor="#BBDEFB"
+		android:strokeAlpha="0.4"/> <!-- 浅蓝干扰线 -->
+</vector>

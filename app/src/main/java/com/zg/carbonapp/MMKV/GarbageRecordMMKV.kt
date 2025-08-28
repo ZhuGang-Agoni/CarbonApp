@@ -9,6 +9,8 @@ import com.zg.carbonapp.Dao.RecognitionRecord
 import java.util.*
 
 object GarbageRecordMMKV {
+    private const val KEY_RECOGNITION_RECORDS = "recognition_records"
+    private const val KEY_LAST_REPORT_SHOW_TIME = "last_report_show_time"
     private val mmkv by lazy { MMKV.mmkvWithID("garbage_record") }
     private val gson = Gson()
 
@@ -50,22 +52,64 @@ object GarbageRecordMMKV {
         }
     }
 
-    // 获取最近3条记录
-    fun getRecentRecords(): List<Any> {
-        val challengeRecords = getChallengeRecords().take(3)
-        val recognitionRecords = getRecognitionRecords().take(3)
-        
+    // 获取指定时间段内的记录
+    fun getRecordsInTimeRange(startTime: Long, endTime: Long): List<RecognitionRecord> {
+        return getRecognitionRecords().filter { it.timestamp in startTime..endTime }
+    }
+
+    // 保存上次报告显示时间
+    fun saveLastReportShowTime(time: Long) {
+        mmkv.encode(KEY_LAST_REPORT_SHOW_TIME, time)
+    }
+
+    // 获取上次报告显示时间
+    fun getLastReportShowTime(): Long {
+        return mmkv.decodeLong(KEY_LAST_REPORT_SHOW_TIME, 0)
+    }
+
+
+    // 获取所有记录（挑战记录 + 识别记录）
+    fun getAllRecords(): List<Any> {
         val allRecords = mutableListOf<Any>()
-        allRecords.addAll(challengeRecords)
-        allRecords.addAll(recognitionRecords)
-        
-        return allRecords.sortedByDescending { 
+        allRecords.addAll(getChallengeRecords())
+        allRecords.addAll(getRecognitionRecords())
+        return allRecords.sortedByDescending {
             when (it) {
                 is ChallengeRecord -> it.timestamp
                 is RecognitionRecord -> it.timestamp
                 else -> 0L
             }
-        }.take(3)
+        }
+    }
+
+    // 获取分类统计数据
+    fun getCategoryStats(): Map<String, Int> {
+        val stats = mutableMapOf(
+            "可回收物" to 0,
+            "有害垃圾" to 0,
+            "厨余垃圾" to 0,
+            "其他垃圾" to 0
+        )
+
+        // 只统计识别记录中的分类
+        getRecognitionRecords().forEach { record ->
+            val category = record.category
+            if (stats.containsKey(category)) {
+                stats[category] = stats[category]!! + 1
+            }
+        }
+
+        return stats
+    }
+
+    // 获取总记录数
+    fun getTotalRecordCount(): Int {
+        return getAllRecords().size
+    }
+
+    // 获取最近3条记录
+    fun getRecentRecords(): List<Any> {
+        return getAllRecords().take(3)
     }
 
     // 检查今日挑战次数
@@ -76,6 +120,7 @@ object GarbageRecordMMKV {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }.timeInMillis
+
         return getChallengeRecords().count {
             it.timestamp >= today && it.isFinished // 只统计完整挑战
         }
@@ -93,46 +138,8 @@ object GarbageRecordMMKV {
         }
     }
 
-    // 遍历本地所有识别记录 调用后端API上传数据
-    fun syncRecognitionRecordsToServer(clearLocalAfterSync: Boolean = false) {
-        val records = getRecognitionRecords()
-        for (record in records) {
-            // TODO: 调用后端API上传单条识别记录（建议协程/异步）
-            // ApiService.uploadRecognitionRecord(record)
-        }
-        if (clearLocalAfterSync) {
-            mmkv.remove("recognition_records")
-        }
-    }
-
-    // 批量保存挑战记录（覆盖本地） 后期可用于从后端拉取后覆盖本地
-    fun saveChallengeRecords(records: List<ChallengeRecord>) {
-        mmkv.encode("challenge_records", gson.toJson(records))
-        // TODO: 可选：拉取后端数据后本地覆盖
-    }
-
-    // 批量保存识别记录（覆盖本地） 后期可用于从后端拉取后覆盖本地
-    fun saveRecognitionRecords(records: List<RecognitionRecord>) {
-        mmkv.encode("recognition_records", gson.toJson(records))
-        // TODO: 可选：拉取后端数据后本地覆盖
-    }
-
-    // 从后端拉取挑战记录并存入本地（协程/异步环境下调用）
-    suspend fun fetchAndSaveChallengeRecordsFromServer() {
-        // TODO: 调用ApiService.getChallengeRecords()获取数据
-        // val records = ApiService.getChallengeRecords()
-        // saveChallengeRecords(records)
-    }
-
-    // 从后端拉取识别记录并存入本地（协程/异步环境下调用）
-    suspend fun fetchAndSaveRecognitionRecordsFromServer() {
-        // TODO: 调用ApiService.getRecognitionRecords()获取数据
-        // val records = ApiService.getRecognitionRecords()
-        // saveRecognitionRecords(records)
-    }
-
     // 清空所有垃圾分类记录
     fun clearRecords() {
         mmkv.clearAll()
     }
-} 
+}

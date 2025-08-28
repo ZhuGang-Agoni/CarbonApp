@@ -2,6 +2,7 @@ package com.zg.carbonapp.Adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.zg.carbonapp.Dao.ItemTravelRecord
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Tool.TravelIconMapper
 import com.zg.carbonapp.databinding.DialogRouteDetailBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,10 +47,14 @@ class TravelRecordAdapter(
         val item = recordList[position]
 
         // 设置图标
+        val iconResId = TravelIconMapper.getIconResId(context, item.modelRavelTag)
+
+        // 加载图标（加校验）
         try {
-            holder.ivModeIcon.setImageResource(item.modelRavel)
+            holder.ivModeIcon.setImageResource(iconResId)
         } catch (e: Exception) {
-            holder.ivModeIcon.setImageResource(R.drawable.walk)
+            Log.e("IconLoad", "图标加载失败: ${e.message}", e)
+            holder.ivModeIcon.setImageResource(R.drawable.destination)
         }
 
         // 绑定数据

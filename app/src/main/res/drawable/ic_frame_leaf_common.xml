@@ -1,0 +1,62 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="200dp"
+	android:height="200dp"
+	android:viewportWidth="200"
+	android:viewportHeight="200">
+
+	<!-- 外层金属渐变边框 -->
+	<path
+		android:pathData="M100,100m-96,0a96,96 0,1 1,192 0a96,96 0,1 1,-192 0"
+		android:strokeWidth="4">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="linear"
+				android:angle="45"
+				android:startX="20"
+				android:startY="20"
+				android:endX="180"
+				android:endY="180">
+				<item
+					android:color="#FFE27A"
+					android:offset="0"/>
+				<item
+					android:color="#FFB347"
+					android:offset="0.5"/>
+				<item
+					android:color="#FF8C00"
+					android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 内层光泽效果 -->
+	<path
+		android:pathData="M100,100m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0"
+		android:strokeWidth="2"
+		android:strokeAlpha="0.3">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="linear"
+				android:angle="135"
+				android:startX="50"
+				android:startY="50"
+				android:endX="150"
+				android:endY="150">
+				<item
+					android:color="#FFFFFF"
+					android:offset="0"/>
+				<item
+					android:color="#00FFFFFF"
+					android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 装饰性光点 -->
+	<path
+		android:pathData="M40,40 L45,35 M160,40 L155,35"
+		android:strokeWidth="2"
+		android:strokeColor="#FFFFFF"
+		android:strokeAlpha="0.6"/>
+</vector>

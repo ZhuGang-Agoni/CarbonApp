@@ -1,0 +1,23 @@
+<!-- 静态基础：ic_badge_forest_static.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="64dp"
+	android:height="64dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+	<group android:name="leaf">
+		<path
+			android:name="leaf1"
+			android:fillColor="#4CAF50"
+			android:pathData="M30,50 Q20,30 35,20 Z"/>
+		<path
+			android:name="leaf2"
+			android:fillColor="#8BC34A"
+			android:pathData="M70,50 Q80,30 65,20 Z"/>
+	</group>
+	<path
+		android:name="badge"
+		android:fillColor="#E8F5E9"
+		android:pathData="M50,10 Q30,30 40,60 Q50,50 60,60 Q70,30 50,10 Z"
+		android:strokeWidth="2"
+		android:strokeColor="#388E3C"/>
+</vector>
