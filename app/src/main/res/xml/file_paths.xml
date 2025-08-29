@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+	<!-- 保留原有的相机照片路径配置（用于拍照功能） -->
+	<external-files-path
+		name="camera_photos"
+		path="Pictures/" />  <!-- 注意：原配置中"Picture那你在我的基础上修改吧s/"是笔误，已修正为"Pictures/" -->
+
+	<!-- 新增适配头像和动态图片的路径配置 -->
+	<!-- 1. 应用外部存储私有目录（涵盖应用生成的所有图片） -->
+	<external-files-path
+		name="app_all_images"
+		path="." />  <!-- 表示external-files目录下的所有文件（包括Pictures子目录） -->
+
+	<!-- 2. 系统外部存储根目录（用于访问相册等公共目录的图片） -->
+	<external-path
+		name="external_root"
+		path="." />  <!-- 允许访问外部存储根目录下的文件（如相册图片） -->
+
+	<!-- 3. 应用缓存目录（处理临时图片） -->
+	<external-cache-path
+		name="app_image_cache"
+		path="Pictures/" />  <!-- 缓存目录下的图片子目录 -->
+</paths>

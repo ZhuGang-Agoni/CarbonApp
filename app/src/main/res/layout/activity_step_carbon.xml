@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/gray_f5">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<!-- 标题栏 -->
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="@color/green_primary"
+			app:title="步数碳减排"
+			app:titleTextColor="@android:color/white"
+			app:navigationIcon="@drawable/ic_back"
+			app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
+
+		<!-- 进度卡片 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="6dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="20dp">
+
+				<!-- 目标进度 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_marginBottom="20dp">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="今日步数目标"
+							android:textColor="@color/gray_600"
+							android:textSize="14sp"/>
+
+						<TextView
+							android:id="@+id/tv_goal_progress"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="3200/10000步 (32%)"
+							android:textColor="@color/green_primary"
+							android:textSize="14sp"
+							android:textStyle="bold"/>
+					</LinearLayout>
+
+					<!-- 进度条 -->
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="12dp"
+						android:background="@drawable/bg_progress_unfilled">
+
+						<View
+							android:id="@+id/progress_bar"
+							android:layout_width="32dp"
+							android:layout_height="match_parent"
+							android:background="@drawable/bg_progress_filled"
+							app:layout_constraintStart_toStartOf="parent"/>
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				</LinearLayout>
+
+				<!-- 步数显示 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:layout_marginBottom="24dp">
+
+					<TextView
+						android:id="@+id/tvSteps"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="3200"
+						android:textColor="@color/green_primary"
+						android:textSize="56sp"
+						android:textStyle="bold"
+						android:layout_marginEnd="8dp"/>
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="步"
+						android:textColor="@color/gray_600"
+						android:textSize="20sp"
+						android:layout_marginTop="16dp"/>
+				</LinearLayout>
+
+				<!-- 数据网格 -->
+				<GridLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:columnCount="2"
+					android:rowCount="2"
+					android:layout_marginBottom="24dp">
+
+					<!-- 距离 -->
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_columnWeight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:layout_margin="8dp">
+
+						<TextView
+							android:id="@+id/tvDistance"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="3.2 公里"
+							android:textColor="@color/gray_800"
+							android:textSize="18sp"
+							android:textStyle="bold"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="步行距离"
+							android:textColor="@color/gray_500"
+							android:textSize="14sp"/>
+					</LinearLayout>
+
+					<!-- 碳减排 -->
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_columnWeight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:layout_margin="8dp">
+
+						<TextView
+							android:id="@+id/tvCarbon"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="0.54 kg"
+							android:textColor="@color/green_primary"
+							android:textSize="18sp"
+							android:textStyle="bold"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="减少碳排放"
+							android:textColor="@color/gray_500"
+							android:textSize="14sp"/>
+					</LinearLayout>
+
+					<!-- 积分 -->
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_columnWeight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:layout_margin="8dp">
+
+						<TextView
+							android:id="@+id/tvPoints"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="54"
+							android:textColor="@color/blue_primary"
+							android:textSize="18sp"
+							android:textStyle="bold"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="碳积分"
+							android:textColor="@color/gray_500"
+							android:textSize="14sp"/>
+					</LinearLayout>
+
+					<!-- 累计步数 -->
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_columnWeight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:layout_margin="8dp">
+
+						<TextView
+							android:id="@+id/tvTotalSteps"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="15600"
+							android:textColor="@color/orange_primary"
+							android:textSize="18sp"
+							android:textStyle="bold"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="累计步数"
+							android:textColor="@color/gray_500"
+							android:textSize="14sp"/>
+					</LinearLayout>
+				</GridLayout>
+
+				<!-- 功能按钮 -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
+					android:weightSum="2">
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/btnReport"
+						android:layout_width="0dp"
+						android:layout_height="56dp"
+						android:layout_weight="1"
+						android:layout_marginEnd="8dp"
+						android:text="减排报告"
+						app:cornerRadius="28dp"
+						app:backgroundTint="@color/green_primary"/>
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/btnHistory"
+						android:layout_width="0dp"
+						android:layout_height="56dp"
+						android:layout_weight="1"
+						android:layout_marginStart="8dp"
+						android:text="历史数据"
+						app:cornerRadius="28dp"
+						app:backgroundTint="@color/blue_primary"/>
+				</LinearLayout>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- 低碳成就时间轴 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:layout_marginTop="0dp"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="低碳成就"
+					android:textColor="@color/gray_800"
+					android:textSize="18sp"
+					android:textStyle="bold"
+					android:layout_marginBottom="16dp"/>
+
+				<!-- 累计步数提示 -->
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="累计步数可解锁以下奖励"
+					android:textColor="@color/gray_600"
+					android:textSize="14sp"
+					android:layout_marginBottom="16dp"/>
+
+				<!-- 水平时间轴容器 -->
+				<HorizontalScrollView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingVertical="8dp">
+
+					<LinearLayout
+						android:id="@+id/timelineContainer"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal"
+						android:gravity="center_vertical">
+
+						<!-- 时间轴节点将通过代码动态添加 -->
+					</LinearLayout>
+				</HorizontalScrollView>
+
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- 低碳小贴士 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:layout_marginTop="0dp"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="4dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="今日低碳小贴士"
+					android:textColor="@color/gray_800"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:layout_marginBottom="12dp"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="傍晚步行30分钟不仅能完成今日步数目标，还能促进新陈代谢。试试选择公园等绿化区域，减排同时还能呼吸新鲜空气~"
+					android:textColor="@color/gray_600"
+					android:textSize="14sp"
+					android:lineSpacingExtra="4dp"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="查看更多 →"
+					android:textColor="@color/green_primary"
+					android:textSize="14sp"
+					android:layout_marginTop="12dp"
+					android:clickable="true"
+					android:focusable="true"/>
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- 积分说明 -->
+		<com.google.android.material.card.MaterialCardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginBottom="24dp"
+			android:layout_marginTop="0dp"
+			app:cardCornerRadius="12dp"
+			app:cardBackgroundColor="#E8F5E9">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="16dp"
+				android:text="💡 1000步=0.17kg减排=17积分，积分可兑换低碳商品"
+				android:textColor="@color/gray_800"
+				android:textSize="14sp"/>
+		</com.google.android.material.card.MaterialCardView>
+	</LinearLayout>
+</androidx.core.widget.NestedScrollView>

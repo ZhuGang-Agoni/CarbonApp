@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardCornerRadius="12dp"
+	app:cardElevation="3dp"
+	app:cardBackgroundColor="@color/white"
+	android:layout_marginVertical="8dp">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:padding="16dp">
+
+<!-- 勋章图标 -->
+<ImageView
+	android:id="@+id/badgeIcon"
+	android:layout_width="56dp"
+android:layout_height="56dp"
+android:src="@drawable/ic_medal_forest" />
+
+<!-- 信息区域 -->
+<LinearLayout
+	android:layout_width="0dp"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:orientation="vertical"
+	android:layout_marginStart="12dp">
+
+	<TextView
+		android:id="@+id/badgeName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="森林守护者"
+		android:textColor="@color/black"
+		android:textSize="16sp"
+		android:textStyle="bold" />
+
+	<TextView
+		android:id="@+id/badgeDesc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="累计减排超过2000kg解锁"
+		android:textColor="@color/grey_600"
+		android:textSize="14sp"
+		android:layout_marginTop="4dp" />
+</LinearLayout>
+
+<!-- 选中标记：Material设计的CheckBox -->
+<com.google.android.material.checkbox.MaterialCheckBox
+	android:id="@+id/cbSelected"
+	android:layout_width="24dp"
+	android:layout_height="24dp"
+	android:layout_marginStart="12dp"
+	android:checked="false"
+	android:gravity="center"
+	android:layout_marginTop="10dp"
+	android:visibility="gone"
+     />
+</LinearLayout>
+
+	</androidx.cardview.widget.CardView>

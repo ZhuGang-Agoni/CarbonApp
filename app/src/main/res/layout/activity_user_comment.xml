@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 根布局改为垂直方向，用 weight 控制评论列表占满中间空间 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:padding="12dp">
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		>
+	<ImageView
+		android:layout_width="20dp"
+		android:layout_height="20dp"
+		android:id="@+id/ic_back"
+		android:src="@drawable/return__1_">
+
+	</ImageView>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="详情"
+		android:layout_marginStart="160dp"
+		android:textSize="20dp"/>
+
+
+
+
+	</LinearLayout>
+	<!-- 1. 动态信息区域（用户信息、内容、图片、互动按钮） -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<!-- 用户信息区域 -->
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="8dp">
+
+			<com.google.android.material.imageview.ShapeableImageView
+				android:id="@+id/ivAvatar"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:src="@drawable/img"
+				android:scaleType="centerCrop"
+				app:shapeAppearanceOverlay="@style/AvatarShapeAppearance" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:orientation="vertical"
+				android:paddingStart="8dp">
+
+				<TextView
+					android:id="@+id/tvUsername"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="用户名"
+					android:textSize="16sp"
+					android:textStyle="bold" />
+
+				<TextView
+					android:id="@+id/tvTime"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="10分钟前"
+					android:textSize="12sp"
+					android:textColor="#888888" />
+			</LinearLayout>
+
+			<ImageView
+				android:id="@+id/ivMore"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:src="@drawable/more"
+				android:padding="4dp" />
+		</LinearLayout>
+
+		<!-- 动态内容 -->
+		<TextView
+			android:id="@+id/tvContent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="这是一条碳社区的动态内容，分享我的低碳生活方式和环保行动..."
+			android:textSize="14sp"
+			android:paddingBottom="8dp" />
+
+		<!-- 图片展示区域 -->
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rvImages"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="8dp"
+			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+			app:spanCount="3" />
+
+		<!-- 互动按钮区域 -->
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingTop="8dp"
+			android:weightSum="3">
+
+			<LinearLayout
+				android:id="@+id/btnLike"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:orientation="horizontal"
+				android:padding="8dp">
+
+				<ImageView
+					android:id="@+id/ivLike"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:src="@drawable/like" />
+
+				<TextView
+					android:id="@+id/tvLikeCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="128"
+					android:textSize="12sp"
+					android:paddingStart="4dp" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/btnComment"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:orientation="horizontal"
+				android:padding="8dp">
+
+				<ImageView
+					android:id="@+id/ivComment"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:src="@drawable/comment_light" />
+
+				<TextView
+					android:id="@+id/tvCommentCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="36"
+					android:textSize="12sp"
+					android:paddingStart="4dp" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/btnShare"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:orientation="horizontal"
+				android:padding="8dp">
+
+				<ImageView
+					android:id="@+id/ivShare"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:src="@drawable/save" />
+
+				<TextView
+					android:id="@+id/tvShareCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="8"
+					android:textSize="12sp"
+					android:paddingStart="4dp" />
+			</LinearLayout>
+		</LinearLayout>
+
+		<!-- 分割线（动态区域与评论区域分隔） -->
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="#e0e0e0"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="8dp" />
+	</LinearLayout>
+
+	<!-- 2. 评论列表区域（用 ScrollView 包裹，占满中间剩余空间，实现滚动） -->
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:overScrollMode="always">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<!-- 评论列表标题 -->
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="评论区"
+				android:textSize="14sp"
+				android:textStyle="bold"
+				android:paddingBottom="8dp" />
+
+			<!-- 评论列表 RecyclerView（放在 ScrollView 内，高度 wrap_content） -->
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/recyclerViewComment"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="16dp" />
+		</LinearLayout>
+	</ScrollView>
+
+	<!-- 3. 发布评论区域（固定在最底部，不随滚动移动） -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="8dp"
+		android:background="#f5f5f5"
+		android:layout_marginTop="8dp">
+
+		<!-- 评论输入框 -->
+		<EditText
+			android:id="@+id/etCommentInput"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:hint="输入评论内容..."
+			android:padding="10dp"
+			android:minHeight="45dp"
+			android:maxLines="3" />
+
+		<!-- 发布按钮 -->
+		<Button
+			android:id="@+id/btnSendComment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="发布"
+			android:layout_marginStart="8dp"
+			android:backgroundTint="@color/colorPrimary"
+			android:textColor="@android:color/white"
+			android:paddingStart="16dp"
+			android:paddingEnd="16dp" />
+	</LinearLayout>
+
+</LinearLayout>

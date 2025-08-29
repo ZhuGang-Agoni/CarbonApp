@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+	<!-- 优化：用更自然的渐变色 + 动态角度 -->
+	<gradient
+		android:startColor="#87CEEB"
+	android:endColor="#E0FFFF"
+	android:angle="270" />        <!-- 垂直渐变（从上到下） -->
+	<corners android:radius="0dp"/>
+</shape>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="120dp"
+	android:layout_marginBottom="12dp"
+	app:cardBackgroundColor="@color/white"
+	app:cardCornerRadius="12dp"
+	app:cardElevation="4dp">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<!-- 阶段图标 -->
+		<ImageView
+			android:id="@+id/iv_stage"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:contentDescription="@string/app_name"/>
+
+		<!-- 信息区 -->
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/tv_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/forest_text"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+
+			<TextView
+				android:id="@+id/tv_age"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:textColor="@color/forest_text"
+				android:textSize="14sp"/>
+
+			<TextView
+				android:id="@+id/tv_stage"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="4dp"
+				android:textColor="@color/forest_primary"
+				android:textSize="14sp"/>
+		</LinearLayout>
+
+		<!-- 箭头 -->
+		<ImageView
+			android:layout_width="24dp"
+			android:layout_height="24dp"
+			android:src="@drawable/right"
+			android:contentDescription="@string/app_name"/>
+	</LinearLayout>
+
+</androidx.cardview.widget.CardView>

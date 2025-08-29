@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bg_gradient_main"
+	android:paddingHorizontal="20dp">
+
+	<!-- 顶部标题栏 -->
+	<TextView
+		android:id="@+id/game_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="40dp"
+		android:text="垃圾分类大作战"
+		android:textColor="@color/white"
+		android:textSize="32sp"
+		android:textStyle="bold"
+		android:shadowColor="@color/black_alpha_30"
+		android:shadowDx="2"
+		android:shadowDy="2"
+		android:shadowRadius="4" />
+
+	<!-- 角色选择区域（核心优化：左右按钮放在垃圾桶两侧） -->
+	<RelativeLayout
+		android:id="@+id/player_select_container"
+		android:layout_width="match_parent"
+		android:layout_height="280dp"
+		android:layout_centerVertical="true">
+
+		<!-- 左侧切换按钮 -->
+		<ImageButton
+			android:id="@+id/btn_left"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:background="@drawable/btn_arrow_selector"
+			android:padding="15dp"
+			android:src="@drawable/ic_arrow_left_white"
+			/>
+
+		<!-- 角色卡片（缩小尺寸更精致） -->
+		<androidx.cardview.widget.CardView
+			android:id="@+id/player_card"
+			android:layout_width="220dp"
+			android:layout_height="280dp"
+			android:layout_centerInParent="true"
+			app:cardBackgroundColor="@color/white"
+			app:cardCornerRadius="24dp"
+			app:cardElevation="8dp"
+			app:cardPreventCornerOverlap="true"
+			app:contentPadding="15dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal">
+
+				<!-- 角色头像容器（圆形背景） -->
+				<RelativeLayout
+					android:layout_width="140dp"
+					android:layout_height="140dp"
+					android:layout_marginTop="10dp"
+					>  <!-- 圆形底色 -->
+
+					<ImageView
+						android:id="@+id/player_image"
+						android:layout_width="110dp"
+						android:layout_height="110dp"
+						android:layout_centerInParent="true"
+						android:scaleType="fitCenter"
+						android:src="@drawable/kitchen_bin" />  <!-- 默认厨余垃圾桶 -->
+				</RelativeLayout>
+
+				<!-- 角色名称 -->
+				<TextView
+					android:id="@+id/player_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:text="厨余垃圾桶"
+					android:textColor="@color/text_primary"
+					android:textSize="22sp"
+					android:textStyle="bold" />
+
+
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+
+		<!-- 右侧切换按钮 -->
+		<ImageButton
+			android:id="@+id/btn_right"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:background="@drawable/btn_arrow_selector"
+			android:padding="15dp"
+			android:src="@drawable/ic_arrow_right_white"
+			/>
+
+	</RelativeLayout>
+
+	<!-- 底部按钮区域（调整间距更紧凑） -->
+	<LinearLayout
+		android:id="@+id/button_container"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="50dp"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:paddingHorizontal="30dp">
+
+		<!-- 开始游戏按钮 -->
+		<TextView
+			android:id="@+id/btn_start_game"
+			android:layout_width="match_parent"
+			android:layout_height="65dp"
+			android:background="@drawable/btn_view_records"
+			android:text="开始游戏"
+			android:textAllCaps="false"
+			android:textColor="@color/white"
+			android:textSize="19sp"
+			android:gravity="center"
+			android:textStyle="bold"
+			android:elevation="4dp" />
+
+		<!-- 查看记录按钮 -->
+		<TextView
+			android:id="@+id/btn_view_records"
+			android:layout_width="match_parent"
+			android:layout_height="65dp"
+			android:layout_marginTop="16dp"
+			android:background="@drawable/btn_view_records"
+			android:text="查看记录"
+			android:gravity="center"
+			android:textAllCaps="false"
+			android:textColor="@color/white"
+			android:textSize="19sp"
+			android:textStyle="bold"
+			android:elevation="4dp" />
+
+	</LinearLayout>
+
+</RelativeLayout>

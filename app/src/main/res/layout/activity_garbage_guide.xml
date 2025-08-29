@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@color/gray_light">
+
+	<!-- 顶部标题栏 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/bg_green_light"
+		android:padding="18dp"
+		android:gravity="center_vertical">
+		<ImageView
+			android:id="@+id/iv_back"
+			android:layout_width="24dp"
+			android:layout_height="24dp"
+			android:src="@drawable/ic_back"
+			app:tint="@color/primary" />
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="垃圾分类指南"
+			android:textColor="@color/primary"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:layout_marginStart="16dp" />
+	</LinearLayout>
+
+	<!-- 搜索框 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:background="@drawable/bg_search_bar"
+		android:gravity="center_vertical"
+		android:paddingHorizontal="12dp">
+		<ImageView
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:src="@drawable/ic_search"
+			app:tint="@color/text_gray" />
+		<EditText
+			android:id="@+id/et_search"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1"
+			android:background="@null"
+			android:hint="搜索垃圾名称..."
+			android:imeOptions="actionSearch"
+			android:maxLines="1"
+			android:paddingHorizontal="12dp"
+			android:textColor="@color/text_gray"
+			android:textSize="14sp" />
+		<ImageView
+			android:id="@+id/iv_clear_search"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:src="@drawable/clear"
+			app:tint="@color/text_gray"
+			android:visibility="gone" />
+	</LinearLayout>
+
+	<!-- 分类标签页 -->
+	<com.google.android.material.tabs.TabLayout
+		android:id="@+id/tabLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		app:tabIndicatorColor="@color/primary"
+		app:tabSelectedTextColor="@color/primary"
+		app:tabTextColor="@color/text_gray"
+		app:tabTextAppearance="@style/TabTextStyle" />
+
+	<!-- 内容列表 -->
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/rv_garbage_guide"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp"
+		android:overScrollMode="never" />
+
+	<!-- 搜索无结果提示 -->
+	<TextView
+		android:id="@+id/empty_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:textColor="@color/text_gray"
+		android:textSize="16sp"
+		android:visibility="gone" />
+</LinearLayout>

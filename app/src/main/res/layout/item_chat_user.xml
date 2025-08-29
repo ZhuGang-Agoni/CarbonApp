@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 用户消息气泡布局（靠右显示，宽度自适应内容） -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:gravity="end"
+    android:padding="8dp">
+
+<LinearLayout
+android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/chat_bubble_user"
-    android:layout_marginEnd="48dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:maxWidth="280dp"> <!-- 最大宽度限制，避免过宽 -->
 
-    <TextView
-        android:id="@+id/chat_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="用户消息示例"
-        android:textColor="@color/on_surface"
-        android:textSize="16sp" />
+<TextView
+android:id="@+id/chat_message"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="用户消息示例"
+android:textColor="@color/on_surface"
+android:textSize="16sp"
+android:lineSpacingExtra="4dp"/> <!-- 增加行间距提升可读性 -->
 
-</LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>

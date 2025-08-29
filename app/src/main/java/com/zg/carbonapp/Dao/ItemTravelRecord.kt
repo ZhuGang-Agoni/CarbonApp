@@ -7,7 +7,7 @@ data class ItemTravelRecord(
     val carbonCount:String,//这个是当天碳排放量
     val distance:String,
     val time:Long,
-    val modelRavel:Int,
+    val modelRavelTag:String,
     val routeDescription:String="无",
     val routeTitle :String="无",
     val duration:String="无"

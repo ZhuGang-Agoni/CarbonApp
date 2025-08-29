@@ -1,0 +1,57 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="64dp"
+	android:height="64dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+
+	<!-- 动态基底 -->
+	<path
+		android:pathData="M50,10 Q30,30 40,60 Q50,50 60,60 Q70,30 50,10 Z"
+		android:strokeWidth="2">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="sweep"
+				android:centerX="50"
+				android:centerY="50">
+				<item android:color="#4CAF50" android:offset="0"/> <!-- 叶绿 -->
+				<item android:color="#2196F3" android:offset="0.5"/> <!-- 科技蓝 -->
+				<item android:color="#4CAF50" android:offset="1"/> <!-- 叶绿 -->
+			</gradient>
+		</aapt:attr>
+		<aapt:attr name="android:fillColor">
+			<gradient
+				android:type="radial"
+				android:centerX="50"
+				android:centerY="50"
+				android:gradientRadius="30">
+				<item android:color="#C8E6C9" android:offset="0"/> <!-- 浅绿 -->
+				<item android:color="#90CAF9" android:offset="1"/> <!-- 浅蓝 -->
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 解锁动画 -->
+	<path
+		android:pathData="M40,50 L45,55 L55,55 L60,50"
+		android:strokeWidth="1.5"
+		android:strokeColor="#BBDEFB"/> <!-- 浅蓝锁链 -->
+	<path
+		android:pathData="M45,55 L45,65 M55,55 L55,65"
+		android:strokeWidth="1.5"
+		android:strokeColor="#4CAF50"/> <!-- 叶绿锁链 -->
+
+	<!-- 粒子特效 -->
+	<path
+		android:pathData="M35,35 L37,33 M65,35 L63,33"
+		android:strokeWidth="1"
+		android:strokeColor="#FFFFFF"
+		android:strokeAlpha="0.8"/> <!-- 白色光点 -->
+
+	<!-- 能量光束 -->
+	<path
+		android:pathData="M50,30 L50,25"
+		android:strokeWidth="1"
+		android:strokeColor="#2196F3"
+		android:strokeAlpha="0.8"/> <!-- 科技蓝光束 -->
+</vector>

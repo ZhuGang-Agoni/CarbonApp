@@ -1,0 +1,90 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="80dp"
+	android:height="80dp"
+	android:viewportWidth="200"
+	android:viewportHeight="200">
+
+	<!-- 动态粒子背景层 -->
+	<path
+		android:pathData="M100,100m-96,0a96,96 0,1 1,192 0a96,96 0,1 1,-192 0"
+		android:strokeWidth="2">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="sweep"
+				android:centerX="100"
+				android:centerY="100">
+				<item android:color="#FF6B6B" android:offset="0"/>
+				<item android:color="#4ECDC4" android:offset="0.33"/>
+				<item android:color="#45B7D1" android:offset="0.66"/>
+				<item android:color="#96CEB4" android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 立体棱镜核心 -->
+	<path
+		android:pathData="M100,30 L130,70 L70,70 Z"
+		android:strokeWidth="1">
+		<aapt:attr name="android:fillColor">
+			<gradient
+				android:type="linear"
+				android:angle="45"
+				android:startX="70"
+				android:startY="30"
+				android:endX="130"
+				android:endY="70">
+				<item android:color="#FFE66D" android:offset="0"/>
+				<item android:color="#FF6B6B" android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 折射光束 -->
+	<path
+		android:pathData="M100,70 L115,100 L85,100 Z"
+		android:strokeWidth="1"
+		android:fillColor="#FFFFFF"
+		android:fillAlpha="0.2"/>
+
+	<!-- 动态波纹 -->
+	<path
+		android:pathData="M100,100m-60,0a60,60 0,1 1,120 0a60,60 0,1 1,-120 0"
+		android:strokeWidth="2">
+		<aapt:attr name="android:strokeColor">
+			<gradient
+				android:type="radial"
+				android:centerX="100"
+				android:centerY="100"
+				android:gradientRadius="60">
+				<item android:color="#00FFFFFF" android:offset="0"/>
+				<item android:color="#40FFFFFF" android:offset="0.7"/>
+				<item android:color="#00FFFFFF" android:offset="1"/>
+			</gradient>
+		</aapt:attr>
+	</path>
+
+	<!-- 悬浮粒子 -->
+	<path
+		android:pathData="M50,50 L55,45 M150,50 L145,45"
+		android:strokeWidth="1.5"
+		android:strokeColor="#FFE66D"
+		android:strokeAlpha="0.8"/>
+	<path
+		android:pathData="M50,150 L45,155 M150,150 L155,155"
+		android:strokeWidth="1.5"
+		android:strokeColor="#4ECDC4"
+		android:strokeAlpha="0.8"/>
+
+	<!-- 动态光轨 -->
+	<path
+		android:pathData="M100,100 L120,120"
+		android:strokeWidth="1"
+		android:strokeColor="#FFFFFF"
+		android:strokeAlpha="0.3"/>
+	<path
+		android:pathData="M100,100 L80,120"
+		android:strokeWidth="1"
+		android:strokeColor="#FFFFFF"
+		android:strokeAlpha="0.3"/>
+</vector>

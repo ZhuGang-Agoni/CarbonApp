@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<!-- 顶部标题栏 -->
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="@color/white"
+		android:elevation="4dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:title="垃圾分类周报"
+		app:titleTextColor="@color/black" />
+
+	<!-- 周报日期卡片 -->
+	<androidx.cardview.widget.CardView
+		android:id="@+id/dateCard"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="2dp"
+		app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="报告周期"
+				android:textColor="@color/gray_500"
+				android:textSize="14sp" />
+
+			<TextView
+				android:id="@+id/dateRange"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:text="2023年10月9日 - 2023年10月15日"
+				android:textColor="@color/black"
+				android:textSize="18sp"
+				android:textStyle="bold" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+
+	<!-- 数据概览卡片 -->
+	<androidx.cardview.widget.CardView
+		android:id="@+id/overviewCard"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="16dp"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="2dp"
+		app:layout_constraintTop_toBottomOf="@id/dateCard">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="本周数据概览"
+				android:textColor="@color/black"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:orientation="horizontal">
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:orientation="vertical">
+
+					<TextView
+						android:id="@+id/totalCount"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="24"
+						android:textColor="@color/black"
+						android:textSize="24sp"
+						android:textStyle="bold" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="4dp"
+						android:text="总识别次数"
+						android:textColor="@color/gray_500"
+						android:textSize="12sp" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:orientation="vertical">
+
+					<TextView
+						android:id="@+id/categoryCount"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="4"
+						android:textColor="@color/black"
+						android:textSize="24sp"
+						android:textStyle="bold" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="4dp"
+						android:text="涉及类别"
+						android:textColor="@color/gray_500"
+						android:textSize="12sp" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:orientation="vertical">
+
+					<TextView
+						android:id="@+id/accuracyRate"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="92%"
+						android:textColor="@color/black"
+						android:textSize="24sp"
+						android:textStyle="bold" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="4dp"
+						android:text="分类准确率"
+						android:textColor="@color/gray_500"
+						android:textSize="12sp" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+
+	<!-- 分类统计图表卡片 -->
+	<androidx.cardview.widget.CardView
+		android:id="@+id/chartCard"
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="16dp"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="2dp"
+		app:layout_constraintTop_toBottomOf="@id/overviewCard">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="垃圾分类占比"
+				android:textColor="@color/black"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<com.github.mikephil.charting.charts.PieChart
+				android:id="@+id/categoryChart"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="8dp" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+
+	<!-- 分类详情列表 -->
+	<androidx.cardview.widget.CardView
+		android:id="@+id/detailCard"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="16dp"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="2dp"
+		app:layout_constraintTop_toBottomOf="@id/chartCard">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="分类详情"
+				android:textColor="@color/black"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/categoryDetailRecycler"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				tools:listitem="@layout/item_garbage_category_detail" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+
+	<!-- 改进建议卡片 - 添加ScrollView使其可滑动 -->
+	<androidx.cardview.widget.CardView
+		android:id="@+id/suggestionCard"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		app:cardBackgroundColor="@color/white"
+		app:cardCornerRadius="12dp"
+		app:cardElevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/detailCard">
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:maxHeight="300dp"> <!-- 限制最大高度，避免内容过少时占满屏幕 -->
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="16dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="改进建议"
+					android:textColor="@color/black"
+					android:textSize="16sp"
+					android:textStyle="bold" />
+
+				<LinearLayout
+					android:id="@+id/suggestionsContainer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
+					android:orientation="vertical" />
+			</LinearLayout>
+		</ScrollView>
+	</androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

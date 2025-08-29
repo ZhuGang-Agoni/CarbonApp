@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/forest_bg">
+
+	<!-- 3D场景视图 -->
+	<com.google.ar.sceneform.SceneView
+		android:id="@+id/scene_view"
+		android:layout_width="match_parent"
+		android:background="@color/sky_blue"
+		android:layout_height="match_parent"/>
+
+	<!-- 顶部信息栏 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/forest_top_bar"
+		android:padding="16dp"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/tv_tree_count"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="我的森林：0 棵树"
+			android:textColor="@color/text_white"
+			android:textSize="20sp"
+			android:textStyle="bold"/>
+
+		<TextView
+			android:id="@+id/tv_total_carbon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="总碳减排：0 kg"
+			android:textColor="@color/text_green_light"
+			android:textSize="16sp"
+			android:layout_marginTop="4dp"/>
+	</LinearLayout>
+
+	<!-- 底部操作栏 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@color/forest_top_bar"
+		android:padding="12dp"
+		android:orientation="horizontal">
+
+		<!-- 返回按钮 -->
+		<Button
+			android:id="@+id/btn_back"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:background="@color/btn_green"
+			android:drawableStart="@drawable/ic_back"
+			android:drawablePadding="8dp"
+			android:text="返回"
+			android:textColor="@color/text_white"
+			android:textSize="14sp"/>
+
+		<!-- 分享按钮 -->
+		<Button
+			android:id="@+id/btn_share"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginStart="16dp"
+			android:background="@color/btn_green"
+			android:drawableStart="@drawable/ic_share"
+			android:drawablePadding="8dp"
+			android:text="分享森林"
+			android:textColor="@color/text_white"
+			android:textSize="14sp"/>
+	</LinearLayout>
+
+</FrameLayout>

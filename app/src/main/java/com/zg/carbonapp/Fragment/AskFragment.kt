@@ -101,7 +101,7 @@ class AskFragment : Fragment() {
         currentAiContent = ""
 
         // 添加"思考中"占位消息
-        chatList.add(ChatMessage("AI正在输入...", MessageType.AI))
+        chatList.add(ChatMessage("AI正在思考...", MessageType.AI))
         aiMessagePosition = chatList.size - 1
         chatAdapter.notifyItemInserted(aiMessagePosition)
         scrollToBottom()

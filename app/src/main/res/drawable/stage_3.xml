@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="60dp"
+	android:height="60dp"
+	android:viewportWidth="100"
+	android:viewportHeight="100">
+	<!-- 土壤 -->
+	<path
+		android:fillColor="#8D6E63"
+		android:pathData="M0,60 L100,60 L100,100 L0,100 Z"/>
+	<!-- 树干 -->
+	<path
+		android:fillColor="#795548"
+		android:pathData="M48,60 L52,60 L50,30"
+		android:strokeWidth="4"/>
+	<!-- 树冠 -->
+	<path
+		android:fillColor="#2E7D32"
+		android:pathData="M50,10 Q30,30 40,50 Q50,35 60,50 Q70,30 50,10 Z"/>
+</vector>

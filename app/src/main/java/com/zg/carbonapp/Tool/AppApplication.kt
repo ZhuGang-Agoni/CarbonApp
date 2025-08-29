@@ -1,5 +1,6 @@
 package com.zg.carbonapp.Tool
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -9,25 +10,34 @@ import androidx.work.WorkManager
 import com.amap.api.location.AMapLocationClient
 import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.tencent.mmkv.MMKV
 import com.zg.carbonapp.DB.CarbonDatabase
 import com.zg.carbonapp.DB.PrepopulateCallback
+import com.zg.carbonapp.MMKV.RecordManager
 import com.zg.carbonapp.Service.MusicService
 import com.zg.carbonapp.Service.NotificationScheduler
 
 class AppApplication : Application(), Configuration.Provider {
 
     companion object {
-        lateinit var context: Context
+
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context :Context
+        const val TOKEN="SJrPcwY43EaLolw0"
     }
+
+
+
+
 
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-
+        RecordManager.initialize(this)
         // 初始化MMKV
         MMKV.initialize(this)
-
+        AndroidThreeTen.init(this) // 初始化 ThreeTenBP
         // 初始化WorkManager
         initializeWorkManager()
 

@@ -1,0 +1,58 @@
+<!-- circle_avatar_frame.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- 立体阴影层 -->
+	<item>
+		<shape android:shape="oval">
+			<solid android:color="#20000000"/> <!-- 半透明黑色阴影 -->
+			<size
+				android:width="104dp"
+				android:height="104dp"/>
+		</shape>
+	</item>
+
+	<!-- 主边框层 -->
+	<item
+		android:left="2dp"
+		android:top="2dp"
+		android:right="2dp"
+		android:bottom="2dp">
+		<shape android:shape="oval">
+			<stroke
+				android:width="4dp"
+				android:dashWidth="8dp"
+				android:dashGap="4dp">
+				<gradient
+					android:type="sweep"
+					android:startColor="#4169E1"
+				android:centerColor="#00BFFF"
+				android:endColor="#00CED1"
+					android:angle="360"/>
+			</stroke>
+
+			<solid android:color="@android:color/transparent"/>
+
+			<!-- 内阴影增强立体感 -->
+			<padding
+				android:left="3dp"
+				android:top="3dp"
+				android:right="3dp"
+				android:bottom="3dp"/>
+		</shape>
+	</item>
+
+	<!-- 高光效果 -->
+	<item
+		android:left="8dp"
+		android:top="8dp"
+		android:right="50dp"
+		android:bottom="50dp">
+		<shape android:shape="oval">
+			<gradient
+				android:type="linear"
+				android:angle="45"
+				android:startColor="#40FFFFFF"
+				android:endColor="@android:color/transparent"/>
+		</shape>
+	</item>
+</layer-list>

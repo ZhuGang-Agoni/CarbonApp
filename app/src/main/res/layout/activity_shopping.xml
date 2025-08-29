@@ -1,68 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 1. 外层包裹 NestedScrollView 实现全局滚动 -->
 <androidx.core.widget.NestedScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fillViewport="true"> <!-- 关键：让子布局填充滚动区域 -->
+	android:fillViewport="true"
+	android:background="@drawable/bg_gradient_green">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-	android:background="@color/background_light">
+		android:layout_height="wrap_content"
+	android:paddingBottom="16dp">
 
 	<!-- 顶部导航栏 -->
-	<LinearLayout
+	<com.google.android.material.appbar.MaterialToolbar
 		android:id="@+id/toolbar"
 		android:layout_width="match_parent"
-		android:layout_height="56dp"
+		android:layout_height="?attr/actionBarSize"
 		android:background="@color/primary"
-		android:orientation="horizontal"
-		android:paddingStart="16dp"
-		android:paddingEnd="16dp"
-		app:layout_constraintTop_toTopOf="parent">
+		app:layout_constraintTop_toTopOf="parent"
+		app:title="碳积分商城"
+		app:titleTextColor="@color/white"
+		app:navigationIcon="@drawable/ic_back_white"/>
 
-		<ImageView
-			android:id="@+id/backButton"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_gravity="center_vertical"
-			android:src="@drawable/ic_back" />
-
-		<TextView
-			android:id="@+id/title"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:layout_weight="1"
-			android:gravity="center"
-			android:text="碳积分商城"
-			android:textColor="@color/white"
-			android:textSize="18sp"
-			android:textStyle="bold" />
-
-		<ImageView
-			android:id="@+id/searchButton"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_gravity="center_vertical"
-			android:layout_marginEnd="16dp"
-			android:src="@drawable/ic_search" />
-	</LinearLayout>
-
-	<!-- 积分信息卡片 -->
-	<androidx.cardview.widget.CardView
+	<!-- 积分卡片 -->
+	<com.google.android.material.card.MaterialCardView
 		android:id="@+id/pointsCard"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
+		android:layout_marginHorizontal="16dp"
 		android:layout_marginTop="16dp"
-		app:cardBackgroundColor="@color/card_background"
-		app:cardCornerRadius="12dp"
-		app:cardElevation="4dp"
+		app:cardCornerRadius="16dp"
+		app:cardElevation="8dp"
+		app:strokeColor="@color/primary_light"
+		app:strokeWidth="1dp"
 		app:layout_constraintTop_toBottomOf="@id/toolbar">
 
 		<LinearLayout
@@ -76,7 +48,7 @@
 				android:layout_height="wrap_content"
 				android:text="我的碳积分"
 				android:textColor="@color/secondary_text"
-				android:textSize="14sp" />
+				android:textSize="14sp"/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -88,7 +60,7 @@
 				<ImageView
 					android:layout_width="24dp"
 					android:layout_height="24dp"
-					android:src="@drawable/ic_points" />
+					android:src="@drawable/ic_carbon_point"/>
 
 				<TextView
 					android:id="@+id/carbon_point"
@@ -97,43 +69,43 @@
 					android:layout_marginStart="8dp"
 					android:text="1250"
 					android:textColor="@color/primary_text"
-					android:textSize="24sp"
-					android:textStyle="bold" />
+					android:textSize="28sp"
+					android:textStyle="bold"/>
 
-				<Button
+				<Space
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
+
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/exchangeHistoryButton"
+					style="@style/Widget.Material3.Button.OutlinedButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="16dp"
-					android:backgroundTint="@color/primary_light"
+					android:layout_marginEnd="8dp"
 					android:text="兑换记录"
-					android:textColor="@color/white"
-					android:textSize="12sp"
-					app:cornerRadius="12dp" />
+					app:icon="@drawable/ic_history"
+					app:iconTint="@color/primary"/>
 
-				<Button
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/earnMoreButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:backgroundTint="@color/primary_light"
-					android:text="赚取更多"
-					android:textColor="@color/white"
-					android:textSize="12sp"
-					app:cornerRadius="12dp" />
+					android:text="赚取积分"
+					app:backgroundTint="@color/primary"
+					app:icon="@drawable/ic_earn_points"
+					app:iconTint="@color/white"/>
 			</LinearLayout>
 		</LinearLayout>
-	</androidx.cardview.widget.CardView>
+	</com.google.android.material.card.MaterialCardView>
 
-	<!-- 商品分类导航 -->
+	<!-- 分类导航 -->
 	<HorizontalScrollView
 		android:id="@+id/categoryScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="16dp"
-		android:fillViewport="true"
-		android:paddingStart="16dp"
-		android:paddingEnd="16dp"
+		android:paddingHorizontal="16dp"
 		app:layout_constraintTop_toBottomOf="@id/pointsCard">
 
 		<LinearLayout
@@ -142,69 +114,43 @@
 			android:orientation="horizontal"
 			android:gravity="center_vertical">
 
-			<Button
+			<com.google.android.material.button.MaterialButton
 				android:id="@+id/categoryAll"
+				style="@style/Widget.Material3.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
-				android:backgroundTint="@color/primary"
 				android:text="全部"
-				android:textColor="@color/white"
-				android:textSize="14sp"
-				app:cornerRadius="16dp"
-				android:paddingStart="16dp"
-				android:paddingEnd="16dp" />
+				app:cornerRadius="16dp"/>
 
-			<Button
-				android:id="@+id/categoryEco"
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/categoryBadges"
+				style="@style/Widget.Material3.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
-				android:backgroundTint="@color/button_background"
-				android:text="环保产品"
-				android:textColor="@color/primary_text"
-				android:textSize="14sp"
+				android:text="勋章"
 				app:cornerRadius="16dp"
-				android:paddingStart="16dp"
-				android:paddingEnd="16dp" />
+				app:icon="@drawable/ic_badge"/>
 
-			<Button
-				android:id="@+id/categoryPlant"
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/categoryFrames"
+				style="@style/Widget.Material3.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
-				android:backgroundTint="@color/button_background"
-				android:text="种植权益"
-				android:textColor="@color/primary_text"
-				android:textSize="14sp"
+				android:text="头像框"
 				app:cornerRadius="16dp"
-				android:paddingStart="16dp"
-				android:paddingEnd="16dp" />
+				app:icon="@drawable/ic_frame"/>
 
-			<Button
-				android:id="@+id/categoryExperience"
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/categoryItems"
+				style="@style/Widget.Material3.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginEnd="8dp"
-				android:backgroundTint="@color/button_background"
-				android:text="体验活动"
-				android:textColor="@color/primary_text"
-				android:textSize="14sp"
+				android:text="挂件"
 				app:cornerRadius="16dp"
-				android:paddingStart="16dp"
-				android:paddingEnd="16dp" />
-
-			<Button
-				android:id="@+id/categoryService"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:backgroundTint="@color/button_background"
-				android:text="服务权益"
-				android:textColor="@color/primary_text"
-				android:textSize="14sp"
-				app:cornerRadius="16dp"
-				android:paddingStart="16dp"
-				android:paddingEnd="16dp" />
+				app:icon="@drawable/ic_item"/>
 		</LinearLayout>
 	</HorizontalScrollView>
 
@@ -213,55 +159,65 @@
 		android:id="@+id/hotTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="16dp"
+		android:layout_marginStart="24dp"
 		android:layout_marginTop="24dp"
 		android:text="热门推荐"
 		android:textColor="@color/primary_text"
-		android:textSize="18sp"
+		android:textSize="20sp"
 		android:textStyle="bold"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/categoryScrollView" />
+		app:layout_constraintTop_toBottomOf="@id/categoryScrollView"/>
 
-	<!-- 热门推荐商品网格 -->
+	<!-- 热门商品网格：增加底部约束，确保与下方区域距离 -->
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/hotProductsRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
-		android:layout_marginTop="16dp"
-		app:layout_constraintTop_toBottomOf="@id/hotTitle"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="12dp"
+		android:paddingVertical="8dp"
 		app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 		app:spanCount="2"
-		tools:listitem="@layout/item_product_card" />
+		app:layout_constraintTop_toBottomOf="@id/hotTitle"
+		app:layout_constraintBottom_toTopOf="@id/newTitle"
+	tools:listitem="@layout/item_virtual_product"/>
 
 	<!-- 最新上架标题 -->
 	<TextView
 		android:id="@+id/newTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="16dp"
+		android:layout_marginStart="24dp"
 		android:layout_marginTop="24dp"
-		android:text="最新上架"
-		android:textColor="@color/primary_text"
-		android:textSize="18sp"
-		android:textStyle="bold"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/hotProductsRecyclerView" />
+	android:text="最新上架"
+	android:textColor="@color/primary_text"
+	android:textSize="20sp"
+	android:textStyle="bold"
+	app:layout_constraintStart_toStartOf="parent"
+	app:layout_constraintTop_toBottomOf="@id/hotProductsRecyclerView"/>
 
-	<!-- 最新上架商品列表（关键修复：约束到底部 + 底部间距） -->
+	<!-- 最新商品列表 -->
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/newProductsRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="16dp"
-		android:layout_marginEnd="16dp"
-		android:layout_marginTop="16dp"
-		android:layout_marginBottom="32dp"
-	app:layout_constraintTop_toBottomOf="@id/newTitle"
-	app:layout_constraintBottom_toBottomOf="parent"
-	app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-	tools:listitem="@layout/item_product_horizontal" />
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="12dp"
+		android:paddingVertical="8dp"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintTop_toBottomOf="@id/newTitle"
+		tools:listitem="@layout/item_product_horizontal"/>
 
+	<!-- 搜索按钮 -->
+	<ImageButton
+		android:id="@+id/searchButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/ic_search"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		app:layout_constraintTop_toTopOf="@id/toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_marginEnd="16dp"
+		android:contentDescription="搜索"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-	</androidx.core.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

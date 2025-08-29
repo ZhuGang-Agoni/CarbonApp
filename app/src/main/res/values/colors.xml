@@ -1,13 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Material Design 3 环保主题色彩 -->
-    <color name="primary">#4CAF50</color>
-    <color name="primary_dark">#388E3C</color>
-    <color name="primary_light">#81C784</color>
+
+    <color name="text_gray">#666666</color> <!-- 次要文本颜色 -->
+    <color name="divider_gray">#EEEEEE</color> <!-- 分隔线颜色 -->
+<!--    <color name="gray_light">#F5F7F5</color> &lt;!&ndash; 页面背景色（更浅的灰绿） &ndash;&gt;-->
+
+    <color name="forest_bg">#1A3A28</color> <!-- 森林背景深绿 -->
+    <color name="forest_top_bar">#80000000</color> <!-- 顶部半透明黑 -->
+    <color name="text_white">#FFFFFF</color> <!-- 白色文字 -->
+    <color name="text_green_light">#80C571</color> <!-- 浅绿色文字 -->
+    <color name="btn_green">#3E7C17</color> <!-- 按钮绿色 -->
+    <color name="ground_color">#2E5D32</color> <!-- 地面颜色 -->
     <color name="accent">#2196F3</color>
     <color name="accent_light">#64B5F6</color>
-    
-    <!-- 环保相关色彩 -->
+
+    <color name="btn_sign_bg_disabled">#BDBDBD</color>
+
+<!--    <color name="background_light_green">#F5F9F7</color>-->
+
+
+
+
+
+
+
+    <color name="menu_background">#E6F7FF</color>
+    <color name="button_color">#4CAF50</color>
+    <color name="start_button_color">#2196F3</color>
+    <color name="record_button_color">#FF9800</color>
+    <color name="restart_button_color">#F44336</color>
+    <color name="title_background">#BBDEFB</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+
+
+
+
+    <color name="primary_color">#2EC4B6</color>
+    <color name="primary_dark">#011627</color>
+    <color name="primary_light">#E6FFFA</color>
+
+    <!-- 文字颜色 -->
+    <color name="text_primary">#011627</color>
+    <color name="text_secondary">#6B7280</color>
+
+    <!-- 辅助色 -->
+    <color name="accent_yellow">#FFD166</color>
+    <color name="accent_red">#EF476F</color>
+    <color name="accent_blue">#118AB2</color>
+
+    <!-- 透明度颜色 -->
+    <color name="black_alpha_30">#4D000000</color>
+    <color name="white_alpha_80">#CCFFFFFF</color>
+
+    <!-- 垃圾桶专属色 -->
+    <color name="kitchen_bin">#4CAF50</color>  <!-- 绿色-厨余 -->
+    <color name="recyclable_bin">#2196F3</color>  <!-- 蓝色-可回收 -->
+    <color name="hazardous_bin">#FF9800</color>  <!-- 橙色-有害 -->
+    <color name="other_bin">#9E9E9E</color>
+
+
+
+
+
+
+    <!-- 按钮颜色 -->
+    <color name="start_button_normal">#FF4CAF50</color>
+    <color name="start_button_pressed">#FF388E3C</color>
+    <color name="records_button_normal">#FF2196F3</color>
+    <color name="records_button_pressed">#FF1976D2</color>
+
+    <!-- 玩家类型颜色 -->
+    <color name="kitchen_color">#FF8BC34A</color>
+    <color name="recyclable_color">#FF2196F3</color>
+    <color name="hazardous_color">#FFFF5722</color>
+    <color name="other_color">#FF9E9E9E</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <color name="gray_700">#4A4A4A</color>
+    <color name="primary">#4CAF50</color>
+
+
+    <color name="recyclable">#4CAF50</color> <!-- 可回收物 - 绿色 -->
+    <color name="kitchen">#FFC107</color> <!-- 厨余垃圾 - 黄色 -->
+    <color name="harmful">#F44336</color> <!-- 有害垃圾 - 红色 -->
+    <color name="other">#9E9E9E</color> <!-- 其他垃圾 - 灰色 -->
+    <color name="default_color">#607D8B</color> <!-- 默认颜色 - 蓝色灰色 -->
+
+
+
+
+
+
+
+
+
+
+    <color name="timeline_line">#BDBDBD</color>
+    <color name="forest_primary">#2E7D32</color> <!-- 深绿主色 -->
+    <color name="forest_primary_light">#66BB6A</color> <!-- 浅绿 -->
+    <color name="forest_secondary">#8D6E63</color> <!-- 树干棕 -->
+<!--    <color name="forest_bg">#F1F8E9</color> &lt;!&ndash; 背景浅绿 &ndash;&gt;-->
+    <color name="forest_text">#212121</color> <!-- 文字黑 -->
+    <color name="forest_timeline">#A5D6A7</color> <!-- 时间轴颜色 -->
+<!--    <color name="white">#FFFFFF</color>-->
+
+    <color name="sky_blue">#87CEEB</color>
+<!--    <color name="green_primary">#2E7D32</color>-->
+    <color name="blue_primary">#1976D2</color>
+    <color name="orange_primary">#F57C00</color>
+    <color name="brown_primary">#8D6E63</color>
+    <color name="gray_f5">#F5F5F5</color>
+    <color name="gray_800">#212121</color>
+<!--    <color name="gray_600">#757575</color>-->
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_eee">#EEEEEE</color> <!-- 浅灰色，常用于分割线、背景等 -->
+    <color name="primaryGreen">#4CAF50</color>
+    <color name="darkGreen">#388E3C</color>
+    <color name="green_success">#4CAF50</color>
+    <color name="secondaryText">#757575</color>
+    <color name="gray_100">#F5F5F5</color>
+
+
+    <color name="gray_400">#BDBDBD</color>
+
+
+
+
+
+
+    <color name="teal_primary">#009688</color>
+
+    <color name="red_error">#F44336</color>
+    <color name="bg_gradient">#2196F3</color> <!-- 天气页面渐变背景 -->
+    <color name="weather_primary">#2196F3</color> <!-- 主色调 -->
+
+    <color name="good_air">#4CAF50</color> <!-- 优良空气质量 -->
+    <color name="green">#4CAF50</color>
+    <color name="yellow">#FFC107</color>
+
+    <color name="purple">#9C27B0</color>
+
+    <color name="energy_green">#43A047</color>       <!-- 主绿色（深） -->
+    <color name="energy_light_bg">#F1F8E9</color>    <!-- 建议卡片背景（浅绿） -->
+    <color name="energy_text">#212121</color>         <!-- 主要文本色（深灰） -->
+    <!-- 次要文本色（中灰） -->
+    <color name="energy_bg">#F5F7F5</color>           <!-- 页面背景（浅灰） -->
+
+    <color name="colorAccent">#4CAF50</color>
+
+
+
+    <color name="color_bg">#F5F7FA</color>
+    <color name="color_card_bg">#FFFFFF</color>
+    <!-- 文本颜色 -->
+    <color name="color_text_primary">#2D3047</color>
+    <color name="color_text_secondary">#4A5072</color>
+    <color name="color_text_hint">#8A8F98</color>
+
+    <!-- 功能颜色 -->
+    <color name="color_primary">#3B7ADB</color>
+    <color name="color_primary_light">#EBF2FF</color>
+    <color name="color_success">#2ECC71</color>
+    <color name="color_warning">#F39C12</color>
+    <color name="color_error">#E74C3C</color>
+
+    <!-- 边框/分割线 -->
+    <color name="color_divider">#E5E7EB</color>
+
+
+
+
+        <color name="primary_dark_green">#388E3C</color>
+        <color name="primary_light_green">#C8E6C9</color>
+        <color name="accent_orange">#FF9800</color>
+        <color name="background_green">#E8F5E9</color>
+        <color name="text_dark_gray">#616161</color>
+
+    <color name="primary_variant">#3700B3</color>
+    <color name="secondary">#03DAC6</color>
+    <color name="secondary_variant">#018786</color>
+
+
+    <color name="background">#F5F5F5</color>
+
+
+    <color name="bdnavi_route_line_walk">#6495ED</color>
+    <color name="bdnavi_route_line_bike">#32CD32</color>
+    <color name="bdnavi_route_line_bus">#FF4500</color>
+    <color name="bdnavi_route_line_subway">#FFD700</color>
+    <!-- 图表颜色 -->
+    <color name="chart_blue">#2196F3</color>
+    <color name="chart_orange">#FF9800</color>
+    <color name="chart_purple">#9C27B0</color>
+    <color name="chart_red">#F44336</color>
+
+    <!-- AI分析卡片背景 -->
+    <color name="ai_card_background">#FFFFFF</color>
+    <color name="ai_text_color">#333333</color>
+
+    <!-- 主色调：绿色系 -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="green_primary">#4CAF50</color>
+    <color name="green_dark">#388E3C</color>
+    <color name="green_light">#C8E6C9</color>
+
+
+
+    <color name="background_grey">#F5F5F5</color>
+
+    <color name="card_stroke">#E0E0E0</color>
+
+
+    <!---->
+
+
+    <!-- 主色调 -->
+    <color name="primary_green">#2E7D32</color>
+
+    <color name="dark_green">#1B5E20</color>
+
+    <!-- 辅助色 -->
+
+    <color name="orange_500">#FF9800</color>
+
+
+
     <color name="blue_light">#42A5F5</color>
     <color name="orange_warning">#FF9800</color>
     <color name="red_alert">#F44336</color>
@@ -15,9 +272,7 @@
     <color name="red">#F44336</color>
     <color name="dark_gray">#616161</color>
 
-    <!-- 基础色彩 -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
     <color name="gray_light">#FAFAFA</color>
     <color name="gray_medium">#E0E0E0</color>
     <color name="gray_dark">#757575</color>
@@ -32,6 +287,16 @@
     
     <!-- 兼容性色彩（保留原有的一些色彩名称） -->
     <color name="blue">#2196F3</color>
+
+    <color name="yellow_primary">#FFC107</color>
+
+    <color name="gray_300">#E0E0E0</color>
+    <color name="light_green">#8BC34A</color> <!-- 浅绿色示例 -->
+
+
+
+
+
 
     <color name="colorSecondary">#2196F3</color>
     <color name="textGray">#757575</color>
@@ -70,34 +335,46 @@
     <color name="green_500">#4CAF50</color>
     <color name="blue_500">#2196F3</color>
 
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+
 
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="bg_green">#4CAF50</color>
     <color name="bg_green_light">#E8F5E8</color>
-    <color name="text_secondary">#757575</color>
-    <color name="wet_green">#4CAF50</color>
-    <color name="dry_gray">#9E9E9E</color>
-    
-    <!-- 垃圾分类相关颜色 -->
-    <color name="text_primary">#212121</color>
 
-    <!-- 美化方案新增颜色 -->
-    <color name="green_primary">#4CAF50</color>
-    <color name="green_light">#81C784</color>
-    <color name="green_dark">#388E3C</color>
-    <color name="orange_challenge">#FF9800</color>
-    <color name="blue_recognition">#2196F3</color>
-    <color name="purple_record">#9C27B0</color>
     <color name="recyclable_blue">#2196F3</color>
     <color name="hazardous_red">#F44336</color>
-    <color name="kitchen_green">#8BC34A</color>
-    <color name="other_gray">#9E9E9E</color>
+    <color name="wet_green">#4CAF50</color>
+    <color name="dry_gray">#9E9E9E</color>
+    <color name="avatar_border_start">#00C853</color>
+    <color name="avatar_border_end">#64DD17</color>
+    <color name="leaf_accent">#7CB342</color>
+
+    <color name="eco_green_primary">#00C853</color>
+    <color name="eco_green_light">#8000C853</color>
+    <color name="eco_green_dark">#007936</color>
+<!--    <color name="eco_green">#4CAF50</color>-->
+    <color name="eco_dark_green">#388E3C</color>
+    <color name="eco_light_green">#C8E6C9</color>
+    <color name="eco_white">#FFFFFF</color>
+    <color name="eco_text">#212121</color>
+    <color name="eco_subtext">#757575</color>
+    <color name="eco_background">#F5F5F5</color>
+    <color name="eco_leaf">#8BC34A</color>
+    <color name="eco_streak">#FF9800</color>
+    <!-- 头像框相关颜色 -->
+    <color name="avatar_ring_outer">#00C853</color>
+    <color name="avatar_ring_inner">#8000C853</color>
+    <color name="eco_green">#00C853</color>
+    <!-- 挂件相关颜色 -->
+    <color name="accessory_leaf">#00C853</color>
+    <color name="accessory_leaf_shadow">#4000C853</color>
+    <!-- 垃圾分类相关颜色 -->
+
+    <!-- 浅灰色，用于列表项边框等 -->
+    <color name="grey_300">#E0E0E0</color>
+    <color name="primary_text">#000000</color>
+    <color name="grey_600">#666666</color>
 
     <color name="background_light_green">#E8F5E9</color>
     <color name="card_background">#FFFFFF</color>
@@ -105,11 +382,25 @@
     <color name="status_bar_background">#1B5E20</color>
 
     <!-- 文本颜色 -->
-    <color name="primary_text">#212121</color>
+
     <color name="secondary_text">#757575</color>
     <color name="bottom_nav_text">#616161</color>
 
     <!-- 分割线颜色 -->
     <color name="divider_color">#BDBDBD</color>
+    <!-- 稀有度颜色 -->
+    <color name="rarity_common">#FF4CAF50</color>
+    <color name="rarity_rare">#FF2196F3</color>
+    <color name="rarity_epic">#FF9C27B0</color>
+    <color name="rarity_legendary">#FFFF9800</color>
+
+    <color name="rarity_common_text">#FF388E3C</color>
+    <color name="rarity_rare_text">#FF1976D2</color>
+    <color name="rarity_epic_text">#FF7B1FA2</color>
+    <color name="rarity_legendary_text">#FFF57C00</color>
+    <!-- 半透明绿色（用于闪光效果） -->
+    <color name="primary_light_transparent">#3300C853</color>
+    <!-- 卡片背景色（原有的可保持不变） -->
+
 
 </resources> 

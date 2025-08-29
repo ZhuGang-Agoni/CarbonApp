@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nodeContainer"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="8dp">
+
+	<ImageView
+		android:id="@+id/nodeIcon"
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:src="@drawable/ic_default_product" />
+
+	<TextView
+		android:id="@+id/nodeName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:text="成就名称"
+		android:textColor="@color/gray_800"
+		android:textSize="12sp" />
+
+	<TextView
+		android:id="@+id/nodeSteps"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:text="10k步"
+		android:textColor="@color/gray_500"
+		android:textSize="10sp" />
+</LinearLayout>

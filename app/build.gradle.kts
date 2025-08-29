@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary = true
         // 添加此配置解决 AndroidX 和 Support 库冲突
         configurations.all {
             resolutionStrategy {
@@ -73,6 +73,7 @@ dependencies {
     // Room 数据库
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.androidx.camera.view)
+//    implementation(libs.androidx.room.runtime.android)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     testImplementation("androidx.room:room-testing:2.6.1")
@@ -85,6 +86,8 @@ dependencies {
     // 地图与定位 - 彻底解决 Support 库冲突
     implementation(libs.play.services.maps)
 
+
+
     implementation("com.amap.api:search:9.7.0") {
         exclude(group = "com.android.support")
         exclude(group = "androidx.core") // 额外排除 androidx.core
@@ -94,6 +97,10 @@ dependencies {
         exclude(group = "androidx.core") // 额外排除 androidx.core
     }
 
+    implementation ("com.google.android.material:material:1.11.0")
+
+        // 其他依赖...
+        implementation ("com.jakewharton.threetenabp:threetenabp:1.4.6")
 
 // 通知和工作管理
     implementation("androidx.work:work-runtime-ktx:2.7.1")
@@ -101,7 +108,7 @@ dependencies {
     // Google 服务
     implementation(libs.play.services.fitness)
     implementation("com.google.android.gms:play-services-auth:21.2.0")
-
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     // 网络请求
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -120,6 +127,8 @@ dependencies {
         exclude(group = "androidx.core") // 排除 Glide 可能引入的 core
     }
     kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Coil 图片加载
@@ -140,7 +149,7 @@ dependencies {
     implementation ("com.baidu.lbsyun:NaviTts:3.2.13")
 
     implementation("com.baidu.lbsyun:BaiduMapSDK_Map-AllNavi:7.6.4")
-
+    implementation("com.airbnb.android:lottie:6.1.0")
 
     // 测试
     testImplementation(libs.junit)
@@ -153,10 +162,9 @@ dependencies {
     implementation("androidx.core:core:1.16.0")
     implementation("androidx.core:core-ktx:1.16.0")
 
-
+//    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
     // pytorch模型
-    implementation("org.pytorch:pytorch_android_lite:1.13.0")
-    implementation("org.pytorch:pytorch_android_torchvision_lite:1.13.0")
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
 }
 
 // 全局解决依赖冲突

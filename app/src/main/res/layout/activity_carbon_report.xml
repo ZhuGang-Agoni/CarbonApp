@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="@color/gray_f5"
+	android:orientation="vertical">
+
+	<!-- 标题栏 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		android:background="@color/green_primary"
+		android:gravity="center_vertical"
+		android:paddingHorizontal="16dp">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="碳减排报告"
+			android:textColor="@android:color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+	<!-- 报告内容 -->
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="16dp">
+
+			<!-- 日期 -->
+			<TextView
+				android:id="@+id/tvDate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="2023年10月01日"
+				android:textColor="@color/gray_600"
+				android:textSize="14sp" />
+
+			<!-- 今日数据卡片 -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				app:cardCornerRadius="8dp"
+				app:cardElevation="2dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="今日数据"
+						android:textColor="@color/gray_800"
+						android:textSize="16sp"
+						android:textStyle="bold" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:orientation="vertical"
+						android:divider="@drawable/divider_horizontal"
+						android:showDividers="middle">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="步行步数"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvTodaySteps"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0 步"
+								android:textColor="@color/gray_800"
+								android:textStyle="bold" />
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="步行距离"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvTodayKm"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0.0 公里"
+								android:textColor="@color/gray_800"
+								android:textStyle="bold" />
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="减少碳排放"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvTodayCarbon"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0.00 kg"
+								android:textColor="@color/green_primary"
+								android:textStyle="bold" />
+						</LinearLayout>
+					</LinearLayout>
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+			<!-- 本月数据卡片 -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				app:cardCornerRadius="8dp"
+				app:cardElevation="2dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="本月累计"
+						android:textColor="@color/gray_800"
+						android:textSize="16sp"
+						android:textStyle="bold" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:orientation="vertical"
+						android:divider="@drawable/divider_horizontal"
+						android:showDividers="middle">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="参与天数"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvMonthDays"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0 天"
+								android:textColor="@color/gray_800"
+								android:textStyle="bold" />
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="总步数"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvMonthTotalSteps"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0 步"
+								android:textColor="@color/gray_800"
+								android:textStyle="bold" />
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="总减排量"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvMonthCarbon"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0.00 kg"
+								android:textColor="@color/green_primary"
+								android:textStyle="bold" />
+						</LinearLayout>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="40dp"
+
+							android:layout_marginHorizontal="8dp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="等效种树"
+								android:textColor="@color/gray_600" />
+
+							<TextView
+								android:id="@+id/tvMonthTrees"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="0 棵"
+								android:textColor="@color/brown_primary"
+								android:textStyle="bold" />
+						</LinearLayout>
+					</LinearLayout>
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+
+			<!-- 环保贡献 -->
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:layout_marginBottom="32dp"
+				app:cardCornerRadius="8dp"
+				app:cardElevation="2dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="16dp">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="环保贡献"
+						android:textColor="@color/gray_800"
+						android:textSize="16sp"
+						android:textStyle="bold" />
+
+					<TextView
+						android:id="@+id/tvContribution"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						android:text="你的步行正在为地球减少温室气体排放"
+						android:textColor="@color/gray_600" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

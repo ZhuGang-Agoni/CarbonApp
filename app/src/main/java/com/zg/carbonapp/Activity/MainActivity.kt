@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.zg.carbonapp.Fragment.AskFragment
-import com.zg.carbonapp.Fragment.ChallengeFragment
 import com.zg.carbonapp.Fragment.CommunityFragment
 import com.zg.carbonapp.Fragment.DataAnalyseFragment
 import com.zg.carbonapp.Fragment.ImFragment
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val tabLayout by lazy { binding.tabLayout }
     private val container by lazy { binding.container }
-    private var currentTabPosition = 2 // 默认选中第3个Tab (AskFragment)
+    private var currentTabPosition = 0// 默认选中第3个Tab (AskFragment)
     private val fragments = mutableMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         // 初始化AskFragment并显示
         if (savedInstanceState == null) {
-            val firstFragment = AskFragment()
+            val firstFragment = MainHomeFragment()
             fragments[currentTabPosition] = firstFragment
             supportFragmentManager.beginTransaction()
                 .add(container.id, firstFragment)
@@ -47,18 +46,21 @@ class MainActivity : AppCompatActivity() {
     private fun handleShareIntent() {
         // 处理分享逻辑
     }
-
+    fun switchToSpecificTab(position: Int) {
+        // 选中指定位置的Tab，会自动触发onTabSelected回调，同步切换Fragment
+        tabLayout.getTabAt(position)?.select()
+    }
     private fun initTableLayout() {
         // 动态添加 tabs
         val askTab = tabLayout.newTab().setIcon(R.drawable.ic_ai_assistant).setText("低碳ai助手")
         val mainHomeTab = tabLayout.newTab().setIcon(R.drawable.main_home2).setText("主页")
         val communityTab = tabLayout.newTab().setIcon(R.drawable.ic_community).setText("碳社区")
         val imTab = tabLayout.newTab().setIcon(R.drawable.ic_profile).setText("我的")
-        val dataTab = tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
+//        val dataTab = tabLayout.newTab().setIcon(R.drawable.data).setText("数据分析")
 
         // 按指定顺序添加Tabs
         tabLayout.addTab(mainHomeTab)  // position 0
-        tabLayout.addTab(dataTab)       // position 1
+//        tabLayout.addTab(dataTab)       // position 1
         tabLayout.addTab(askTab)        // position 2 (默认选中)
         tabLayout.addTab(communityTab)  // position 3
         tabLayout.addTab(imTab)         // position 4
@@ -72,10 +74,10 @@ class MainActivity : AppCompatActivity() {
                 val fragment = fragments.getOrPut(tab.position) {
                     when (tab.position) {
                         0 -> MainHomeFragment()
-                        1 -> DataAnalyseFragment()
-                        2 -> AskFragment()
-                        3 -> CommunityFragment()
-                        4 -> ImFragment()
+//                        1 -> DataAnalyseFragment()
+                        1 -> AskFragment()
+                        2 -> CommunityFragment()
+                        3 -> ImFragment()
                         else -> throw IllegalStateException("Invalid position")
                     }
                 }
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun switchFragment(newFragment: Fragment) {
+    fun switchFragment(newFragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
 
         fragments[currentTabPosition]?.let {
