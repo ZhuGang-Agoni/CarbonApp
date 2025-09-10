@@ -6,7 +6,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fillViewport="true"
-	android:background="@drawable/bg_gradient_green">
+	android:background="@drawable/bg_ranking"
+	android:fitsSystemWindows="true">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
@@ -77,24 +78,30 @@
 					android:layout_height="0dp"
 					android:layout_weight="1"/>
 
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/exchangeHistoryButton"
-					style="@style/Widget.Material3.Button.OutlinedButton"
+				<LinearLayout
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginEnd="8dp"
-					android:text="兑换记录"
-					app:icon="@drawable/ic_history"
-					app:iconTint="@color/primary"/>
+					android:orientation="vertical">
 
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/earnMoreButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="赚取积分"
-					app:backgroundTint="@color/primary"
-					app:icon="@drawable/ic_earn_points"
-					app:iconTint="@color/white"/>
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/exchangeHistoryButton"
+						style="@style/Widget.Material3.Button.OutlinedButton"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:text="兑换记录"
+						app:icon="@drawable/ic_history"
+						app:iconTint="@color/primary" />
+
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/earnMoreButton"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="赚取积分"
+						app:backgroundTint="@color/primary"
+						app:icon="@drawable/ic_earn_points"
+						app:iconTint="@color/white"/>
+				</LinearLayout>
 			</LinearLayout>
 		</LinearLayout>
 	</com.google.android.material.card.MaterialCardView>

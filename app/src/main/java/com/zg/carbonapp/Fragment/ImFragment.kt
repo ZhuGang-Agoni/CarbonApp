@@ -160,9 +160,9 @@ class ImFragment : Fragment() {
                 signature = "点击编辑个性签名",
                 userQQ = "",  // 初始为空，让用户自行填写
                 userTelephone = "",  // 初始为空，让用户自行填写
-                userEvator = "",
+                userAvatar = "",
                 carbonCount = 0,
-                userPassword = "123456"  // 初始默认密码
+                userPassword = "123456"
             )
             UserMMKV.saveUser(currentUser!!)  // 保存到MMKV
         }
@@ -198,9 +198,9 @@ class ImFragment : Fragment() {
             binding.userSignatureEdit.text = user.signature
 
             // 加载头像
-            if (user.userEvator.isNotEmpty()) {
+            if (user.userAvatar.isNotEmpty()) {
                 Glide.with(this)
-                    .load(user.userEvator)
+                    .load(user.userAvatar)
                     .into(binding.ivAvatar)
             } else {
                 // 显示默认头像
@@ -392,7 +392,7 @@ class ImFragment : Fragment() {
             e.printStackTrace()
         }
 
-        tempUser?.userEvator = uri.toString()
+        tempUser?.userAvatar = uri.toString()
         Glide.with(this).load(uri).into(binding.ivAvatar)
         MyToast.sendToast("头像已更新，点击保存提交更改", requireContext())
     }

@@ -28,9 +28,10 @@ import com.zg.carbonapp.Adapter.FeedImageAdapter
 import com.zg.carbonapp.Dao.User
 import com.zg.carbonapp.Dao.UserComment
 import com.zg.carbonapp.Dao.UserFeed
-import com.zg.carbonapp.MMKV.MMKVManager
+import com.zg.carbonapp.MMKV.TokenManager
 import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Service.RetrofitClient
 import com.zg.carbonapp.databinding.ActivityUserCommentBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,9 +45,9 @@ class UserCommentActivity : AppCompatActivity() {
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var feedImageAdapter: FeedImageAdapter
     private var feedId: String? = null
-    private var currentFeed: UserFeed? = null  // 当前动态对象（包含发布者信息）
+    private var currentFeed: UserFeed? = null
 
-    // 从UserMMKV获取当前登录用户信息
+    // 使用 UserMMKV 获取用户信息
     private val currentUser: User? by lazy { UserMMKV.getUser() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +55,6 @@ class UserCommentActivity : AppCompatActivity() {
         binding = ActivityUserCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 获取传递的feedId
         feedId = intent.getStringExtra("feedId")
         if (feedId.isNullOrEmpty()) {
             Toast.makeText(this, "动态信息获取失败", Toast.LENGTH_SHORT).show()
@@ -62,7 +62,6 @@ class UserCommentActivity : AppCompatActivity() {
             return
         }
 
-        // 检查用户登录状态
         if (currentUser == null) {
             Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show()
             finish()
@@ -75,29 +74,21 @@ class UserCommentActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        // 返回按钮
-        binding.icBack.setOnClickListener{
-            finish()
-        }
+        binding.icBack.setOnClickListener { finish() }
 
-        // 评论列表Adapter（使用当前登录用户ID判断删除权限）
         commentAdapter = CommentAdapter(
             onDeleteClick = { deleteComment(it) },
             currentUserId = currentUser?.userId ?: ""
         )
 
-
         binding.recyclerViewComment.apply {
             layoutManager = LinearLayoutManager(this@UserCommentActivity)
             adapter = commentAdapter
         }
-       commentAdapter.setupSwipeToDelete(binding.recyclerViewComment)
+        commentAdapter.setupSwipeToDelete(binding.recyclerViewComment)
 
+        setupImages(binding, emptyList(), this)
 
-        // 动态图片Adapter
-        setupImages(binding, emptyList(),this)
-
-        // 评论输入框监听
         binding.etCommentInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -106,7 +97,6 @@ class UserCommentActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // 发布评论按钮
         binding.btnSendComment.setOnClickListener {
             val commentContent = binding.etCommentInput.text.toString().trim()
             if (commentContent.isNotBlank() && feedId != null && currentUser != null) {
@@ -114,14 +104,50 @@ class UserCommentActivity : AppCompatActivity() {
             }
         }
 
-        // 动态点赞按钮
         binding.btnLike.setOnClickListener {
             currentFeed?.let { handleLikeClick(it) }
         }
 
-        // 动态收藏按钮
         binding.btnShare.setOnClickListener {
             currentFeed?.let { handleSaveClick(it) }
+        }
+    }
+
+    // 添加 loadComments 方法
+    private fun loadComments() {
+        val feedId = this.feedId ?: return
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitClient.instance.getCommentsByFeedId(feedId)
+                if (response.isSuccessful && response.body()?.code == 200) {
+                    val comments = response.body()?.data ?: emptyList()
+
+                    withContext(Dispatchers.Main) {
+                        // 将 Comment 对象转换为 UserComment 对象
+                        val userComments = comments.map { comment ->
+                            UserComment(
+                                feedId = comment.feedId,
+                                userId = comment.userId,
+                                username = comment.userName,
+                                avatar = comment.avatar,
+                                content = comment.content,
+                                commentTime = comment.commentTime
+                            )
+                        }
+                        commentAdapter.submitList(userComments)
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@UserCommentActivity, "加载评论失败", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@UserCommentActivity, "加载评论失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserCommentActivity", "加载评论失败", e)
+                }
+            }
         }
     }
 
@@ -150,108 +176,94 @@ class UserCommentActivity : AppCompatActivity() {
         return (dp * context.resources.displayMetrics.density).toInt()
     }
 
-    /**
-     * 加载动态数据（从MMKV获取，包含发布者信息）
-     */
     private fun loadFeedData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            // 从MMKV获取所有动态，匹配当前feedId
-            val allFeeds = MMKVManager.getAllFeeds()
-            currentFeed = allFeeds.firstOrNull { it.feedId == feedId }
+            try {
+                // 获取动态详情
+                val response = RetrofitClient.instance.getDynamicDetail(feedId!!)
+                if (response.isSuccessful && response.body()?.code == 200) {
+                    val dynamicDetail = response.body()?.data
+                    withContext(Dispatchers.Main) {
+                        dynamicDetail?.let { detail ->
+                            // 更新UI显示动态信息
+                            binding.tvUsername.text = detail.dynamic.userName
+                            binding.tvTime.text = detail.dynamic.createTime
+                            binding.tvContent.text = detail.dynamic.content
 
-            withContext(Dispatchers.Main) {
-                currentFeed?.let { feed ->
-                    // 动态发布者信息（来自UserFeed）
-                    binding.tvUsername.text = feed.username
-                    binding.tvTime.text = feed.createTime
-                    binding.tvContent.text = feed.content
-                    binding.tvLikeCount.text = feed.likeCount.toString()
-                    binding.tvCommentCount.text = feed.commentCount.toString()
-                    binding.tvShareCount.text = feed.shareCount.toString()
+                            // 加载头像
+                            loadAvatar(detail.dynamic.avatar, detail.dynamic.userName, this@UserCommentActivity)
 
-                    // 加载动态发布者的头像
-                    loadAvatar(feed.avatar, feed.username, this@UserCommentActivity)
+                            // 加载图片
+                            setupImages(binding, detail.dynamic.pics, this@UserCommentActivity)
 
-                    // 加载动态图片
-                    setupImages(binding,feed.images,this@UserCommentActivity)
+                            // 更新点赞和收藏状态
+                            updateLikeAndSaveState(detail.dynamic.isLiked, detail.dynamic.isSaved)
 
-                    // 更新点赞/收藏状态
-                    updateLikeAndSaveState(feed)
-                } ?: run {
-                    Toast.makeText(this@UserCommentActivity, "动态已删除", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-        }
-    }
-
-    /**
-     * 加载评论列表
-     */
-    private fun loadComments() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val comments = MMKVManager.getCommentsByFeedId(feedId ?: "")
-
-            withContext(Dispatchers.Main) {
-                if (comments.isEmpty()) {
-//                    binding.tvEmpty.visibility = View.VISIBLE
-                    commentAdapter.submitList(emptyList())
+                            // 保存到本地currentFeed
+                            currentFeed?.let { feed ->
+                                feed.feedId = detail.dynamic.feedId
+                                feed.userId = detail.dynamic.userId
+                                feed.username = detail.dynamic.userName
+                                feed.avatar = detail.dynamic.avatar
+                                feed.content = detail.dynamic.content
+                                feed.images = detail.dynamic.pics
+                                feed.createTime = detail.dynamic.createTime
+                            }
+                        } ?: run {
+                            Toast.makeText(this@UserCommentActivity, "动态信息获取失败", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } else {
-//                    binding.tvEmpty.visibility = View.GONE
-                    commentAdapter.submitList(comments)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@UserCommentActivity, "动态信息获取失败", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@UserCommentActivity, "动态信息获取失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserCommentActivity", "加载动态信息失败", e)
                 }
             }
         }
     }
 
-    /**
-     * 发布评论（使用从UserMMKV获取的当前登录用户信息）
-     * 关键修改：发布成功后回传「更新后的评论数+feedId」
-     */
     private fun publishComment(content: String) {
         val feedId = this.feedId ?: return
-        val user = currentUser ?: return
-
-        // 创建评论对象（评论者信息来自UserMMKV）
-        val newComment = UserComment(
-            feedId = feedId,
-            userId = user.userId,         // 当前登录用户ID
-            username = user.userName,     // 当前登录用户名
-            avatar = user.userEvator,     // 当前登录用户头像
-            content = content,
-            commentTime = getCurrentTime()
-        )
 
         lifecycleScope.launch(Dispatchers.IO) {
-            MMKVManager.addComment(feedId, newComment)
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
+                val response = RetrofitClient.instance.publishComment(
+                    "Bearer $token",
+                    feedId,
+                    content
+                )
 
-            // 1. 获取更新后的动态（包含最新评论数）
-            val updatedFeed = MMKVManager.getAllFeeds().firstOrNull { it.feedId == feedId }
-            val newCommentCount = updatedFeed?.commentCount ?: 0
+                if (response.isSuccessful && response.body()?.code == 200) {
+                    // 重新加载评论和动态信息
+                    loadComments()
+                    loadFeedData()
 
-            withContext(Dispatchers.Main) {
-                binding.etCommentInput.text.clear()
-                loadComments()
-                // 2. 刷新当前页面评论数显示
-                currentFeed = updatedFeed
-                currentFeed?.let {
-                    binding.tvCommentCount.text = it.commentCount.toString()
+                    val isCommented = response.body()?.data ?: false
+                    withContext(Dispatchers.Main) {
+                        currentFeed?.isCommented = isCommented
+                        binding.etCommentInput.text.clear()
+                        Toast.makeText(this@UserCommentActivity, "评论发布成功", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@UserCommentActivity, "评论发布失败", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
-                // 3. 关键：回传结果给来源Fragment（feedId + 最新评论数）
-                val resultIntent = Intent()
-                resultIntent.putExtra("feedId", feedId)
-                resultIntent.putExtra("newCommentCount", newCommentCount)
-                setResult(RESULT_OK, resultIntent)
-
-                Toast.makeText(this@UserCommentActivity, "评论发布成功", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@UserCommentActivity, "评论发布失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserCommentActivity", "发布评论失败", e)
+                }
             }
         }
     }
 
-    /**
-     * 加载头像（支持动态发布者头像）
-     */
     private fun loadAvatar(avatarUrl: String?, username: String, context: Context) {
         binding.ivAvatar.setImageResource(R.drawable.default_avatar)
         if (avatarUrl.isNullOrEmpty()) {
@@ -300,152 +312,98 @@ class UserCommentActivity : AppCompatActivity() {
             .into(binding.ivAvatar)
     }
 
-    /**
-     * 获取目前时间
-     */
     private fun getCurrentTime(): String {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
         return format.format(Date())
     }
 
-    /**
-     * 删除评论
-     * 关键修改：删除成功后回传「更新后的评论数+feedId」
-     */
     private fun deleteComment(comment: UserComment) {
-        val feedId = this.feedId ?: return
-        lifecycleScope.launch(Dispatchers.IO) {
-            MMKVManager.deleteComment(feedId, comment)
-
-            // 1. 获取更新后的动态（包含最新评论数）
-            val updatedFeed = MMKVManager.getAllFeeds().firstOrNull { it.feedId == feedId }
-            val newCommentCount = updatedFeed?.commentCount ?: 0
-
-            withContext(Dispatchers.Main) {
-                loadComments()
-                // 2. 刷新当前页面评论数显示
-                currentFeed = updatedFeed
-                currentFeed?.let {
-                    binding.tvCommentCount.text = it.commentCount.toString()
-                }
-
-                // 3. 关键：回传结果给来源Fragment（feedId + 最新评论数）
-                val resultIntent = Intent()
-                resultIntent.putExtra("feedId", feedId)
-                resultIntent.putExtra("newCommentCount", newCommentCount)
-                setResult(RESULT_OK, resultIntent)
-
-                Toast.makeText(this@UserCommentActivity, "评论已删除", Toast.LENGTH_SHORT).show()
-            }
-        }
+        // 注意：接口文档中没有提供删除评论的接口
+        // 这里只能从本地删除，无法从服务器删除
+        Toast.makeText(this, "无法删除服务器评论", Toast.LENGTH_SHORT).show()
     }
 
-    /**
-     * 点赞逻辑
-     */
     private fun handleLikeClick(feed: UserFeed) {
-        val newLikeState = !feed.isLiked
         lifecycleScope.launch(Dispatchers.IO) {
-            val allFeeds = MMKVManager.getAllFeeds().toMutableList()
-            val index = allFeeds.indexOfFirst { it.feedId == feed.feedId }
-            if (index != -1) {
-                val updatedFeed = allFeeds[index].copy(
-                    isLiked = newLikeState,
-                    likeCount = feed.likeCount + if (newLikeState) 1 else -1
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
+                val response = RetrofitClient.instance.likeDynamic(
+                    "Bearer $token",
+                    feed.feedId
                 )
-                allFeeds[index] = updatedFeed
-                MMKVManager.saveAllFeeds(allFeeds)
 
-                val likedFeeds = MMKVManager.getLikedFeeds().toMutableList()
-                if (newLikeState) {
-                    if (!likedFeeds.any { it.feedId == feed.feedId }) {
-                        likedFeeds.add(updatedFeed)
+                if (response.isSuccessful && response.body()?.code == 200) {
+                    // 重新加载动态信息
+                    loadFeedData()
+                    val isLiked = response.body()?.data ?: false
+                    withContext(Dispatchers.Main) {
+                        currentFeed?.isLiked = isLiked
+                        Toast.makeText(
+                            this@UserCommentActivity,
+                            if (isLiked) "取消点赞成功" else "点赞成功",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    likedFeeds.removeAll { it.feedId == feed.feedId }
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@UserCommentActivity, "操作失败", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                MMKVManager.saveLikedFeeds(likedFeeds)
-
+            } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    currentFeed = updatedFeed
-                    binding.tvLikeCount.text = updatedFeed.likeCount.toString()
-                    binding.ivLike.setImageResource(
-                        if (newLikeState) R.drawable.like__1_ else R.drawable.like
-                    )
-                    Toast.makeText(
-                        this@UserCommentActivity,
-                        if (newLikeState) "点赞成功" else "取消点赞",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@UserCommentActivity, "操作失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserCommentActivity", "点赞失败", e)
                 }
             }
         }
     }
 
-    /**
-     * 收藏逻辑
-     */
     private fun handleSaveClick(feed: UserFeed) {
-        val newSaveState = !feed.isSaved
         lifecycleScope.launch(Dispatchers.IO) {
-            val allFeeds = MMKVManager.getAllFeeds().toMutableList()
-            val index = allFeeds.indexOfFirst { it.feedId == feed.feedId }
-            if (index != -1) {
-                val updatedFeed = allFeeds[index].copy(
-                    isSaved = newSaveState,
-                    shareCount = feed.shareCount + if (newSaveState) 1 else -1
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
+                val response = RetrofitClient.instance.collectDynamic(
+                    "Bearer $token",
+                    feed.feedId
                 )
-                allFeeds[index] = updatedFeed
-                MMKVManager.saveAllFeeds(allFeeds)
 
-                val savedFeeds = MMKVManager.getSavedFeeds().toMutableList()
-                if (newSaveState) {
-                    if (!savedFeeds.any { it.feedId == feed.feedId }) {
-                        savedFeeds.add(updatedFeed)
+                if (response.isSuccessful && response.body()?.code == 200) {
+                    // 重新加载动态信息
+                    loadFeedData()
+                    val isSaved = response.body()?.data ?: false
+                    withContext(Dispatchers.Main) {
+                        currentFeed?.isSaved = isSaved
+                        Toast.makeText(
+                            this@UserCommentActivity,
+                            if (isSaved) "取消收藏成功" else "收藏成功",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    savedFeeds.removeAll { it.feedId == feed.feedId }
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@UserCommentActivity, "操作失败", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                MMKVManager.saveSavedFeeds(savedFeeds)
-
+            } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    currentFeed = updatedFeed
-                    binding.tvShareCount.text = updatedFeed.shareCount.toString()
-                    binding.ivShare.setImageResource(
-                        if (newSaveState) R.drawable.save_1 else R.drawable.save
-                    )
-                    Toast.makeText(
-                        this@UserCommentActivity,
-                        if (newSaveState) "收藏成功" else "取消收藏",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@UserCommentActivity, "操作失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserCommentActivity", "收藏失败", e)
                 }
             }
         }
     }
 
-    /**
-     * 更新点赞和收藏状态显示
-     */
-    private fun updateLikeAndSaveState(feed: UserFeed) {
+    private fun updateLikeAndSaveState(isLiked: Boolean, isSaved: Boolean) {
         binding.ivLike.setImageResource(
-            if (feed.isLiked) R.drawable.like__1_ else R.drawable.like
+            if (isLiked) R.drawable.like__1_ else R.drawable.like
         )
         binding.ivShare.setImageResource(
-            if (feed.isSaved) R.drawable.save_1 else R.drawable.save
+            if (isSaved) R.drawable.save_1 else R.drawable.save
         )
     }
 
-    // 优化：返回时若未发布/删除评论，也正常回传结果（避免来源Fragment接收不到结果）
     override fun finish() {
-        if (intent.hasExtra("feedId") && currentFeed != null) {
-            val resultIntent = Intent()
-            resultIntent.putExtra("feedId", feedId)
-            resultIntent.putExtra("newCommentCount", currentFeed?.commentCount ?: 0)
-            setResult(RESULT_OK, resultIntent)
-        } else {
-            setResult(RESULT_OK)
-        }
+        setResult(RESULT_OK)
         super.finish()
     }
 }

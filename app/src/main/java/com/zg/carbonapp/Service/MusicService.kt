@@ -22,7 +22,7 @@ class MusicService : Service() {
         super.onCreate()
         try {
             // 加载音乐（替换为你的音乐文件，如 res/raw/app_music.mp3）
-            mediaPlayer = MediaPlayer.create(this, R.raw.music3)
+            mediaPlayer = MediaPlayer.create(this, R.raw.music)
             mediaPlayer.isLooping = true // 循环播放
         } catch (e: Exception) {
             e.printStackTrace()

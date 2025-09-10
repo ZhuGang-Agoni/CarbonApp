@@ -168,7 +168,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
             isFinished = true
         )
         GarbageRecordMMKV.saveChallengeRecord(record)
-        val maxScore = (totalQuestions * scorePerQuestion*0.9).toInt()
+        val maxScore = (totalQuestions * scorePerQuestion*0.8).toInt()
 
         if (currentScore >=maxScore) {
             // 满分，弹窗提示是否挑战高阶
@@ -176,7 +176,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
                 .setTitle("挑战完成！")
                 .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n恭喜你,你的正确率高达百分之九十！要不要尝试更高阶的分类挑战？")
                 .setPositiveButton("去试试") { _, _ ->
-                    val intent = Intent(this, GameMenuActivity::class.java)
+                    val intent = Intent(this, MenuActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

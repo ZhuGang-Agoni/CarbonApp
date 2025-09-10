@@ -1,28 +1,38 @@
+// TokenManager.kt
 package com.zg.carbonapp.MMKV
 
-import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 
 object TokenManager {
-    private val mmkv= MMKV.mmkvWithID("user_token")
-    private val gson= Gson()
+    private const val TOKEN_KEY = "token"
+    private val mmkv = MMKV.mmkvWithID("user_token")
 
-//获取用户的一个token
-     fun getToken(): String? {
+    // 获取用户token
+    fun getToken(): String? {
         return try {
-              mmkv.decodeString("token")
-        }
-        catch (e:Exception){
+            mmkv.decodeString(TOKEN_KEY)
+        } catch (e: Exception) {
             null
         }
     }
-    //存用户的一个token
-    fun setToken(token :String){
-           mmkv.encode("token",token)
+
+    // 保存用户token
+    fun setToken(token: String) {
+        mmkv.encode(TOKEN_KEY, token)
     }
 
-    fun clearToken(){
+    // 清除token
+    fun clearToken() {
+        mmkv.removeValueForKey(TOKEN_KEY)
+    }
+
+    // 检查是否已登录
+    fun isLoggedIn(): Boolean {
+        return getToken() != null
+    }
+
+    // 清除所有token相关数据
+    fun clearAll() {
         mmkv.clearAll()
     }
-
 }

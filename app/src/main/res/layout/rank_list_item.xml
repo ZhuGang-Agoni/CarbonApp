@@ -18,8 +18,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="95dp"
 		android:gravity="center_vertical"
-	android:orientation="horizontal"
-	android:paddingHorizontal="16dp"> <!-- 内部水平间距，内容不贴边 -->
+		android:orientation="horizontal"
+		android:paddingHorizontal="16dp"> <!-- 内部水平间距，内容不贴边 -->
 
 	<!-- 排名数字：前三名用特殊颜色突出 -->
 	<TextView

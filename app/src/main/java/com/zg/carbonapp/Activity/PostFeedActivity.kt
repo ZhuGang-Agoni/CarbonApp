@@ -19,11 +19,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.zg.carbonapp.MMKV.TokenManager
 import com.zg.carbonapp.Dao.UserFeed
 import com.zg.carbonapp.MMKV.MMKVManager
 import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.R
+import com.zg.carbonapp.Service.RetrofitClient
 import com.zg.carbonapp.databinding.ActivityPostFeedBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -318,34 +327,76 @@ class PostFeedActivity : AppCompatActivity() {
             return
         }
 
-        val user = currentUser ?: run {
-            Toast.makeText(this, "发布失败，请重试", Toast.LENGTH_SHORT).show()
+        if (!TokenManager.isLoggedIn()) {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show()
+            finish()
             return
         }
 
-        val newFeed = UserFeed(
-            userId = user.userId,
-            username = user.userName,
-            avatar = user.userEvator,
-            content = content,
-            images = selectedImagePaths,
-            likeCount = 0,
-            commentCount = 0,
-            shareCount = 0,
-            createTime = getCurrentTime(),
-            isLiked = false,
-            isSaved = false,
-            isCommented = false
-        )
+        binding.btnPublish.isEnabled = false
+        binding.btnPublish.text = "发布中..."
 
-        val feeds = MMKVManager.getAllFeeds().toMutableList()
-        feeds.add(0, newFeed)
-        MMKVManager.saveAllFeeds(feeds)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
 
-        setResult(RESULT_OK)
-        finish()
-        Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show()
+                // 准备文件
+                val parts = selectedImagePaths.mapNotNull { path ->
+                    try {
+                        val file = File(path)
+                        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                        MultipartBody.Part.createFormData("files", file.name, requestFile)
+                    } catch (e: Exception) {
+                        Log.e("PostFeedActivity", "文件处理失败: $path", e)
+                        null
+                    }
+                }
+
+                val response = RetrofitClient.instance.publishDynamic(
+                    "Bearer $token",
+                    content,
+                    parts
+                )
+
+                withContext(Dispatchers.Main) {
+                    binding.btnPublish.isEnabled = true
+                    binding.btnPublish.text = "发布"
+
+                    if (response.isSuccessful) {
+                        val apiResponse = response.body()
+                        if (apiResponse != null && apiResponse.code == 1) {
+                            Toast.makeText(this@PostFeedActivity, "发布成功", Toast.LENGTH_SHORT).show()
+                            setResult(RESULT_OK)
+                            finish()
+                        } else {
+                            val errorMsg = apiResponse?.message ?: "发布失败"
+                            Toast.makeText(this@PostFeedActivity, errorMsg, Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@PostFeedActivity,
+                            "网络请求失败: ${response.message()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    binding.btnPublish.isEnabled = true
+                    binding.btnPublish.text = "发布"
+
+                    Toast.makeText(
+                        this@PostFeedActivity,
+                        "发布失败: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e("PostFeedActivity", "发布动态失败", e)
+                }
+            }
+        }
     }
+
+
     private fun generateRandomUserId(): String {
         val timestamp = System.currentTimeMillis()
         val random = Random().nextInt(9000) + 1000  // 4位随机数

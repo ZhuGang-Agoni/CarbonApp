@@ -5,7 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:background="@color/gray_light">
+	android:background="@drawable/bg_ranking"
+	android:fitsSystemWindows="true">
 
 	<com.baidu.mapapi.map.MapView
 		android:id="@+id/bmapView"
@@ -43,7 +44,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="绿色出行"
-					android:textSize="26sp"
+					android:textSize="22sp"
 					android:textStyle="bold"
 					android:textColor="@color/green_dark"
 					android:layout_centerHorizontal="true"

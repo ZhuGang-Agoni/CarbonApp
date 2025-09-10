@@ -4,19 +4,20 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/gray_light">
+	android:background="@color/colorBackground"
+	android:fitsSystemWindows="true">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/surface">
+		android:background="@color/primary">
 
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			app:title="我的互动记录"
-			app:titleTextColor="@color/on_surface" />
+			app:titleTextColor="@color/white" />
 
 		<com.google.android.material.tabs.TabLayout
 			android:id="@+id/tab_layout"

@@ -61,7 +61,7 @@ class AllActivitiesActivity : AppCompatActivity() {
                 id = 1,
                 name = "城市骑行日挑战",
                 description = "参与城市骑行活动，完成5公里骑行即可获得积分奖励",
-                imageRes = R.drawable.ic_activity_cycling,
+                imageRes = R.drawable.activity_city_cycling,
                 startTime = "2025-08-25 09:00", // 近期活动
                 endTime = "2025-08-25 16:00",
                 location = "城市中央公园",
@@ -75,7 +75,7 @@ class AllActivitiesActivity : AppCompatActivity() {
                 id = 2,
                 name = "垃圾分类公益讲座",
                 description = "专业讲师讲解垃圾分类知识，参与互动问答可额外获得积分",
-                imageRes = R.drawable.ic_activity_garbage,
+                imageRes = R.drawable.activity_garbage_lectrue,
                 startTime = "2025-08-30 14:00", // 未开始
                 endTime = "2025-08-30 16:00",
                 location = "市民中心报告厅",
@@ -89,7 +89,7 @@ class AllActivitiesActivity : AppCompatActivity() {
                 id = 3,
                 name = "植树节植树活动",
                 description = "共同参与植树造林，每种植一棵树苗可获得高额积分奖励",
-                imageRes = R.drawable.ic_activity_tree,
+                imageRes = R.drawable.activity_planting_tree,
                 startTime = "2025-03-12 08:00", // 已结束
                 endTime = "2025-03-12 12:00",
                 location = "城郊林场",
@@ -103,7 +103,7 @@ class AllActivitiesActivity : AppCompatActivity() {
                 id = 4,
                 name = "低碳生活创意大赛",
                 description = "分享你的低碳生活小妙招，优秀作品可获得丰厚积分奖励",
-                imageRes = R.drawable.ic_activity_creative,
+                imageRes = R.drawable.activity_green_create,
                 startTime = "2025-09-01 00:00",
                 endTime = "2025-09-30 23:59",
                 location = "线上参与",

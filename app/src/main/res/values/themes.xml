@@ -1,6 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 	<!-- Base application theme. -->
 	<style name="Base.Theme.CarbonApp" parent="Theme.Material3.DayNight.NoActionBar">
+		<!-- 添加以下属性来解决重叠问题 -->
+		<item name="android:windowTranslucentStatus">false</item>
+		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
 		<!-- Primary brand color. -->
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryVariant">@color/primary_dark</item>
@@ -65,4 +69,5 @@
 		<item name="android:insetTop">0dp</item>
 		<item name="android:insetBottom">0dp</item>
 	</style>
+
 </resources>

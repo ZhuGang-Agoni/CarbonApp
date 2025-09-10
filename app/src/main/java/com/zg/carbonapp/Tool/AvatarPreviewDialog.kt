@@ -53,9 +53,9 @@ class AvatarPreviewDialog(
 
     private fun loadUserAvatar() {
         try {
-            if (user.userEvator.isNotEmpty()) {
+            if (user.userAvatar.isNotEmpty()) {
                 Glide.with(this)
-                    .load(Uri.parse(user.userEvator))
+                    .load(Uri.parse(user.userAvatar))
                     .error(R.drawable.default_avatar)
                     .into(binding.userAvatar)
             } else {

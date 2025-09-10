@@ -157,7 +157,7 @@ class MainHomeFragment : Fragment() {
                 id = 1,
                 name = "城市骑行日挑战",
                 description = "参与城市骑行活动，完成5公里骑行即可获得积分奖励，减少碳排放从我做起",
-                imageRes = R.drawable.ic_activity_cycling,
+                imageRes = R.drawable.activity_city_cycling,
                 startTime = "2025-06-15 09:00",
                 endTime = "2025-06-15 16:00",
                 location = "城市中央公园",
@@ -171,7 +171,7 @@ class MainHomeFragment : Fragment() {
                 id = 2,
                 name = "垃圾分类公益讲座",
                 description = "专业讲师讲解垃圾分类知识，参与互动问答可额外获得积分",
-                imageRes = R.drawable.ic_activity_garbage,
+                imageRes = R.drawable.activity_garbage_lectrue,
                 startTime = "2025-06-20 14:00",
                 endTime = "2025-06-20 16:00",
                 location = "市民中心报告厅",
@@ -370,8 +370,8 @@ class MainHomeFragment : Fragment() {
     private fun refreshUserAvatar() {
         val user = UserMMKV.getUser()
         user?.let {
-            if (it.userEvator.isNotEmpty()) {
-                val avatarUri = Uri.parse(it.userEvator)
+            if (it.userAvatar.isNotEmpty()) {
+                val avatarUri = Uri.parse(it.userAvatar)
                 Glide.with(this)
                     .load(avatarUri)
                     .error(R.drawable.default_avatar)
@@ -472,7 +472,7 @@ class MainHomeFragment : Fragment() {
     }
 
     private fun navigateToGarbageClassification() {
-        IntentHelper.goIntent(requireContext(),MenuActivity::class.java)
+        IntentHelper.goIntent(requireContext(),GarbageSortActivity::class.java)
         showToast("跳转到垃圾分类页")
     }
 

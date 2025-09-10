@@ -1,8 +1,9 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
+    id("kotlin-parcelize") // 启用Parcelize支持
+    id("kotlin-kapt") // 添加kapt插件支持
 }
 
 android {
@@ -156,6 +157,21 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0-alpha03")
+
+    implementation("com.google.android.gms:play-services-fitness:21.2.0")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // CameraX - 使用版本目录中的统一版本
+    implementation(libs.androidx.camera.core)
+    implementation("androidx.camera:camera-camera2:1.4.2")
+    implementation("androidx.camera:camera-lifecycle:1.4.2")
+    implementation(libs.androidx.camera.view)
+
+    // ML Kit
+    implementation("com.google.mlkit:image-labeling:17.0.7")
+
+    // OpenCV (可选，暂时注释掉，因为可能没有对应的仓库)
+    // implementation("org.opencv:opencv-android:4.8.0")
 
 
     // 强制使用特定版本的 core 库

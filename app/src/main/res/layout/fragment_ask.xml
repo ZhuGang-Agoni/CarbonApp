@@ -5,15 +5,16 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/gray_light"
-	>
+	android:fitsSystemWindows="true">
 
 	<!-- 顶部AppBar -->
 	<com.google.android.material.appbar.MaterialToolbar
 		android:id="@+id/toolbar"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:background="@color/primary"
 		app:title="低碳AI助手"
-		app:titleTextColor="@color/on_surface"
+		app:titleTextColor="@color/white"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent" />
@@ -84,7 +85,7 @@
 		app:layout_constraintBottom_toTopOf="@id/inputLayout"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		tools:listitem="@layout/item_chat_user" />
+		tools:listitem="@layout/item_chat_user"/>
 
 	<!-- 底部输入栏 -->
 	<LinearLayout
@@ -129,7 +130,6 @@
 			android:src="@drawable/ic_send"
 			app:backgroundTint="@color/primary"
 			app:tint="@color/white" />
-
 	</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

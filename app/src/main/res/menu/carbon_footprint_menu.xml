@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share"
+        android:title="分享"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="设置"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_help"
+        android:title="帮助"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manual_input"
+        android:title="手动输入步数"
+        app:showAsAction="never" />
+
+</menu> 

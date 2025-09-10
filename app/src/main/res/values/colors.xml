@@ -4,7 +4,7 @@
 
     <color name="text_gray">#666666</color> <!-- 次要文本颜色 -->
     <color name="divider_gray">#EEEEEE</color> <!-- 分隔线颜色 -->
-<!--    <color name="gray_light">#F5F7F5</color> &lt;!&ndash; 页面背景色（更浅的灰绿） &ndash;&gt;-->
+    <!--    <color name="gray_light">#F5F7F5</color> &lt;!&ndash; 页面背景色（更浅的灰绿） &ndash;&gt;-->
 
     <color name="forest_bg">#1A3A28</color> <!-- 森林背景深绿 -->
     <color name="forest_top_bar">#80000000</color> <!-- 顶部半透明黑 -->
@@ -17,7 +17,7 @@
 
     <color name="btn_sign_bg_disabled">#BDBDBD</color>
 
-<!--    <color name="background_light_green">#F5F9F7</color>-->
+    <!--    <color name="background_light_green">#F5F9F7</color>-->
 
 
 
@@ -136,19 +136,19 @@
     <color name="forest_primary">#2E7D32</color> <!-- 深绿主色 -->
     <color name="forest_primary_light">#66BB6A</color> <!-- 浅绿 -->
     <color name="forest_secondary">#8D6E63</color> <!-- 树干棕 -->
-<!--    <color name="forest_bg">#F1F8E9</color> &lt;!&ndash; 背景浅绿 &ndash;&gt;-->
+    <!--    <color name="forest_bg">#F1F8E9</color> &lt;!&ndash; 背景浅绿 &ndash;&gt;-->
     <color name="forest_text">#212121</color> <!-- 文字黑 -->
     <color name="forest_timeline">#A5D6A7</color> <!-- 时间轴颜色 -->
-<!--    <color name="white">#FFFFFF</color>-->
+    <!--    <color name="white">#FFFFFF</color>-->
 
     <color name="sky_blue">#87CEEB</color>
-<!--    <color name="green_primary">#2E7D32</color>-->
+    <!--    <color name="green_primary">#2E7D32</color>-->
     <color name="blue_primary">#1976D2</color>
     <color name="orange_primary">#F57C00</color>
     <color name="brown_primary">#8D6E63</color>
     <color name="gray_f5">#F5F5F5</color>
     <color name="gray_800">#212121</color>
-<!--    <color name="gray_600">#757575</color>-->
+    <!--    <color name="gray_600">#757575</color>-->
     <color name="gray_500">#9E9E9E</color>
     <color name="gray_eee">#EEEEEE</color> <!-- 浅灰色，常用于分割线、背景等 -->
     <color name="primaryGreen">#4CAF50</color>
@@ -183,8 +183,6 @@
     <!-- 次要文本色（中灰） -->
     <color name="energy_bg">#F5F7F5</color>           <!-- 页面背景（浅灰） -->
 
-    <color name="colorAccent">#4CAF50</color>
-
 
 
     <color name="color_bg">#F5F7FA</color>
@@ -207,11 +205,11 @@
 
 
 
-        <color name="primary_dark_green">#388E3C</color>
-        <color name="primary_light_green">#C8E6C9</color>
-        <color name="accent_orange">#FF9800</color>
-        <color name="background_green">#E8F5E9</color>
-        <color name="text_dark_gray">#616161</color>
+    <color name="primary_dark_green">#388E3C</color>
+    <color name="primary_light_green">#C8E6C9</color>
+    <color name="accent_orange">#FF9800</color>
+    <color name="background_green">#E8F5E9</color>
+    <color name="text_dark_gray">#616161</color>
 
     <color name="primary_variant">#3700B3</color>
     <color name="secondary">#03DAC6</color>
@@ -276,7 +274,7 @@
     <color name="gray_light">#FAFAFA</color>
     <color name="gray_medium">#E0E0E0</color>
     <color name="gray_dark">#757575</color>
-    
+
     <!-- Material Design 3 语义色彩 -->
     <color name="surface">#FFFFFF</color>
     <color name="surface_variant">#F5F5F5</color>
@@ -284,7 +282,7 @@
     <color name="on_surface_variant">#49454F</color>
     <color name="outline">#79747E</color>
     <color name="outline_variant">#CAC4D0</color>
-    
+
     <!-- 兼容性色彩（保留原有的一些色彩名称） -->
     <color name="blue">#2196F3</color>
 
@@ -298,33 +296,31 @@
 
 
 
-    <color name="colorSecondary">#2196F3</color>
     <color name="textGray">#757575</color>
     <color name="gray">#E0E0E0</color>
 
     <color name="error">#F44336</color> <!-- Material Design 红色，代表错误 -->
-<!--    <color name="primary">#2E7D32</color>        &lt;!&ndash; 深绿 &ndash;&gt;-->
-<!--    <color name="primary_light">#A5D6A7</color>  &lt;!&ndash; 浅绿 &ndash;&gt;-->
-<!--    <color name="primary_dark">#1B5E20</color>   &lt;!&ndash; 暗绿 &ndash;&gt;-->
+    <!--    <color name="primary">#2E7D32</color>        &lt;!&ndash; 深绿 &ndash;&gt;-->
+    <!--    <color name="primary_light">#A5D6A7</color>  &lt;!&ndash; 浅绿 &ndash;&gt;-->
+    <!--    <color name="primary_dark">#1B5E20</color>   &lt;!&ndash; 暗绿 &ndash;&gt;-->
 
     <!-- 中性色 -->
     <color name="background_light">#F5F7FA</color>  <!-- 背景色 -->
-<!--    <color name="card_background">#FFFFFF</color>   &lt;!&ndash; 卡片背景 &ndash;&gt;-->
-<!--    <color name="primary_text">#212121</color>      &lt;!&ndash; 主要文本 &ndash;&gt;-->
-<!--    <color name="secondary_text">#757575</color>    &lt;!&ndash; 次要文本 &ndash;&gt;-->
-<!--    <color name="divider_color">#BDBDBD</color>     &lt;!&ndash; 分隔线 &ndash;&gt;-->
+    <!--    <color name="card_background">#FFFFFF</color>   &lt;!&ndash; 卡片背景 &ndash;&gt;-->
+    <!--    <color name="primary_text">#212121</color>      &lt;!&ndash; 主要文本 &ndash;&gt;-->
+    <!--    <color name="secondary_text">#757575</color>    &lt;!&ndash; 次要文本 &ndash;&gt;-->
+    <!--    <color name="divider_color">#BDBDBD</color>     &lt;!&ndash; 分隔线 &ndash;&gt;-->
     <color name="button_background">#EEEEEE</color> <!-- 按钮背景 -->
 
     <!-- 其他 -->
-<!--    <color name="white">#FFFFFF</color>-->
-<!--    <color name="black">#000000</color>-->
+    <!--    <color name="white">#FFFFFF</color>-->
+    <!--    <color name="black">#000000</color>-->
 
 
 
 
     <color name="gray_200">#F5F5F5</color> <!-- 边框色 -->
     <color name="gray_600">#666666</color> <!-- 辅助文字色 -->
-    <color name="colorPrimary">#3F51B5</color> <!-- 主色调（可替换为你的主题色） -->
     <color name="gold">#FFD700</color> <!-- 第一名金色 -->
     <color name="silver">#C0C0C0</color> <!-- 第二名银色 -->
     <color name="bronze">#CD7F32</color> <!-- 第三名铜色 -->
@@ -353,7 +349,7 @@
     <color name="eco_green_primary">#00C853</color>
     <color name="eco_green_light">#8000C853</color>
     <color name="eco_green_dark">#007936</color>
-<!--    <color name="eco_green">#4CAF50</color>-->
+    <!--    <color name="eco_green">#4CAF50</color>-->
     <color name="eco_dark_green">#388E3C</color>
     <color name="eco_light_green">#C8E6C9</color>
     <color name="eco_white">#FFFFFF</color>
@@ -401,6 +397,18 @@
     <!-- 半透明绿色（用于闪光效果） -->
     <color name="primary_light_transparent">#3300C853</color>
     <!-- 卡片背景色（原有的可保持不变） -->
+
+    <!-- 补充缺失的颜色 -->
+    <color name="other_gray">#FF888888</color>
+    <color name="purple_record">#FF800080</color>
+    <color name="orange_challenge">#FFFFA500</color>
+
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorSecondary">#FF9800</color>
+    <color name="colorAccent">#7E57C2</color>
+    <color name="colorBackground">#F1F8F6</color>
+    <color name="textPrimary">#333333</color>
+    <color name="textSecondary">#666666</color>
 
 
 </resources> 

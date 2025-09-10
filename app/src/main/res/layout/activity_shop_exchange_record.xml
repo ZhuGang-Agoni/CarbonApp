@@ -3,7 +3,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:background="@color/gray_light">
+	android:background="@color/colorBackground"
+	android:fitsSystemWindows="true">
 
 	<!-- 顶部标题栏 -->
 	<LinearLayout
@@ -12,6 +13,7 @@
 		android:background="@color/white"
 		android:elevation="4dp"
 		android:orientation="horizontal"
+		android:backgroundTint="@color/primary"
 		android:padding="16dp">
 
 		<ImageButton
@@ -19,7 +21,7 @@
 			android:layout_width="48dp"
 			android:layout_height="48dp"
 			android:background="?attr/selectableItemBackgroundBorderless"
-			android:src="@drawable/ic_back"
+			android:src="@drawable/ic_back_white"
 			android:contentDescription="返回" />
 
 		<TextView
@@ -30,7 +32,7 @@
 			android:layout_marginTop="10dp"
 			android:gravity="center"
 			android:text="兑换记录"
-			android:textColor="@color/green_dark"
+			android:textColor="@color/white"
 			android:textSize="22sp"
 			android:textStyle="bold" />
 
@@ -42,7 +44,7 @@
 			android:textSize="14sp"
 			android:layout_gravity="center_vertical"
 			android:background="@android:color/transparent"
-			android:textColor="@color/green_dark"
+			android:textColor="@color/white"
 			android:paddingLeft="8dp"
 			android:paddingRight="8dp"/>
 	</LinearLayout>
@@ -52,7 +54,7 @@
 		android:id="@+id/rv_records"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="@color/white"
+		android:background="@drawable/bg_ranking"
 		android:padding="16dp" />
 
 	<!-- 空状态 -->

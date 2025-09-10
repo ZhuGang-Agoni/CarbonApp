@@ -8,21 +8,76 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
-    private const val BASE_URL = "https://api.carbonlabel.com/"
+    // 可以根据需要切换协议
+    private const val BASE_URL_HTTP = "http://204.141.229.223:8080/"
+    private const val BASE_URL_HTTPS = "https://204.141.229.223:8080/"
+
+    // 默认使用 HTTP（根据实际情况调整）
+    private const val BASE_URL = BASE_URL_HTTP
+
     private const val MAX_RETRY = 3
 
-    private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-        .addInterceptor(RetryInterceptor(MAX_RETRY))
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .writeTimeout(15, TimeUnit.SECONDS)
-        .build()
+    // 创建一个不验证证书的 OkHttpClient（用于 HTTPS）
+    private fun getUnsafeOkHttpClient(): OkHttpClient {
+        try {
+            // 创建一个信任所有证书的 TrustManager
+            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<out X509Certificate>, authType: String) {}
+                override fun checkServerTrusted(chain: Array<out X509Certificate>, authType: String) {}
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            })
+
+            // 安装 TrustManager
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+
+            // 创建不验证主机名的 ssl socket factory
+            val sslSocketFactory = sslContext.socketFactory
+
+            return OkHttpClient.Builder()
+                .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+                .hostnameVerifier { _, _ -> true } // 不验证主机名
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+                .addInterceptor(RetryInterceptor(MAX_RETRY))
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+    }
+
+    // 创建一个普通的 OkHttpClient（用于 HTTP）
+    private fun getSafeOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .addInterceptor(RetryInterceptor(MAX_RETRY))
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    // 根据 BASE_URL 的协议选择不同的 OkHttpClient
+    private val okHttpClient by lazy {
+        if (BASE_URL.startsWith("https")) {
+            getUnsafeOkHttpClient()
+        } else {
+            getSafeOkHttpClient()
+        }
+    }
 
     class RetryInterceptor(private val maxRetry: Int) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {

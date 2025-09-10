@@ -15,8 +15,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.zg.carbonapp.Activity.UserCommentActivity
 import com.zg.carbonapp.Adapter.CommunityFeedAdapter
 import com.zg.carbonapp.Dao.UserFeed
+import com.zg.carbonapp.Tool.toUserFeed
 import com.zg.carbonapp.MMKV.MMKVManager
-import com.zg.carbonapp.MMKV.UserMMKV
+import com.zg.carbonapp.MMKV.TokenManager
+import com.zg.carbonapp.Service.RetrofitClient
 import com.zg.carbonapp.databinding.FragmentLikedFeedsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ class LikedFeedsFragment : Fragment() {
     private lateinit var binding: FragmentLikedFeedsBinding
     private lateinit var adapter: CommunityFeedAdapter
     private var likedFeedList: MutableList<UserFeed> = mutableListOf()
-    private val COMMENT_REQUEST_CODE = 1002  // 与CommunityFeedFragment保持一致的请求码
+    private val COMMENT_REQUEST_CODE = 1002
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,43 +42,36 @@ class LikedFeedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRefreshAndRecycler()
-        loadLikedFeeds()
+        //loadLikedFeeds()
     }
 
-    // 关键修复1：使用与全局Fragment完全一致的评论数刷新逻辑
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == COMMENT_REQUEST_CODE && resultCode == RESULT_OK) {
             val feedId = data?.getStringExtra("feedId")
             val newCommentCount = data?.getIntExtra("newCommentCount", 0) ?: 0
 
-            // 1. 先从全量数据中获取最新的动态对象（确保数据绝对新鲜）
             lifecycleScope.launch(Dispatchers.IO) {
                 val allFeeds = MMKVManager.getAllFeeds()
                 val updatedFeed = allFeeds.firstOrNull { it.feedId == feedId }
 
                 withContext(Dispatchers.Main) {
-                    // 2. 先局部刷新UI（优先保证体验）
                     updatedFeed?.let { updateLocalFeed(it) }
-                    // 3. 再全量刷新列表（确保数据最终一致）
                     loadLikedFeeds()
                 }
             }
         }
     }
 
-    // 关键修复2：直接使用全量数据中的对象替换当前列表中的对象
     private fun updateLocalFeed(updatedFeed: UserFeed) {
         val targetIndex = likedFeedList.indexOfFirst { it.feedId == updatedFeed.feedId }
         if (targetIndex != -1) {
-            // 直接替换整个对象，而不仅仅是评论数
             likedFeedList[targetIndex] = updatedFeed
             adapter.notifyItemChanged(targetIndex)
         }
     }
 
     private fun setupRefreshAndRecycler() {
-        // 下拉刷新配置
         binding.swipeRefresh.apply {
             setColorSchemeResources(
                 android.R.color.holo_blue_light,
@@ -85,7 +80,6 @@ class LikedFeedsFragment : Fragment() {
             setOnRefreshListener { loadLikedFeeds() }
         }
 
-        // 适配器配置
         adapter = CommunityFeedAdapter(
             onLikeClick = { handleLikeClick(it) },
             onCommentClick = { handleCommentClick(it) },
@@ -100,26 +94,36 @@ class LikedFeedsFragment : Fragment() {
         }
     }
 
-    // 关键修复3：加载逻辑与全量数据强关联
     private fun loadLikedFeeds() {
         binding.swipeRefresh.isRefreshing = true
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // 1. 先获取全量最新数据
-                val allFeeds = MMKVManager.getAllFeeds()
-                // 2. 再获取点赞列表的ID集合（只存ID，避免数据不一致）
-                val likedFeedIds = MMKVManager.getLikedFeeds().map { it.feedId }.toSet()
-                // 3. 从全量数据中筛选出点赞的动态（保证数据是最新的）
-                val filteredFeeds = allFeeds
-                    .filter { likedFeedIds.contains(it.feedId) }
-                    .sortedByDescending { it.createTime }
-                    .toMutableList()
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
+                val response = RetrofitClient.instance.getLikeList("Bearer $token")
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (apiResponse?.code == 200) {
+                        val dynamics = apiResponse.data
+                        val feeds = dynamics.map { it.toUserFeed() }
 
-                withContext(Dispatchers.Main) {
-                    if (!isAdded) return@withContext
-                    likedFeedList = filteredFeeds
-                    adapter.submitList(likedFeedList)
+                        // 保存到本地缓存
+                        MMKVManager.saveLikedFeeds(feeds)
+
+                        withContext(Dispatchers.Main) {
+                            if (!isAdded) return@withContext
+                            likedFeedList = feeds.toMutableList()
+                            adapter.submitList(likedFeedList)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(requireContext(), "获取点赞列表失败: ${apiResponse?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "网络请求失败", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("LikedFeeds", "加载失败: ${e.message}", e)
@@ -136,50 +140,52 @@ class LikedFeedsFragment : Fragment() {
         }
     }
 
-    // 点赞逻辑（保持与全局Fragment一致）
     private fun handleLikeClick(position: Int) {
         if (position >= likedFeedList.size) return
         val targetFeed = likedFeedList[position]
         val newLikeState = !targetFeed.isLiked
-        val currentUser = UserMMKV.getUser()
 
-        if (currentUser == null) {
+        if (!TokenManager.isLoggedIn()) {
             Toast.makeText(requireContext(), "请先登录", Toast.LENGTH_SHORT).show()
             return
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            // 更新全量数据
-            val allFeeds = MMKVManager.getAllFeeds().toMutableList()
-            val allFeedIndex = allFeeds.indexOfFirst { it.feedId == targetFeed.feedId }
-            if (allFeedIndex != -1) {
-                allFeeds[allFeedIndex] = allFeeds[allFeedIndex].copy(
-                    isLiked = newLikeState,
-                    likeCount = allFeeds[allFeedIndex].likeCount + if (newLikeState) 1 else -1
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
+
+                // 调用点赞接口
+                val response = RetrofitClient.instance.likeDynamic(
+                    "Bearer $token",
+                    targetFeed.feedId
                 )
-                MMKVManager.saveAllFeeds(allFeeds)
-            }
 
-            // 更新点赞列表（只存ID集合，减少数据冗余）
-            val likedFeeds = MMKVManager.getLikedFeeds().toMutableList()
-            if (newLikeState) {
-                if (!likedFeeds.any { it.feedId == targetFeed.feedId }) {
-                    allFeeds[allFeedIndex]?.let { likedFeeds.add(it) }
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful && response.body()?.code == 200) {
+                        // 重新加载列表确保数据一致
+                        loadLikedFeeds()
+                        Toast.makeText(
+                            requireContext(),
+                            if (newLikeState) "点赞成功" else "取消点赞",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "操作失败: ${response.body()?.message ?: "未知错误"}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            } else {
-                likedFeeds.removeAll { it.feedId == targetFeed.feedId }
-            }
-            MMKVManager.saveLikedFeeds(likedFeeds)
-
-            // 刷新UI
-            withContext(Dispatchers.Main) {
-                if (!isAdded) return@withContext
-                loadLikedFeeds() // 直接重新加载列表，确保数据一致
-                Toast.makeText(
-                    requireContext(),
-                    if (newLikeState) "点赞成功" else "取消点赞",
-                    Toast.LENGTH_SHORT
-                ).show()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        "操作失败: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e("LikedFeeds", "点赞失败", e)
+                }
             }
         }
     }
@@ -187,9 +193,8 @@ class LikedFeedsFragment : Fragment() {
     private fun handleCommentClick(position: Int) {
         if (position >= likedFeedList.size) return
         val targetFeed = likedFeedList[position]
-        val currentUser = UserMMKV.getUser()
 
-        if (currentUser == null) {
+        if (!TokenManager.isLoggedIn()) {
             Toast.makeText(requireContext(), "请先登录", Toast.LENGTH_SHORT).show()
             return
         }
@@ -203,41 +208,47 @@ class LikedFeedsFragment : Fragment() {
         if (position >= likedFeedList.size) return
         val targetFeed = likedFeedList[position]
         val newSaveState = !targetFeed.isSaved
-        val currentUser = UserMMKV.getUser()
 
-        if (currentUser == null) {
+        if (!TokenManager.isLoggedIn()) {
             Toast.makeText(requireContext(), "请先登录", Toast.LENGTH_SHORT).show()
             return
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val allFeeds = MMKVManager.getAllFeeds().toMutableList()
-            val index = allFeeds.indexOfFirst { it.feedId == targetFeed.feedId }
-            if (index != -1) {
-                allFeeds[index] = allFeeds[index].copy(
-                    isSaved = newSaveState,
-                    shareCount = allFeeds[index].shareCount + if (newSaveState) 1 else -1
-                )
-                MMKVManager.saveAllFeeds(allFeeds)
+            try {
+                val token = TokenManager.getToken() ?: throw Exception("用户未登录")
 
-                val savedFeeds = MMKVManager.getSavedFeeds().toMutableList()
-                if (newSaveState) {
-                    if (!savedFeeds.any { it.feedId == targetFeed.feedId }) {
-                        savedFeeds.add(allFeeds[index])
-                    }
-                } else {
-                    savedFeeds.removeAll { it.feedId == targetFeed.feedId }
-                }
-                MMKVManager.saveSavedFeeds(savedFeeds)
+                // 调用收藏接口
+                val response = RetrofitClient.instance.collectDynamic(
+                    "Bearer $token",
+                    targetFeed.feedId
+                )
 
                 withContext(Dispatchers.Main) {
-                    if (!isAdded) return@withContext
-                    adapter.notifyItemChanged(position)
+                    if (response.isSuccessful && response.body()?.code == 200) {
+                        // 更新本地状态
+                        adapter.notifyItemChanged(position)
+                        Toast.makeText(
+                            requireContext(),
+                            if (newSaveState) "收藏成功" else "取消收藏",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "操作失败: ${response.body()?.message ?: "未知错误"}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
                     Toast.makeText(
                         requireContext(),
-                        if (newSaveState) "收藏成功" else "取消收藏",
+                        "操作失败: ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()
+                    Log.e("LikedFeeds", "收藏失败", e)
                 }
             }
         }

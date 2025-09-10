@@ -17,7 +17,7 @@ object CarbonFootprintDataMMKV {
     fun saveStep(date: String, step: Int) {
         mmkv.encode("step_$date", step)
     }
-    
+
     /**
      * 按天获取本地存储的步数
      *
@@ -28,7 +28,7 @@ object CarbonFootprintDataMMKV {
     fun getStep(date: String): Int {
         return mmkv.decodeInt("step_$date", 0)
     }
-    
+
     /**
      * 检查指定日期是否有步数记录
      *
@@ -42,7 +42,7 @@ object CarbonFootprintDataMMKV {
 
     /**
      * 清空所有步数缓存（调试用）
-     * 
+     *
      * 功能说明：
      * - 删除所有以"step_"开头的键值对
      * - 用于测试或重置数据
@@ -55,12 +55,12 @@ object CarbonFootprintDataMMKV {
 
     /**
      * 同步本地所有步数到后端（后端API待实现）
-     * 
+     *
      * 功能说明：
      * - 遍历本地所有步数记录
      * - 调用后端API上传数据
      * - 用于数据备份和同步
-     * 
+     *
      * 实现说明：
      * 1. 获取所有以"step_"开头的键
      * 2. 解析日期和步数
@@ -70,12 +70,12 @@ object CarbonFootprintDataMMKV {
     fun syncAllStepsToServer() {
         // 获取所有步数相关的键
         val allKeys = mmkv.allKeys()?.filter { it.startsWith("step_") } ?: return
-        
+
         // 遍历所有步数记录
         for (key in allKeys) {
             val date = key.removePrefix("step_") // 提取日期部分
             val steps = mmkv.decodeInt(key, 0) // 获取步数
-            
+
             // TODO: 调用后端API上传 (date, steps)
             // 例如: ApiService.uploadStep(date, steps)
             // 上传成功后可以删除本地数据：mmkv.remove(key)

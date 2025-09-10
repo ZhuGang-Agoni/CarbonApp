@@ -188,7 +188,8 @@
                     android:src="@drawable/ic_recyclable"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:tint="@color/white"/>
 
                 <TextView
                     android:text="可回收物"
@@ -216,7 +217,8 @@
                     android:src="@drawable/ic_hazardous"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:tint="@color/white"/>
 
                 <TextView
                     android:text="有害垃圾"
@@ -253,7 +255,8 @@
                     android:src="@drawable/ic_kitchen"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:tint="@color/white"/>
 
                 <TextView
                     android:text="厨余垃圾"
@@ -281,7 +284,8 @@
                     android:src="@drawable/ic_other"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:tint="@color/white"/>
 
                 <TextView
                     android:text="其他垃圾"

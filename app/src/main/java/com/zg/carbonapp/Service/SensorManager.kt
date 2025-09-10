@@ -129,7 +129,7 @@ class SensorManager(private val context: Context) {
             Log.w(TAG, "设备不支持步数传感器")
         }
     }
-    
+
     /**
      * 获取今天的步数（优先Google Fit，其次本地传感器）
      * @param callback 回调函数，返回步数Int
@@ -153,7 +153,7 @@ class SensorManager(private val context: Context) {
             getLocalSteps(callback)
         }
     }
-    
+
     /**
      * 获取指定日期的步数（Google Fit支持历史，本地传感器仅支持当天）
      * @param date 日期字符串，格式yyyy-MM-dd
@@ -177,7 +177,7 @@ class SensorManager(private val context: Context) {
             }
         }
     }
-    
+
     /**
      * 获取本地传感器的步数（仅支持当天）
      * @param callback 回调函数，返回步数Int
@@ -207,7 +207,7 @@ class SensorManager(private val context: Context) {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         return date == today
     }
-    
+
     /**
      * 获取Google Fit服务对象
      */
@@ -221,7 +221,7 @@ class SensorManager(private val context: Context) {
     fun isGoogleFitSignedIn(): Boolean {
         return googleFitService.isSignedIn()
     }
-    
+
     /**
      * 释放传感器资源，防止内存泄漏
      */

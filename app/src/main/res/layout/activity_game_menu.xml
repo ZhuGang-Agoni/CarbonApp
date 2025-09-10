@@ -5,7 +5,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/menu_bg_gradient">
+	android:background="@drawable/menu_bg_gradient"
+	android:fitsSystemWindows="true">
 
 	<!-- 标题区域 -->
 	<TextView

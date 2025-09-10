@@ -101,10 +101,10 @@ class CommunityRankingFragment : Fragment() {
     // 获取当前用户的真实头像
     private fun getCurrentUserAvatar(): String {
         val currentUser = UserMMKV.getUser()
-        return if (currentUser != null && currentUser.userEvator.isNotBlank()
-            && currentUser.userEvator != "/R.drawable.img") { // 排除错误路径
-            Log.d("RankingFragment", "获取当前用户真实头像: ${currentUser.userEvator}")
-            currentUser.userEvator
+        return if (currentUser != null && currentUser.userAvatar.isNotBlank()
+            && currentUser.userAvatar != "/R.drawable.img") { // 排除错误路径
+            Log.d("RankingFragment", "获取当前用户真实头像: ${currentUser.userAvatar}")
+            currentUser.userAvatar
         } else {
             Log.d("RankingFragment", "当前用户无有效头像，使用默认头像")
             getDefaultAvatarPath()
