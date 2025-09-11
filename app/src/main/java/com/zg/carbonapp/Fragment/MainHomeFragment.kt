@@ -510,7 +510,9 @@ class MainHomeFragment : Fragment() {
         loadLowCarbonActivities()
     }
 
-    private fun loadUserData() {}
+    private fun loadUserData() {
+         binding.userName.text="用户名字："+UserMMKV.getUser()?.userName
+    }
     private fun loadLowCarbonData() {}
     private fun loadRecommendedContent() {}
     private fun loadLowCarbonActivities() {}

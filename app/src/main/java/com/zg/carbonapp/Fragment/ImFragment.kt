@@ -57,11 +57,17 @@ class ImFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-        // 退出登录按钮（注释Token相关逻辑，默认隐藏）
-        binding.logoutText.setOnClickListener {
-            // 注释：原退出登录逻辑，暂时禁用
-            // showLogoutDialog()
-        }
+       binding.logoutText.setOnClickListener{
+           AlertDialog.Builder(requireContext())
+               .setTitle("确定退出当前登录吗？")
+               .setPositiveButton("确定"){_,_->
+                   TokenManager.clearToken()
+                   IntentHelper.goIntent(requireContext(),LoginActivity::class.java)
+               }
+               .setNegativeButton("取消"){_,_->
+
+               }.show()
+       }
 
         // 通知设置
         binding.notifyLayout.setOnClickListener {
@@ -135,11 +141,10 @@ class ImFragment : Fragment() {
 
         // 登录提示点击事件（注释，强制隐藏）
         binding.loginPrompt.setOnClickListener {
-            // 注释：原登录跳转逻辑，暂时禁用
-            // IntentHelper.goIntent(requireContext(), LoginActivity::class.java)
+
+             IntentHelper.goIntent(requireContext(), LoginActivity::class.java)
         }
-        // 强制隐藏登录提示
-        binding.loginPrompt.visibility = View.GONE
+
     }
 
     private fun loadUserInfo() {
@@ -221,7 +226,7 @@ class ImFragment : Fragment() {
 
         // 显示/隐藏退出登录按钮（注释控制逻辑，强制隐藏）
         // binding.logoutText.visibility = if (isLoggedIn) View.VISIBLE else View.GONE
-        binding.logoutText.visibility = View.GONE  // 强制隐藏
+
 
         // 显示/隐藏登录提示（强制隐藏）
         // binding.loginPrompt.visibility = if (isLoggedIn) View.GONE else View.VISIBLE

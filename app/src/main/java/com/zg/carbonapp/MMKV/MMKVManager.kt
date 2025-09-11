@@ -8,7 +8,7 @@ import com.zg.carbonapp.Dao.UserComment
 import com.zg.carbonapp.Dao.UserFeed
 
 object MMKVManager {
-    private val mmkv by lazy { MMKV.mmkvWithID("community_feed1") }
+    private val mmkv by lazy { MMKV.mmkvWithID("community_feed2") }
     private val gson = Gson()
 
     // 原有动态相关键
@@ -79,6 +79,7 @@ object MMKVManager {
             emptyList()
         }
     }
+
     // ======================== 新增：评论管理方法（核心） ========================
     /**
      * 1. 保存单条评论到指定动态的评论列表
@@ -209,8 +210,6 @@ object MMKVManager {
             saveCommentedFeeds(commentedFeeds)
         }
     }
-
-
 
     // 清除所有数据（调试用，含评论）
     fun clearAllData() {

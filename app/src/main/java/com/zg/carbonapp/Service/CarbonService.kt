@@ -25,10 +25,10 @@ interface CarbonService {
     suspend fun searchCarbonByName(@Query("name") name: String): Response<CarbonFootprint>
 
     // 2. 用户注册登录相关
-    @POST("regP")
+    @POST("users/regP")
     suspend fun register(
         @Query("userName") userName: String,
-        @Query("email") email: String,
+        @Query("userTelephone") userTelephone: String,
         @Query("userPassword") userPassword: String
     ): Response<ApiResponse<String>> // 返回空字符串
 
@@ -40,7 +40,7 @@ interface CarbonService {
     @POST("dynamic/publish")
     suspend fun publishDynamic(
         @Header("Authorization") token: String,
-        @Part("content") content: String,
+        @Part("content") content: RequestBody,
         @Part files: List<MultipartBody.Part>
     ): Response<ApiResponse<String>> // 返回"动态发布成功,动态id为XX"
 
@@ -55,7 +55,7 @@ interface CarbonService {
     suspend fun publishComment(
         @Header("Authorization") token: String,
         @Path("feedId") feedId: String,
-        @Query("content") content: String
+        @Query("content") content:String
     ): Response<ApiResponse<Boolean>> // 返回"评论成功"
 
     @GET("dynamic/commentList")
@@ -96,10 +96,13 @@ interface CarbonService {
     ): Response<ApiResponse<String>> // 返回"头像上传成功"+avatarUrl
 
     // ---------------------- 查询个人详细信息接口 ----------------------
+
     @GET("users/userInfo")
     suspend fun getUserInfo(
         @Header("Authorization") token: String
     ): Response<ApiResponse<User>> // 返回User对象（含email、carbonScore、userQQ等完整信息）
+
+
 
     // ---------------------- 访问用户主界面接口 ----------------------
     @GET("uses/{id}") // 按文档17：URL为/uses/{id}（注意非/users）

@@ -88,7 +88,7 @@
 					android:layout_height="56dp"
 					android:layout_marginBottom="16dp"
 					android:background="@drawable/bg_edittext"
-					android:hint="请输入用户名"
+					android:hint="请输入电话号码"
 					android:inputType="text"
 					android:paddingStart="16dp"
 					android:paddingEnd="16dp"

@@ -419,33 +419,33 @@
 					<LinearLayout
 						android:id="@+id/notify_layout"
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:orientation="horizontal"
+						android:layout_height="60dp"
+						android:clickable="true"
 						android:gravity="center_vertical"
-						android:padding="16dp"
-						android:clickable="true">
+						android:orientation="horizontal"
+						android:padding="16dp">
 
 						<ImageView
 							android:layout_width="24dp"
 							android:layout_height="24dp"
-							android:src="@drawable/notify"
-							android:contentDescription="通知设置" />
+							android:contentDescription="通知设置"
+							android:src="@drawable/notify" />
 
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginStart="16dp"
 							android:text="通知设置"
-							android:textSize="18sp"
-							android:textColor="@android:color/black" />
+							android:textColor="@android:color/black"
+							android:textSize="18sp" />
 
 						<ImageView
 							android:layout_width="24dp"
 							android:layout_height="24dp"
-							android:layout_marginStart="210dp"
 							android:layout_gravity="end"
-							android:src="@drawable/right"
-							android:contentDescription="前往" />
+							android:layout_marginStart="210dp"
+							android:contentDescription="前往"
+							android:src="@drawable/right" />
 					</LinearLayout>
 				</LinearLayout>
 			</com.google.android.material.card.MaterialCardView>

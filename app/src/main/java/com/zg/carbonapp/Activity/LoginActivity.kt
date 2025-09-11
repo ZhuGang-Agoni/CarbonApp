@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private val apiService: CarbonService
         get() = RetrofitClient.instance
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 通过视图绑定初始化布局
@@ -106,6 +107,20 @@ class LoginActivity : AppCompatActivity() {
                                 }
 
                                 MyToast.sendToast("登录成功", this@LoginActivity)
+                                val token = TokenManager.getToken().toString()
+                                val response = apiService.getUserInfo(token)
+
+                                if (response.isSuccessful) {
+                                    val apiResponse = response.body()
+                                    if (apiResponse != null && apiResponse.code == 1) {
+                                        // 保存用户信息到 MMKV
+                                        apiResponse.data?.let { user ->
+                                            UserMMKV.saveUser(user)
+                                        }
+                                    }
+                                }
+
+
                                 IntentHelper.goIntent(this@LoginActivity, MainActivity::class.java)
                                 finish()
                             } else {

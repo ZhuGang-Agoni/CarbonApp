@@ -101,13 +101,14 @@ class RegisterActivity : AppCompatActivity() {
                         // 调用注册API - 注意：这里使用手机号作为email
                         val response = apiService.register(
                             userName = userNameText,
-                            email = phoneEdit, // 使用手机号作为email
+                            userTelephone = phoneEdit, // 使用手机号作为email
                             userPassword = newPasswordEdit
                         )
 
                         if (response.isSuccessful) {
                             val apiResponse = response.body()
-                            if (apiResponse != null && apiResponse.code == 200) {
+                            if (apiResponse != null && apiResponse.code == 1) {
+
                                 MyToast.sendToast("注册成功", this@RegisterActivity)
                                 IntentHelper.goIntent(this@RegisterActivity, LoginActivity::class.java)
                                 finish()
