@@ -25,6 +25,7 @@ import com.zg.carbonapp.Repository.LowCarbonKnowledgeRepository
 import com.zg.carbonapp.Tool.IntentHelper
 import com.zg.carbonapp.databinding.DialogBadgeListBinding
 import com.zg.carbonapp.databinding.FragmentMainHomeBinding
+import com.zg.carbonapp.ui.weather.WeatherActivity
 
 class MainHomeFragment : Fragment() {
 
@@ -438,14 +439,19 @@ class MainHomeFragment : Fragment() {
         if (binding.functionGrid.childCount > 1 && binding.functionGrid.getChildAt(1) is ViewGroup) {
             val secondRow = binding.functionGrid.getChildAt(1) as ViewGroup
             secondRow.getChildAt(0).setOnClickListener { navigateToCarbonFootprint() }
-            secondRow.getChildAt(1).setOnClickListener { navigateToMoreFunctions() }
-            secondRow.getChildAt(2).setOnClickListener { navigateToVRScene() }
+            secondRow.getChildAt(1).setOnClickListener { navigateToWeatherQuery() }
+            secondRow.getChildAt(2).setOnClickListener { navigateToMoreFunctions() }
         }
     }
 
     private fun navigateToVRScene() {
         IntentHelper.goIntent(requireContext(),MyActionActivity::class.java)
     }
+
+    private fun navigateToWeatherQuery() {
+        IntentHelper.goIntent(requireContext(), WeatherActivity::class.java)
+    }
+
 
     private fun navigateToUserProfile() {
         showToast("跳转到用户个人资料页")
@@ -458,7 +464,7 @@ class MainHomeFragment : Fragment() {
     }
 
     private fun navigateToNotifications() {
-        showToast("跳转到通知页")
+        IntentHelper.goIntent(requireContext(),MyActionActivity::class.java)
     }
 
     private fun navigateToGreenTravel() {
@@ -487,8 +493,18 @@ class MainHomeFragment : Fragment() {
     }
 
     private fun navigateToMoreFunctions() {
-        IntentHelper.goIntent(requireContext(), TravelHelperActivity::class.java)
-        showToast("跳转到更多功能页")
+        val options = arrayOf("帮助中心", "意见反馈")
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("更多功能")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> Toast.makeText(requireContext(), "帮助中心正在开发中", Toast.LENGTH_SHORT).show()
+                    1 -> Toast.makeText(requireContext(), "意见反馈正在开发中", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("取消", null)
+            .show()
     }
 
     private fun navigateToActivities() {

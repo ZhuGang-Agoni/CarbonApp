@@ -184,7 +184,7 @@
                     android:id="@+id/btn_camera"
                     android:layout_width="140dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/bg_button_gradient"
+                    android:background="@drawable/button_gradient_green"
                     android:src="@drawable/ic_camera"
                     android:tint="@color/white"
                     android:contentDescription="拍照识别" />

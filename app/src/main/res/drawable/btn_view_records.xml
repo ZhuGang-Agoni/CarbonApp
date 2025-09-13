@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- 按下状态 -->
 	<item android:state_pressed="true">
 		<shape android:shape="rectangle">
-			<solid android:color="@color/accent_blue" />
+			<solid android:color="#2E7D32" /> <!-- 深绿色 -->
 			<corners android:radius="32dp" />
 		</shape>
 	</item>
+
+	<!-- 默认状态 -->
 	<item>
 		<shape android:shape="rectangle">
-			<solid android:color="@color/accent_blue" />
 			<corners android:radius="32dp" />
 			<gradient
 				android:type="linear"
 				android:angle="0"
-				android:startColor="@color/accent_blue"
-				android:endColor="@color/primary_color" />
+				android:startColor="#4CAF50"
+				android:endColor="#81C784" /> <!-- 浅绿色 -->
 		</shape>
 	</item>
 </selector>

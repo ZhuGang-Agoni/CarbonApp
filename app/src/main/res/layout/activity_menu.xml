@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/bg_gradient_main"
+	android:background="@drawable/bg_ranking"
 	android:paddingHorizontal="20dp">
 
 	<!-- 顶部标题栏 -->
@@ -40,13 +40,14 @@
 			android:background="@drawable/btn_arrow_selector"
 			android:padding="15dp"
 			android:src="@drawable/ic_arrow_left_white"
+			android:tint="@color/white"
 			/>
 
 		<!-- 角色卡片（缩小尺寸更精致） -->
 		<androidx.cardview.widget.CardView
 			android:id="@+id/player_card"
-			android:layout_width="220dp"
-			android:layout_height="280dp"
+			android:layout_width="200dp"
+			android:layout_height="250dp"
 			android:layout_centerInParent="true"
 			app:cardBackgroundColor="@color/white"
 			app:cardCornerRadius="24dp"
@@ -101,6 +102,7 @@
 			android:background="@drawable/btn_arrow_selector"
 			android:padding="15dp"
 			android:src="@drawable/ic_arrow_right_white"
+			android:tint="@color/white"
 			/>
 
 	</RelativeLayout>
