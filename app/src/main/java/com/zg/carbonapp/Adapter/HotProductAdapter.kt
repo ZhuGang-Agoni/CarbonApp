@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.filament.Colors
 import com.zg.carbonapp.Dao.Rarity
 import com.zg.carbonapp.Dao.VirtualProduct
 import com.zg.carbonapp.R
@@ -41,10 +42,13 @@ class HotProductAdapter(
             // 修复：使用MaterialCardView自带方法设置背景色（避免类型转换）
             root.setCardBackgroundColor(getRarityColor(product.rarity))
 
+            // 设置边框颜色
+            root.strokeColor = ContextCompat.getColor(context, R.color.eco_primary_green)
+
             // 添加特效标识
             effectIndicator.visibility = if (product.effectRes != 0) View.VISIBLE else View.GONE
             if (product.effectRes != 0) {
-                effectIndicator.setImageResource(R.drawable.ic_effect)
+                effectIndicator.setImageResource(R.drawable.ic_leaf)
             }
 
             // 点击动画
@@ -75,10 +79,10 @@ class HotProductAdapter(
 
     private fun getRarityColor(rarity: Rarity): Int {
         return when (rarity) {
-            Rarity.COMMON -> ContextCompat.getColor(context, R.color.rarity_common)
-            Rarity.RARE -> ContextCompat.getColor(context, R.color.rarity_rare)
-            Rarity.EPIC -> ContextCompat.getColor(context, R.color.rarity_epic)
-            Rarity.LEGENDARY -> ContextCompat.getColor(context, R.color.rarity_legendary)
+            Rarity.COMMON -> ContextCompat.getColor(context, R.color.eco_rare)
+            Rarity.RARE -> ContextCompat.getColor(context, R.color.eco_epic)
+            Rarity.EPIC -> ContextCompat.getColor(context, R.color.eco_epic)
+            Rarity.LEGENDARY -> ContextCompat.getColor(context, R.color.eco_legendary)
         }
     }
 }

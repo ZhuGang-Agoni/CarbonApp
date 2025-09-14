@@ -19,7 +19,15 @@
 
     <!--    <color name="background_light_green">#F5F9F7</color>-->
 
+    <!-- 环保主题稀有度颜色 -->
+    <color name="eco_common">#CCFFFFFF</color>      <!-- 80% 白色 - 普通 -->
+    <color name="eco_rare">#99E8F5E9</color>       <!-- 60% 浅绿色 - 稀有 -->
+    <color name="eco_epic">#99C8E6C9</color>       <!-- 60% 稍深绿色 - 史诗 -->
+    <color name="eco_legendary">#9981C784</color>   <!-- 60% 中等绿色 - 传说 -->
 
+    <!-- 环保主题主色 -->
+    <color name="eco_primary_green">#FF4CAF50</color>
+    <color name="eco_secondary_green">#FF388E3C</color>
 
 
 

@@ -24,7 +24,7 @@ class AppApplication : Application(), Configuration.Provider {
 
         @SuppressLint("StaticFieldLeak")
         lateinit var context :Context
-        const val TOKEN="SJrPcwY43EaLolw0"
+        const val TOKEN="sYD7tYL1KkZN6Fv0"
     }
 
 

@@ -27,9 +27,6 @@ class MyActionActivity : AppCompatActivity() {
 
 
     private fun setupUI() {
-        // 设置工具栏
-        binding.toolbar.title = "碳社区"
-
 
         // 设置ViewPager2
         binding.viewPager.adapter = MyActionPagerAdapter(this)

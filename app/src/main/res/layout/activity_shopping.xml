@@ -6,77 +6,126 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fillViewport="true"
-	android:background="@drawable/bg_ranking"
+	android:background="@drawable/ic_cartoon2"
 	android:fitsSystemWindows="true">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-	android:paddingBottom="16dp">
+		android:paddingBottom="16dp">
 
-	<!-- 顶部导航栏 -->
-	<com.google.android.material.appbar.MaterialToolbar
-		android:id="@+id/toolbar"
-		android:layout_width="match_parent"
-		android:layout_height="?attr/actionBarSize"
-		android:background="@color/primary"
-		app:layout_constraintTop_toTopOf="parent"
-		app:title="碳积分商城"
-		app:titleTextColor="@color/white"
-		app:navigationIcon="@drawable/ic_back_white"/>
-
-	<!-- 积分卡片 -->
-	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/pointsCard"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="16dp"
-		android:layout_marginTop="16dp"
-		app:cardCornerRadius="16dp"
-		app:cardElevation="8dp"
-		app:strokeColor="@color/primary_light"
-		app:strokeWidth="1dp"
-		app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-		<LinearLayout
+		<!-- 顶部导航栏卡片 -->
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/toolbarCard"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:padding="16dp">
+			android:layout_marginHorizontal="8dp"
+			android:layout_marginTop="8dp"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="8dp"
+			app:strokeColor="#AA4CAF50"
+			app:strokeWidth="2dp"
+			app:cardBackgroundColor="#DDFFFFFF"
+			app:layout_constraintTop_toTopOf="parent">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="我的碳积分"
-				android:textColor="@color/secondary_text"
-				android:textSize="14sp"/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:background="@android:color/transparent"
+				android:paddingHorizontal="20dp"
+				android:gravity="center_vertical">
+
+				<ImageView
+					android:id="@+id/backButton"
+					android:layout_width="24dp"
+					android:layout_height="24dp"
+					android:src="@drawable/ic_back_white"
+					android:tint="#FF333333"
+					android:contentDescription="返回"
+					android:clickable="true"
+					android:focusable="true"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="碳积分商城"
+					android:textColor="#FF333333"
+					android:textSize="22sp"
+					android:textStyle="bold"
+					android:layout_marginStart="12dp"
+					android:letterSpacing="0.02" />
+
+				<View
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					android:layout_weight="1" />
+
+				<!-- 搜索按钮 -->
+				<ImageButton
+					android:id="@+id/searchButton"
+					android:layout_width="24dp"
+					android:layout_height="24dp"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:contentDescription="搜索"
+					android:src="@drawable/ic_search"
+					android:tint="#FF333333" />
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- 半透明积分卡片 -->
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/pointsCard"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginTop="16dp"
+			app:cardBackgroundColor="#80FFFFFF"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="8dp"
+			app:strokeColor="@color/primary_light"
+			app:strokeWidth="1dp"
+			app:layout_constraintTop_toBottomOf="@id/toolbarCard">
 
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:orientation="horizontal"
-				android:gravity="center_vertical">
-
-				<ImageView
-					android:layout_width="24dp"
-					android:layout_height="24dp"
-					android:src="@drawable/ic_carbon_point"/>
+				android:orientation="vertical"
+				android:padding="16dp">
 
 				<TextView
-					android:id="@+id/carbon_point"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="8dp"
-					android:text="1250"
-					android:textColor="@color/primary_text"
-					android:textSize="28sp"
-					android:textStyle="bold"/>
+					android:text="我的碳积分"
+					android:textColor="#CC000000"
+					android:textSize="14sp"/>
 
-				<Space
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1"/>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:orientation="horizontal"
+					android:gravity="center_vertical">
+
+						<ImageView
+							android:layout_width="24dp"
+							android:layout_height="24dp"
+							android:src="@drawable/ic_carbon_point"
+							android:tint="#FF4CAF50"/>
+
+						<TextView
+							android:id="@+id/carbon_point"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="8dp"
+							android:text="6224"
+							android:textColor="#CC000000"
+							android:textSize="28sp"
+							android:textStyle="bold"/>
+
+						<Space
+							android:layout_width="0dp"
+							android:layout_height="0dp"
+							android:layout_weight="1"/>
 
 				<LinearLayout
 					android:layout_width="wrap_content"
@@ -89,31 +138,34 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginEnd="8dp"
+						android:backgroundTint="#804CAF50"
 						android:text="兑换记录"
+						android:textColor="#CC000000"
 						app:icon="@drawable/ic_history"
-						app:iconTint="@color/primary" />
+						app:iconTint="#CC000000" />
 
 					<com.google.android.material.button.MaterialButton
 						android:id="@+id/earnMoreButton"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:backgroundTint="#804CAF50"
 						android:text="赚取积分"
-						app:backgroundTint="@color/primary"
+						android:textColor="#CC000000"
 						app:icon="@drawable/ic_earn_points"
-						app:iconTint="@color/white"/>
+						app:iconTint="#CC000000"/>
 				</LinearLayout>
 			</LinearLayout>
-		</LinearLayout>
-	</com.google.android.material.card.MaterialCardView>
+	</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
 
-	<!-- 分类导航 -->
+	<!-- 半透明分类导航 -->
 	<HorizontalScrollView
-		android:id="@+id/categoryScrollView"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="16dp"
-		android:paddingHorizontal="16dp"
-		app:layout_constraintTop_toBottomOf="@id/pointsCard">
+	android:id="@+id/categoryScrollView"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="16dp"
+	android:paddingHorizontal="16dp"
+	app:layout_constraintTop_toBottomOf="@id/pointsCard">
 
 		<LinearLayout
 			android:layout_width="wrap_content"
@@ -127,7 +179,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
+				android:backgroundTint="#80FFFFFF"
 				android:text="全部"
+				android:textColor="#CC000000"
 				app:cornerRadius="16dp"/>
 
 			<com.google.android.material.button.MaterialButton
@@ -136,9 +190,12 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
+				android:backgroundTint="#80FFFFFF"
 				android:text="勋章"
+				android:textColor="#CC000000"
 				app:cornerRadius="16dp"
-				app:icon="@drawable/ic_badge"/>
+				app:icon="@drawable/ic_badge"
+				app:iconTint="#CC000000"/>
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/categoryFrames"
@@ -146,37 +203,43 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginEnd="8dp"
+				android:backgroundTint="#80FFFFFF"
 				android:text="头像框"
+				android:textColor="#CC000000"
 				app:cornerRadius="16dp"
-				app:icon="@drawable/ic_frame"/>
+				app:icon="@drawable/ic_frame"
+				app:iconTint="#CC000000"/>
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/categoryItems"
 				style="@style/Widget.Material3.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:backgroundTint="#80FFFFFF"
 				android:text="挂件"
+				android:textColor="#CC000000"
 				app:cornerRadius="16dp"
-				app:icon="@drawable/ic_item"/>
+				app:icon="@drawable/ic_item"
+				app:iconTint="#CC000000"/>
 		</LinearLayout>
 	</HorizontalScrollView>
 
-	<!-- 热门推荐标题 -->
-	<TextView
+		<!-- 热门推荐标题 -->
+		<TextView
 		android:id="@+id/hotTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="24dp"
 		android:layout_marginTop="24dp"
 		android:text="热门推荐"
-		android:textColor="@color/primary_text"
-		android:textSize="20sp"
-		android:textStyle="bold"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/categoryScrollView"/>
+		android:textColor="#CC000000"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/categoryScrollView"/>
 
-	<!-- 热门商品网格：增加底部约束，确保与下方区域距离 -->
-	<androidx.recyclerview.widget.RecyclerView
+		<!-- 热门商品网格 -->
+		<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/hotProductsRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -187,24 +250,24 @@
 		app:spanCount="2"
 		app:layout_constraintTop_toBottomOf="@id/hotTitle"
 		app:layout_constraintBottom_toTopOf="@id/newTitle"
-	tools:listitem="@layout/item_virtual_product"/>
+		tools:listitem="@layout/item_virtual_product"/>
 
-	<!-- 最新上架标题 -->
-	<TextView
+		<!-- 最新上架标题 -->
+		<TextView
 		android:id="@+id/newTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="24dp"
 		android:layout_marginTop="24dp"
-	android:text="最新上架"
-	android:textColor="@color/primary_text"
-	android:textSize="20sp"
-	android:textStyle="bold"
-	app:layout_constraintStart_toStartOf="parent"
-	app:layout_constraintTop_toBottomOf="@id/hotProductsRecyclerView"/>
+		android:text="最新上架"
+		android:textColor="#CC000000"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/hotProductsRecyclerView"/>
 
-	<!-- 最新商品列表 -->
-	<androidx.recyclerview.widget.RecyclerView
+		<!-- 最新商品列表 -->
+		<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/newProductsRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -215,16 +278,5 @@
 		app:layout_constraintTop_toBottomOf="@id/newTitle"
 		tools:listitem="@layout/item_product_horizontal"/>
 
-	<!-- 搜索按钮 -->
-	<ImageButton
-		android:id="@+id/searchButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:src="@drawable/ic_search"
-		android:background="?attr/selectableItemBackgroundBorderless"
-		app:layout_constraintTop_toTopOf="@id/toolbar"
-		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginEnd="16dp"
-		android:contentDescription="搜索"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

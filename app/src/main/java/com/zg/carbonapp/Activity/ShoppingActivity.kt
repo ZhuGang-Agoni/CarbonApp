@@ -116,7 +116,7 @@ class ShoppingActivity : AppCompatActivity() {
     }
 
     private fun setupAllListeners() {
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.backButton.setOnClickListener { finish() }
 
         binding.searchButton.setOnClickListener {
             Toast.makeText(this, "搜索功能开发中", Toast.LENGTH_SHORT).show()
