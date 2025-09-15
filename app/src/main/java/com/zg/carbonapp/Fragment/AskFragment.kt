@@ -42,7 +42,16 @@ class AskFragment : Fragment() {
         binding = FragmentAskBinding.inflate(inflater, container, false)
         initRecyclerView()
         initEvent()
+        // 添加AI欢迎消息
+        addWelcomeMessage()
         return binding.root
+    }
+
+    // 添加AI欢迎消息
+    private fun addWelcomeMessage() {
+        val welcomeMessage = "你好！我是你的低碳助手。有什么可以帮助你的吗？"
+        chatList.add(ChatMessage(welcomeMessage, MessageType.AI))
+        chatAdapter.notifyItemInserted(chatList.size - 1)
     }
 
     // 初始化RecyclerView

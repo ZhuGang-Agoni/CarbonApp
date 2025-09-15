@@ -84,7 +84,7 @@ class UserCommentActivity : AppCompatActivity() {
      */
     private fun initView() {
         // 返回按钮
-        binding.icBack.setOnClickListener { finish() }
+        binding.toolbar.setOnClickListener { finish() }
 
         // 评论适配器（支持删除评论）
         commentAdapter = CommentAdapter(

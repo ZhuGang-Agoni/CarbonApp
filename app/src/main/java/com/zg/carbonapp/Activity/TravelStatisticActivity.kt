@@ -54,6 +54,8 @@ class TravelStatisticActivity : AppCompatActivity() {
         binding.aiAnalysisCard.visibility = View.VISIBLE
     }
 
+
+
     // 新增：初始化7天内的步数减碳数据
     private fun initStepCarbonData() {
         val weekData = StepCarbonMMKV.getWeekData()
@@ -68,7 +70,28 @@ class TravelStatisticActivity : AppCompatActivity() {
 
     private fun initSummaryData() {
         try {
+
+            // 添加模拟数据 - 步数减碳（近7天）
+            val calendar = Calendar.getInstance()
+            val mockStepData = mutableMapOf<String, DailyStepData>()
+            for (i in 6 downTo 0) {
+                calendar.time = Date()
+                calendar.add(Calendar.DAY_OF_YEAR, -i)
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+                val dateKey = SimpleDateFormat("MM/dd", Locale.getDefault()).format(calendar.time)
+
+                val steps = 4000 + Random().nextInt(11000)
+                val stepData = DailyStepData(date).apply {
+                    this.steps = steps
+                    calculateCarbon()
+                }
+                mockStepData[dateKey] = stepData
+            }
+
+            // 使用模拟数据
+            stepCarbonData = mockStepData
             val allRecords = TravelRecordManager.getRecords().list
+
             // 新增：获取今日步数减碳数据
             val todayStepData = StepCarbonMMKV.getTodayData()
             val todayStepCarbon = todayStepData?.carbonReduction ?: 0.0
@@ -81,10 +104,9 @@ class TravelStatisticActivity : AppCompatActivity() {
             val totalTodayCarbon = todayTravelCarbon.toFloat() + todayStepCarbon.toFloat()
 
             // 计算7天前的时间点
-            val calendar = Calendar.getInstance().apply {
-                timeInMillis = todayStart
-                add(Calendar.DAY_OF_YEAR, -7)
-            }
+            // 计算7天前的时间点
+            calendar.timeInMillis = todayStart
+            calendar.add(Calendar.DAY_OF_YEAR, -7)
             val sevenDaysAgo = calendar.timeInMillis
 
             // 筛选7天内的出行记录

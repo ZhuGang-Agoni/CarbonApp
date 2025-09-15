@@ -67,7 +67,7 @@
 				android:layout_height="wrap_content"
 				android:text="AI物体识别"
 				android:textAllCaps="false"
-				android:drawableStart="@drawable/ic_ai"
+				android:drawableStart="@drawable/ic_ai1"
 				android:drawablePadding="8dp"
 				android:backgroundTint="#2196F3"
 				android:textColor="#FFFFFF"

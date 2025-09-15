@@ -190,6 +190,7 @@ class GreenTravelActivity : AppCompatActivity(),
 
         // 初始化出行记录
         initTravelRecord()
+
     }
 
     private fun checkIfCityHasSubway(city: String?): Boolean {
@@ -557,7 +558,37 @@ class GreenTravelActivity : AppCompatActivity(),
         return "%.3f".format(todayTotal / 1000.0)
     }
 
-    private fun initTravelRecord() = refreshTravelRecordUI()
+    // 在 initTravelRecord() 方法中添加模拟数据
+    private fun initTravelRecord() {
+        try {
+
+            // 获取现有记录并添加模拟记录
+            val existingRecord = TravelRecordManager.getRecords()
+            val newList = mutableListOf<ItemTravelRecord>().apply {
+                addAll(existingRecord.list)
+            }
+
+            // 计算新的总碳减排
+            val newTotalCarbon = newList.sumOf { it.carbonCount.toDoubleOrNull() ?: 0.0 } / 1000.0
+
+            // 保存更新后的记录
+            val user = UserMMKV.getUser() ?: return
+            TravelRecordManager.saveRecord(
+                TravelRecord(
+                    userId = user.userId ?: "default_user",
+                    totalCarbon = String.format("%.3f", newTotalCarbon),
+                    todayCarbon = calculateTodayCarbonFromList(newList),
+                    carbonPoint = user.carbonCount.toString(),
+                    list = newList
+                )
+            )
+
+            refreshTravelRecordUI()
+        } catch (e: Exception) {
+            Log.e(TAG, "初始化出行记录失败: ${e.message}")
+            refreshTravelRecordUI() // 仍然尝试刷新UI
+        }
+    }
 
     // 步行路线结果回调（统一对话框样式）
     override fun onGetWalkingRouteResult(result: WalkingRouteResult?) {

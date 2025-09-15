@@ -8,12 +8,13 @@
 	android:fitsSystemWindows="true">
 
 	<!-- 标题栏 -->
-	<LinearLayout
+	<com.google.android.material.appbar.MaterialToolbar
 		android:layout_width="match_parent"
-		android:layout_height="56dp"
+		android:layout_height="?attr/actionBarSize"
 		android:background="@color/green_primary"
-		android:gravity="center_vertical"
-		android:paddingHorizontal="16dp">
+		android:id="@+id/toolbar"
+		app:navigationIcon="@drawable/ic_back"
+		app:navigationIconTint="@color/white">
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -21,8 +22,9 @@
 			android:text="碳减排报告"
 			android:textColor="@android:color/white"
 			android:textSize="20sp"
-			android:textStyle="bold" />
-	</LinearLayout>
+			android:textStyle="bold"
+			android:layout_gravity="center" />
+	</com.google.android.material.appbar.MaterialToolbar>
 
 	<!-- 报告内容 -->
 	<ScrollView

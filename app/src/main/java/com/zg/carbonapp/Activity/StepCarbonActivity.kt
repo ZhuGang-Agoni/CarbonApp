@@ -32,6 +32,7 @@ import com.zg.carbonapp.MMKV.UserMMKV
 import com.zg.carbonapp.Repository.AchievementProductRepository
 import com.zg.carbonapp.R
 import com.zg.carbonapp.databinding.ActivityStepCarbonBinding
+import java.lang.Math.random
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -85,7 +86,32 @@ class StepCarbonActivity : AppCompatActivity(), SensorEventListener {
     // 初始化基础数据
     private fun initData() {
         val todayDate = getTodayDate()
-        todayData = StepCarbonMMKV.getTodayData() ?: DailyStepData(todayDate)
+
+        // 添加模拟数据 - 今日步数
+        todayData = DailyStepData(todayDate).apply {
+            steps = 10000 // 模拟10000步
+            calculateCarbon() // 计算碳减排和积分
+        }
+
+        // 添加模拟数据 - 历史步数数据（近7天）
+        val calendar = Calendar.getInstance()
+        for (i in 6 downTo 0) {
+            calendar.time = Date()
+            calendar.add(Calendar.DAY_OF_YEAR, -i)
+            val date = dateFormat.format(calendar.time)
+
+            if (date != todayDate) { // 避免覆盖今日数据
+                val steps = 4000 + Random().nextInt(11000)
+                val stepData = DailyStepData(date).apply {
+                    this.steps = steps
+                    calculateCarbon()
+                }
+                StepCarbonMMKV.saveTodayData(stepData)
+            }
+        }
+
+        // 保存今日数据
+        StepCarbonMMKV.saveTodayData(todayData)
         todaySteps = todayData.steps
 
         // 检查是否跨天

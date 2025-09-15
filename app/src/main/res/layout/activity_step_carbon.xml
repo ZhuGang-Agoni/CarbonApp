@@ -15,14 +15,22 @@
 
 		<!-- 标题栏 -->
 		<com.google.android.material.appbar.MaterialToolbar
-			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:background="@color/green_primary"
-			app:title="步数碳减排"
-			app:titleTextColor="@android:color/white"
-			app:navigationIcon="@drawable/ic_back_white"
-			app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
+			android:id="@+id/toolbar"
+			app:navigationIcon="@drawable/ic_back"
+			app:navigationIconTint="@color/white">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="步数碳减排"
+				android:textColor="@android:color/white"
+				android:textSize="20sp"
+				android:textStyle="bold"
+				android:layout_gravity="center" />
+		</com.google.android.material.appbar.MaterialToolbar>
 
 		<!-- 进度卡片 -->
 		<com.google.android.material.card.MaterialCardView

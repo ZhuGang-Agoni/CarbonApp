@@ -7,31 +7,24 @@
 	android:fitsSystemWindows="true"
 	android:background="@android:color/white">
 
-	<!-- 顶部栏 -->
-	<LinearLayout
+	<!-- 标题栏 -->
+	<com.google.android.material.appbar.MaterialToolbar
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:orientation="horizontal"
-		android:background="#4CAF50"
-		android:gravity="center_vertical"
-		android:paddingHorizontal="12dp">
-
-		<ImageView
-			android:id="@+id/ic_back"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:src="@drawable/return__1_"
-			android:tint="@android:color/white" />
+		android:layout_height="?attr/actionBarSize"
+		android:background="@color/green_primary"
+		android:id="@+id/toolbar"
+		app:navigationIcon="@drawable/ic_back"
+		app:navigationIconTint="@color/white">
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="详情"
-			android:layout_marginStart="16dp"
-			android:textSize="18sp"
 			android:textColor="@android:color/white"
-			android:textStyle="bold" />
-	</LinearLayout>
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:layout_gravity="center" />
+	</com.google.android.material.appbar.MaterialToolbar>
 
 	<!-- 动态信息区域 -->
 	<LinearLayout

@@ -12,10 +12,19 @@
 		android:layout_width="match_parent"
 		android:layout_height="?attr/actionBarSize"
 		android:background="@color/green_primary"
-		app:title="历史数据"
 		android:id="@+id/toolbar"
-		app:titleTextColor="@android:color/white"
-		app:navigationIcon="@drawable/ic_back"/>
+		app:navigationIcon="@drawable/ic_back"
+		app:navigationIconTint="@color/white">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="历史数据"
+			android:textColor="@android:color/white"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:layout_gravity="center" />
+	</com.google.android.material.appbar.MaterialToolbar>
 
 	<!-- 时间段筛选 -->
 	<LinearLayout

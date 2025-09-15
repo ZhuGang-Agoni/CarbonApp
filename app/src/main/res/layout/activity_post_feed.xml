@@ -7,16 +7,24 @@
 	android:background="@android:color/white"
 	android:fitsSystemWindows="true">
 
-	<!-- 顶部栏 -->
+	<!-- 标题栏 -->
 	<com.google.android.material.appbar.MaterialToolbar
-		android:id="@+id/toolbar"
 		android:layout_width="match_parent"
 		android:layout_height="?attr/actionBarSize"
-		android:background="#4CAF50"
-		android:elevation="4dp"
-		android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
-		app:title="发布动态"
-		app:titleTextColor="@android:color/white" />
+		android:background="@color/green_primary"
+		android:id="@+id/toolbar"
+		app:navigationIcon="@drawable/ic_back"
+		app:navigationIconTint="@color/white">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="发布动态"
+			android:textColor="@android:color/white"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:layout_gravity="center" />
+	</com.google.android.material.appbar.MaterialToolbar>
 
 	<ScrollView
 		android:layout_width="match_parent"
