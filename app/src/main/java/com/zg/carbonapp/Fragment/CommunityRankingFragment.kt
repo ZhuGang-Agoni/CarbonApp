@@ -119,24 +119,27 @@ class CommunityRankingFragment : Fragment() {
 
     // 模拟刷新数据
     private fun getRefreshData(): List<RankingItem> {
-        val userAvatar = getCurrentUserAvatar()
         return listOf(
-            RankingItem("1", "Agoni", userAvatar, 120.0, 1),
-            RankingItem("2", "Mona", userAvatar, 110.0, 2),
-            RankingItem("3", "Carbon", userAvatar, 105.0, 3),
-            RankingItem("4", "Eco", userAvatar, 90.0, 4), // 使用默认头像
-            RankingItem("5", "Green", userAvatar, 80.0, 5) // 使用默认头像
+            RankingItem("1", "Agoni", getAvatarResourcePath(R.drawable.avatar1), 420.6, 1),
+            RankingItem("2", "王哪跑啊", getAvatarResourcePath(R.drawable.avatar2), 345.2, 2),
+            RankingItem("3", "xdx9527", getDefaultAvatarPath(), 344.9, 3),
+            RankingItem("4", "天然好呆~", getAvatarResourcePath(R.drawable.avatar3), 71.0, 4),
+            RankingItem("5", "xdx2513", getDefaultAvatarPath(), 1.3, 5)
         )
     }
 
     // 初始模拟数据
     private fun getInitialData(): List<RankingItem> {
-        val userAvatar = getCurrentUserAvatar()
         return listOf(
-            RankingItem("1", "Agoni", userAvatar, 100.0, 1),
-            RankingItem("2", "Mona", userAvatar, 100.0, 2),
-            RankingItem("3", "Carbon", userAvatar, 100.0, 3),
-            RankingItem("4", "Eco", getDefaultAvatarPath(), 100.0, 4) // 使用默认头像
+            RankingItem("1", "Agoni", getAvatarResourcePath(R.drawable.avatar1), 417.3, 1),
+            RankingItem("2", "xdx9527", getDefaultAvatarPath(), 342.1, 2),
+            RankingItem("3", "王哪跑啊", getAvatarResourcePath(R.drawable.avatar2), 339.5, 3),
+            RankingItem("4", "天然好呆~", getAvatarResourcePath(R.drawable.avatar3), 69.3, 4)
         )
+    }
+
+    // 辅助方法：获取头像资源路径
+    private fun getAvatarResourcePath(resId: Int): String {
+        return "android.resource://${requireContext().packageName}/$resId"
     }
 }

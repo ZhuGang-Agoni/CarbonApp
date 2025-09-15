@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/bg_cartoon"
+    android:background="@drawable/bg_ranking"
     android:fitsSystemWindows="true">
 
     <LinearLayout

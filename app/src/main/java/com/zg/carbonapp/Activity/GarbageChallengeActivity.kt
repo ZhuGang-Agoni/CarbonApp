@@ -168,7 +168,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
             isFinished = true
         )
         GarbageRecordMMKV.saveChallengeRecord(record)
-        val maxScore = (totalQuestions * scorePerQuestion*0.1).toInt()
+        val maxScore = (totalQuestions * scorePerQuestion*0.9).toInt()
 
         if (currentScore >=maxScore) {
             // 满分，弹窗提示是否挑战高阶

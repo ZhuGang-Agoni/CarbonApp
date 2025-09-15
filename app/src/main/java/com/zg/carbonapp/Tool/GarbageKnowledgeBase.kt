@@ -109,6 +109,8 @@ object GarbageKnowledgeBase {
         return localKnowledge[garbageName]
     }
 
+
+
     fun searchGarbage(query: String): List<GarbageKnowledge> {
         return localKnowledge.values.filter {
             it.name.contains(query, ignoreCase = true)
