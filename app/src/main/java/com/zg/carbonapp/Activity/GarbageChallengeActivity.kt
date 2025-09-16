@@ -19,7 +19,7 @@ import android.content.Intent
 import android.widget.Toast
 
 class GarbageChallengeActivity : AppCompatActivity() {
-    
+
     private lateinit var ivGarbageImage: ImageView
     private lateinit var btnRecyclable: LinearLayout
     private lateinit var btnHazardous: LinearLayout
@@ -28,20 +28,20 @@ class GarbageChallengeActivity : AppCompatActivity() {
     private lateinit var tvProgress: TextView
     private lateinit var tvScore: TextView
     private lateinit var progressBar: com.google.android.material.progressindicator.LinearProgressIndicator
-    
+
     private val challenges = mutableListOf<GarbageChallenge>()
     private var currentChallengeIndex = 0
     private var currentScore = 0
     private var totalQuestions = 10
     private val scorePerQuestion = 10
-    
-//    private lateinit var textToSpeech: TextToSpeech
+
+    //    private lateinit var textToSpeech: TextToSpeech
     private var ttsReady = false
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garbage_challenge)
-        
+
         initViews()
         initChallenges()
         startChallenge()
@@ -66,7 +66,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
         btnKitchen.setOnClickListener { checkAnswer("厨余垃圾") }
         btnOther.setOnClickListener { checkAnswer("其他垃圾") }
     }
-    
+
     private fun initChallenges() {
         // 用合并后的题库初始化
         challenges.clear()
@@ -74,7 +74,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
         totalQuestions = challenges.size
         progressBar.max = totalQuestions
     }
-    
+
     private fun startChallenge() {
         if (GarbageRecordMMKV.getTodayChallengeCount() >= 3) {
             MyToast.sendToast("今日挑战次数已达上限，明天再来吧！", this)
@@ -85,7 +85,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
         currentScore = 0
         showCurrentChallenge()
     }
-    
+
     private fun showCurrentChallenge() {
         if (currentChallengeIndex >= totalQuestions) {
             finishChallenge()
@@ -124,11 +124,11 @@ class GarbageChallengeActivity : AppCompatActivity() {
         tvScore.text = "得分: $currentScore"
         progressBar.progress = currentChallengeIndex + 1
     }
-    
+
     private fun checkAnswer(userAnswer: String) {
         val challenge = challenges[currentChallengeIndex]
         val isCorrect = mapCategory(userAnswer) == mapCategory(challenge.correctCategory)
-        
+
         if (isCorrect) {
             currentScore += scorePerQuestion
             MyToast.sendToast("回答正确！+${scorePerQuestion}分", this)
@@ -136,11 +136,11 @@ class GarbageChallengeActivity : AppCompatActivity() {
             MyToast.sendToast("回答错误！", this)
             showKnowledgeDialog(challenge)
         }
-        
+
         currentChallengeIndex++
         showCurrentChallenge()
     }
-    
+
     private fun showKnowledgeDialog(challenge: GarbageChallenge) {
         val speakText = "正确答案：${challenge.correctCategory}。${challenge.explanation}"
 //        if (ttsReady) {
@@ -155,7 +155,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
             .setPositiveButton("知道了") { _, _ -> }
             .show()
     }
-    
+
     private fun finishChallenge() {
         val accuracy = (currentScore / (totalQuestions * scorePerQuestion.toDouble()) * 100).toInt()
         // 只保存一条完整挑战记录
@@ -178,7 +178,7 @@ class GarbageChallengeActivity : AppCompatActivity() {
             .setCancelable(false)
             .show()
     }
-    
+
     private fun calculateCarbonPoints(score: Int): Int {
         // 按照总分动态计算奖励
         val maxScore = totalQuestions * scorePerQuestion

@@ -10,6 +10,8 @@ import java.util.*
 
 object GarbageRecordMMKV {
     private const val KEY_RECOGNITION_RECORDS = "recognition_records"
+
+    private const val KEY_CHALLENGE_RECORDS = "challenge_records"
     private const val KEY_LAST_REPORT_SHOW_TIME = "last_report_show_time"
     private val mmkv by lazy { MMKV.mmkvWithID("garbage_record") }
     private val gson = Gson()
@@ -33,6 +35,11 @@ object GarbageRecordMMKV {
         }
     }
 
+    fun clearChallengeRecords() {
+        mmkv.remove(KEY_CHALLENGE_RECORDS)
+    }
+
+
     // 保存识别记录
     fun saveRecognitionRecord(record: RecognitionRecord) {
         val records = getRecognitionRecords().toMutableList()
@@ -50,6 +57,12 @@ object GarbageRecordMMKV {
             Log.e("GarbageRecordMMKV", "解析recognition_records失败: ${e.message}")
             emptyList()
         }
+    }
+
+
+    // 清空识别记录
+    fun clearRecognitionRecords() {
+        mmkv.remove(KEY_RECOGNITION_RECORDS)
     }
 
     // 获取指定时间段内的记录
@@ -72,11 +85,9 @@ object GarbageRecordMMKV {
     fun getAllRecords(): List<Any> {
         val allRecords = mutableListOf<Any>()
         allRecords.addAll(getChallengeRecords())
-        allRecords.addAll(getRecognitionRecords())
         return allRecords.sortedByDescending {
             when (it) {
                 is ChallengeRecord -> it.timestamp
-                is RecognitionRecord -> it.timestamp
                 else -> 0L
             }
         }

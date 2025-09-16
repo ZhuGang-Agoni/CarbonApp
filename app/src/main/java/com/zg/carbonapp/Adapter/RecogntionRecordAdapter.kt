@@ -12,13 +12,13 @@ import com.zg.carbonapp.Dao.GarbageRecord
 import com.zg.carbonapp.R
 import java.io.File
 
-class GarbageRecordAdapter(
+class RecognitionRecordAdapter(
     private val records: List<GarbageRecord>,
     private val onItemClick: (GarbageRecord) -> Unit = {}
-) : RecyclerView.Adapter<GarbageRecordAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecognitionRecordAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivPhoto: ImageView = view.findViewById(R.id.iv_photo) // 修改为照片视图
+        val ivPhoto: ImageView = view.findViewById(R.id.iv_photo)
         val tvTitle: TextView = view.findViewById(R.id.tv_record_title)
         val tvDetail: TextView = view.findViewById(R.id.tv_record_detail)
         val tvTime: TextView = view.findViewById(R.id.tv_record_time)
@@ -37,8 +37,8 @@ class GarbageRecordAdapter(
         holder.tvDetail.text = record.categoryName
         holder.tvTime.text = record.time
 
-        // 显示照片（如果是识别记录且有照片）
-        if (!record.imagePath.isNullOrEmpty() && record.garbageName != "挑战记录") {
+        // 显示照片
+        if (!record.imagePath.isNullOrEmpty()) {
             // 异步加载照片
             val options = RequestOptions()
                 .override(100, 100)
@@ -53,12 +53,8 @@ class GarbageRecordAdapter(
             holder.ivPhoto.setImageResource(record.categoryIcon)
         }
 
-        // 只有设置了点击回调时才设置点击监听器
-        if (onItemClick != {}) {
-            holder.itemView.setOnClickListener { onItemClick(record) }
-        } else {
-            holder.itemView.setOnClickListener(null)
-        }
+        // 设置点击监听器
+        holder.itemView.setOnClickListener { onItemClick(record) }
     }
 
     override fun getItemCount() = records.size

@@ -34,7 +34,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="分类记录"
+            android:text="识别记录"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -120,4 +120,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout> 
+</LinearLayout>

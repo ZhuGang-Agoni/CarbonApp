@@ -7,7 +7,8 @@ data class GarbageRecord(
     val garbageName: String,
     val categoryName: String,
     val time: String,
-    val categoryIcon: Int
+    val categoryIcon: Int,
+    val imagePath: String? = null // 新增图片路径字段
 )
 
 data class GarbageChallenge(

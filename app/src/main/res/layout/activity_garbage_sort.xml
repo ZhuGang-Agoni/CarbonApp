@@ -22,13 +22,11 @@
             app:cardElevation="8dp"
             app:strokeColor="#AA4CAF50"
             app:strokeWidth="2dp"
-            app:cardBackgroundColor="#DDFFFFFF"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
                 android:paddingHorizontal="20dp"
                 android:gravity="center_vertical">
 
@@ -89,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="@color/colorBackground">
+                    android:background="@color/white">
 
                     <ImageView
                         android:layout_width="42dp"
@@ -137,7 +135,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="@color/colorBackground">
+                    android:background="@color/white">
 
                     <ImageView
                         android:layout_width="42dp"
@@ -186,7 +184,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="20dp"
-                android:background="@color/colorBackground">
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="36dp"
@@ -227,6 +225,57 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeColor="#AA4CAF50"
+            app:strokeWidth="2dp"
+            app:cardBackgroundColor="#DDFFFFFF"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_tip"
+                        android:tint="#FF4CAF50" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="分类小知识"
+                        android:textColor="#FF333333"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_garbage_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="小贴士：废旧电池属于有害垃圾，需单独投放至专用回收箱哦~"
+                    android:textColor="#FF333333"
+                    android:textSize="14sp"
+                    android:layout_marginTop="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -243,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp"
-                android:background="@color/colorBackground">
+                android:background="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -424,55 +473,5 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeColor="#AA4CAF50"
-            app:strokeWidth="2dp"
-            app:cardBackgroundColor="#DDFFFFFF"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:background="@color/colorBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@drawable/ic_tip"
-                        android:tint="#FF4CAF50" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="分类小知识"
-                        android:textColor="#FF333333"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="12dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_garbage_tip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="小贴士：废旧电池属于有害垃圾，需单独投放至专用回收箱哦~"
-                    android:textColor="#FF333333"
-                    android:textSize="14sp"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingMultiplier="1.2" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

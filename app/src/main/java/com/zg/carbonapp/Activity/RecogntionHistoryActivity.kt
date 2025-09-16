@@ -1,42 +1,39 @@
 package com.zg.carbonapp.Activity
 
 import android.app.AlertDialog
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zg.carbonapp.Adapter.GarbageRecordAdapter
+import com.zg.carbonapp.Adapter.RecognitionRecordAdapter
 import com.zg.carbonapp.Dao.GarbageRecord
 import com.zg.carbonapp.MMKV.GarbageRecordMMKV
 import com.zg.carbonapp.R
 import java.text.SimpleDateFormat
 import java.util.*
-import android.widget.Button
-import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.io.File
 
-class GarbageHistoryActivity : AppCompatActivity() {
+class RecognitionHistoryActivity : AppCompatActivity() {
 
-    private lateinit var btnBack: android.widget.ImageView
+    private lateinit var btnBack: ImageView
     private lateinit var tvTitle: TextView
     private lateinit var rvRecords: RecyclerView
     private lateinit var tvEmpty: com.google.android.material.card.MaterialCardView
     private lateinit var btnClear: TextView
 
-    private lateinit var recordAdapter: GarbageRecordAdapter
+    private lateinit var recordAdapter: RecognitionRecordAdapter
     private val recordList = mutableListOf<GarbageRecord>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_garbage_history)
+        setContentView(R.layout.activity_recogntion_history) // 使用相同的布局
 
         // 设置状态栏透明
         window.statusBarColor = android.graphics.Color.TRANSPARENT
@@ -46,7 +43,7 @@ class GarbageHistoryActivity : AppCompatActivity() {
 
         initViews()
         initListeners()
-        loadAllRecords()
+        loadRecognitionRecords()
     }
 
     private fun initViews() {
@@ -55,6 +52,9 @@ class GarbageHistoryActivity : AppCompatActivity() {
         rvRecords = findViewById(R.id.rv_records)
         tvEmpty = findViewById(R.id.tv_empty)
         btnClear = findViewById(R.id.btn_clear)
+
+        // 修改标题
+        tvTitle.text = "识别记录"
     }
 
     private fun initListeners() {
@@ -62,27 +62,28 @@ class GarbageHistoryActivity : AppCompatActivity() {
             finish()
         }
         btnClear.setOnClickListener {
-            GarbageRecordMMKV.clearChallengeRecords()
-            loadAllRecords()
-            android.widget.Toast.makeText(this, "已清空", android.widget.Toast.LENGTH_SHORT).show()
+            // 只清空识别记录
+            GarbageRecordMMKV.clearRecognitionRecords()
+            loadRecognitionRecords()
+            android.widget.Toast.makeText(this, "已清空识别记录", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun loadAllRecords() {
-        // 只获取挑战记录
-        val challengeRecords = GarbageRecordMMKV.getChallengeRecords()
+    private fun loadRecognitionRecords() {
+        // 只获取识别记录
+        val recognitionRecords = GarbageRecordMMKV.getRecognitionRecords()
 
         recordList.clear()
 
-        // 添加挑战记录
-        challengeRecords.forEach { record ->
+        // 添加识别记录
+        recognitionRecords.forEach { record ->
             recordList.add(
                 GarbageRecord(
-                    garbageName = "挑战记录",
-                    categoryName = "得分: ${record.totalScore}，正确${record.correctCount}/${record.totalQuestions}",
+                    garbageName = record.garbageName,
+                    categoryName = record.category,
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(record.timestamp)),
-                    categoryIcon = R.drawable.challenge2,
-                    imagePath = null // 挑战记录没有图片
+                    categoryIcon = R.drawable.ic_paizhao2,
+                    imagePath = record.imageUrl
                 )
             )
         }
@@ -108,38 +109,9 @@ class GarbageHistoryActivity : AppCompatActivity() {
             tvEmpty.visibility = View.GONE
             rvRecords.visibility = View.VISIBLE
 
-            recordAdapter = GarbageRecordAdapter(recordList) { record ->
-                // 判断是否为挑战记录
-                if (record.garbageName == "挑战记录") {
-                    // 找到原始 ChallengeRecord
-                    val challengeRecords = GarbageRecordMMKV.getChallengeRecords()
-                    val original = challengeRecords.find {
-                        "得分: ${it.totalScore}，正确${it.correctCount}/${it.totalQuestions}" == record.categoryName &&
-                                SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(it.timestamp)) == record.time
-                    }
-                    if (original != null && original.totalScore >= (original.totalQuestions * 10 * 0.9).toInt()) {
-                        // 满分，弹窗跳转
-                        AlertDialog.Builder(this)
-                            .setTitle("满分挑战记录")
-                            .setMessage("你这次的挑战记录正确率高达百分之90！要不要试试更高级的挑战？")
-                            .setPositiveButton("去试试") { _, _ ->
-                                val intent = Intent(this, GameMenuActivity::class.java)
-                                startActivity(intent)
-                            }
-                            .setNegativeButton("下次吧", null)
-                            .show()
-                        return@GarbageRecordAdapter
-                    }
-                }
-
-                // 查找对应的 RecognitionRecord 以获取 explanation
-                val recognition = GarbageRecordMMKV.getRecognitionRecords().find {
-                    it.garbageName == record.garbageName &&
-                            SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(it.timestamp)) == record.time
-                }
-
+            recordAdapter = RecognitionRecordAdapter(recordList) { record ->
                 // 显示包含图片的详情对话框
-                showRecordDetailDialog(record, recognition?.explanation ?: "暂无详细说明")
+                showRecordDetailDialog(record, record.categoryName)
             }
             rvRecords.layoutManager = LinearLayoutManager(this)
             rvRecords.adapter = recordAdapter
@@ -163,26 +135,23 @@ class GarbageHistoryActivity : AppCompatActivity() {
         tvExplanation.text = "说明：$explanation"
 
         // 使用 Glide 加载图片（如果有）
-        if (!record.imagePath.isNullOrEmpty() && record.garbageName != "挑战记录") {
+        if (!record.imagePath.isNullOrEmpty()) {
             val file = File(record.imagePath)
             if (file.exists()) {
                 Glide.with(this)
                     .load(file)
                     .apply(
                         RequestOptions()
-                        //.placeholder(R.drawable.ic_loading)
-                        //.error(R.drawable.ic_error)
-                        .centerCrop())
+                            .centerCrop())
                     .into(ivImage)
                 ivImage.visibility = View.VISIBLE
             } else {
-                ivImage.visibility = View.GONE
+                ivImage.setImageResource(R.drawable.ic_paizhao2)
+                ivImage.visibility = View.VISIBLE
             }
-        }else if (record.imagePath.isNullOrEmpty() && record.garbageName != "挑战记录") {
+        } else {
             ivImage.setImageResource(R.drawable.ic_paizhao2)
             ivImage.visibility = View.VISIBLE
-        } else {
-            ivImage.visibility = View.GONE
         }
 
         val dialog = AlertDialog.Builder(this)

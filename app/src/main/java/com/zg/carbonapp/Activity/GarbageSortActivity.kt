@@ -187,21 +187,19 @@ class GarbageSortActivity : AppCompatActivity() {
             .map {
                 when (it) {
                     is GarbageRecord -> it
-                    is RecognitionRecord -> GarbageRecord(
-                        garbageName = it.garbageName,
-                        categoryName = it.category,
-                        time = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(it.timestamp)),
-                        categoryIcon = getCategoryIcon(it.category)
-                    )
+                    is RecognitionRecord -> null // 不显示识别记录
                     is com.zg.carbonapp.Dao.ChallengeRecord -> GarbageRecord(
                         garbageName = "挑战记录",
                         categoryName = "得分: ${it.totalScore}，正确${it.correctCount}/${it.totalQuestions}",
                         time = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(it.timestamp)),
-                        categoryIcon = R.drawable.ic_leaf
+                        categoryIcon = R.drawable.challenge2
                     )
-                    else -> GarbageRecord("-", "-", "-", R.drawable.ic_other)
+                    else -> null
                 }
             }
+            .filterNotNull() // 过滤掉null值
+
+        // 使用不带点击回调的适配器构造函数
         recentRecordAdapter = GarbageRecordAdapter(recentRecords)
         rvRecentRecords.adapter = recentRecordAdapter
     }
@@ -241,11 +239,11 @@ class GarbageSortActivity : AppCompatActivity() {
     // 原有方法：获取分类图标
     private fun getCategoryIcon(category: String): Int {
         return when (category) {
-            "可回收物" -> R.drawable.ic_recyclable
-            "有害垃圾" -> R.drawable.ic_hazardous
-            "厨余垃圾" -> R.drawable.ic_kitchen
-            "其他垃圾" -> R.drawable.ic_other
-            else -> R.drawable.ic_other
+            "可回收物" -> R.drawable.kehuishoulaji
+            "有害垃圾" -> R.drawable.hazardous_bin
+            "厨余垃圾" -> R.drawable.kitchen_bin
+            "其他垃圾" -> R.drawable.other_bin
+            else -> R.drawable.ic_paizhao
         }
     }
 }
