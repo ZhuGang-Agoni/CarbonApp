@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="分类记录"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -44,10 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="清空"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:clickable="true"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/black"
+            android:background="@drawable/bg_rounded_score"
+            android:textColor="#FF4CAF50"
             android:padding="8dp"/>
     </LinearLayout>
 
