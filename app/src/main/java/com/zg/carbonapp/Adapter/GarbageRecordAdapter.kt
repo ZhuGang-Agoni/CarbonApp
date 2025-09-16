@@ -29,7 +29,7 @@ class GarbageRecordAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
-        
+//         真是无敌了 这里还用一个 string我都不知道想干啥
         holder.ivRecordIcon.setImageResource(record.categoryIcon)
         holder.tvRecordTitle.text = record.garbageName
         holder.tvRecordDetail.text = record.categoryName

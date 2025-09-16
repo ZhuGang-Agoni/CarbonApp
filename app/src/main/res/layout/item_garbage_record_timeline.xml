@@ -6,35 +6,15 @@
     android:padding="16dp"
     android:background="@drawable/bg_rounded_card">
 
-    <!-- 时间轴线 -->
-    <View
-        android:id="@+id/timeline_line"
-        android:layout_width="2dp"
-        android:layout_height="0dp"
-        android:background="@color/purple_record"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="12dp" />
 
-    <!-- 时间点 -->
-    <View
-        android:id="@+id/timeline_dot"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:background="@drawable/bg_timeline_dot"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="8dp" />
+
 
     <!-- 记录图标 -->
     <ImageView
         android:id="@+id/iv_record_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/bg_circle_gradient"
+        android:layout_marginStart="20dp"
         android:padding="12dp"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"

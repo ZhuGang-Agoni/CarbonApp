@@ -1,16 +1,30 @@
 package com.zg.carbonapp.Fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.zg.carbonapp.MMKV.UserMMKV
 
 import com.zg.carbonapp.R
 import com.zg.carbonapp.Tool.DeepSeekHelper
@@ -174,7 +188,61 @@ class AskFragment : Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val message = messages[position]
             when (holder) {
-                is UserViewHolder -> holder.content.text = message.content
+                is UserViewHolder -> {
+                    holder.content.text = message.content
+                    val user= UserMMKV.getUser()
+
+                    if (user!=null){
+                         var avatarUrl=user.userAvatar
+
+                        holder.userEvator.setImageResource(R.drawable.default_avatar)
+                        if (avatarUrl.isNullOrEmpty()) {
+                            return
+                        }
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                ActivityCompat.requestPermissions(
+                                    context as android.app.Activity,
+                                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                                    10086
+                                )
+                                return
+                            }
+                        }
+                        Glide.with(requireContext())
+                            .load(avatarUrl)
+                            .circleCrop()
+                            .placeholder(R.drawable.default_avatar)
+                            .error(R.drawable.default_avatar)
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: com.bumptech.glide.request.target.Target<Drawable>,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+
+                                    return false
+                                }
+                                override fun onResourceReady(
+                                    resource: Drawable,
+                                    model: Any,
+                                    target: Target<Drawable>?,
+                                    dataSource: DataSource,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+
+                                    return false
+                                }
+                            })
+                            .into(holder.userEvator)
+
+
+                    }
+
+            }
                 is AiViewHolder -> holder.content.text = message.content
             }
         }
@@ -183,6 +251,7 @@ class AskFragment : Fragment() {
 
         inner class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val content: TextView = view.findViewById(R.id.chat_message)
+            var userEvator: ImageView=view.findViewById(R.id.iv_user_avatar)
         }
 
         inner class AiViewHolder(view: View) : RecyclerView.ViewHolder(view) {

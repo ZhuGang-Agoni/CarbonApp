@@ -15,15 +15,15 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeColor="#AA4CAF50"
-            app:strokeWidth="2dp"
-            app:cardBackgroundColor="#DDFFFFFF"
-            android:layout_marginBottom="16dp">
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardCornerRadius="16dp"-->
+<!--            app:cardElevation="8dp"-->
+<!--            app:strokeColor="#AA4CAF50"-->
+<!--            app:strokeWidth="2dp"-->
+<!--            app:cardBackgroundColor="#DDFFFFFF"-->
+<!--            android:layout_marginBottom="16dp">-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,10 +37,10 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_back_white"
-                    android:tint="#FF333333"
-                    android:contentDescription="返回"
-                    android:clickable="true"
-                    android:focusable="true"/>
+	                android:contentDescription="返回"
+	                android:clickable="true"
+	                android:focusable="true"
+	                app:tint="#FF333333" />
 
                 <View
                     android:layout_width="72dp"
@@ -59,7 +59,7 @@
 
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,9 +95,9 @@
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:src="@drawable/challenge1"
-                        android:tint="#FF4CAF50" />
+                        app:tint="#FF4CAF50" />
 
-                    <TextView
+	                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分类挑战"
@@ -143,9 +143,9 @@
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:src="@drawable/ic_paizhao"
-                        android:tint="#FF4CAF50" />
+                        app:tint="#FF4CAF50" />
 
-                    <TextView
+	                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="垃圾识别"
@@ -222,7 +222,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/right"
-                    android:tint="#FF4CAF50" />
+	                app:tint="#FF4CAF50" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -253,9 +253,9 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:src="@drawable/ic_tip"
-                        android:tint="#FF4CAF50" />
+                        app:tint="#FF4CAF50" />
 
-                    <TextView
+	                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分类小知识"
@@ -306,9 +306,9 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/fenlei"
-                        android:tint="#FF4CAF50" />
+                        app:tint="#FF4CAF50" />
 
-                    <TextView
+	                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分类记录"

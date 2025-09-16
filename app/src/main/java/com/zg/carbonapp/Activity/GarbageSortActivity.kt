@@ -3,6 +3,7 @@ package com.zg.carbonapp.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -28,6 +29,7 @@ class GarbageSortActivity : AppCompatActivity() {
     private lateinit var rvRecentRecords: RecyclerView
     private lateinit var recentRecordAdapter: GarbageRecordAdapter
 
+    private lateinit var backButton: ImageView
     // 新增控件：周报入口
     private lateinit var cardWeeklyReport: MaterialCardView
     private lateinit var tvReportDesc: TextView
@@ -59,6 +61,7 @@ class GarbageSortActivity : AppCompatActivity() {
         rvRecentRecords = findViewById(R.id.rv_recent_records)
         tvChallengeCount = findViewById(R.id.tv_challenge_count)
 
+         backButton=findViewById(R.id.backButton)
         // 绑定新增控件（周报入口）
         cardWeeklyReport = findViewById(R.id.card_weekly_report)
         tvReportDesc = findViewById(R.id.tv_report_desc)
@@ -88,6 +91,8 @@ class GarbageSortActivity : AppCompatActivity() {
         btnViewAllHistory.setOnClickListener {
             startActivity(Intent(this, GarbageHistoryActivity::class.java))
         }
+
+        backButton.setOnClickListener {finish() }
 
         // 新增：周报入口点击事件
         cardWeeklyReport.setOnClickListener {
