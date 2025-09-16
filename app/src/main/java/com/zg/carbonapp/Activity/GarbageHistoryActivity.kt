@@ -22,7 +22,7 @@ class GarbageHistoryActivity : AppCompatActivity() {
     private lateinit var tvTitle: TextView
     private lateinit var rvRecords: RecyclerView
     private lateinit var tvEmpty: com.google.android.material.card.MaterialCardView
-    private lateinit var btnClear: Button
+    private lateinit var btnClear: TextView
     
     private lateinit var recordAdapter: GarbageRecordAdapter
     private val recordList = mutableListOf<GarbageRecord>()

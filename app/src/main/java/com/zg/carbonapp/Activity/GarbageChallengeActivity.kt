@@ -168,33 +168,15 @@ class GarbageChallengeActivity : AppCompatActivity() {
             isFinished = true
         )
         GarbageRecordMMKV.saveChallengeRecord(record)
-        val maxScore = (totalQuestions * scorePerQuestion*0.9).toInt()
 
-        if (currentScore >=maxScore) {
-            // 满分，弹窗提示是否挑战高阶
-            AlertDialog.Builder(this)
-                .setTitle("挑战完成！")
-                .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n恭喜你,你的正确率高达百分之九十！要不要尝试更高阶的分类挑战？")
-                .setPositiveButton("去试试") { _, _ ->
-                    val intent = Intent(this, MenuActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                .setNegativeButton("下次吧") { _, _ ->
-                    finish()
-                }
-                .setCancelable(false)
-                .show()
-        } else {
-            AlertDialog.Builder(this)
-                .setTitle("挑战完成！")
-                .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n根据你的表现，获得${calculateCarbonPoints(currentScore)}碳积分！")
-                .setPositiveButton("确定") { _, _ -> 
-                    finish()
-                }
-                .setCancelable(false)
-                .show()
-        }
+        AlertDialog.Builder(this)
+            .setTitle("挑战完成！")
+            .setMessage("你的得分：$currentScore\n正确率：$accuracy%\n\n你真棒，再接再厉！根据你的表现，获得${calculateCarbonPoints(currentScore)}碳积分！")
+            .setPositiveButton("确定") { _, _ ->
+                finish()
+            }
+            .setCancelable(false)
+            .show()
     }
     
     private fun calculateCarbonPoints(score: Int): Int {

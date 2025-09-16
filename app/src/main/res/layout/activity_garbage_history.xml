@@ -39,15 +39,16 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="清空"
-            android:textSize="14sp"
+            android:textSize="18sp"
+            android:clickable="true"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bg_rounded_score"
-            android:textColor="@color/white"
+            android:textColor="#FF4CAF50"
             android:padding="8dp"/>
     </LinearLayout>
 
