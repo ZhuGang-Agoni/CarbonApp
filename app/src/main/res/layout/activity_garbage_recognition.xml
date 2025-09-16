@@ -266,22 +266,22 @@
 
     </LinearLayout>
 
-    <!-- 加载动画 - 现在位于屏幕正中央，并且有模糊背景 -->
+    <!-- 加载动画 - 位于屏幕上方，靠近顶部导航栏 -->
     <LinearLayout
         android:id="@+id/loading_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="#22000000"
-        android:visibility="gone">
+        android:paddingTop="100dp"
+        android:visibility="visible"
+        >
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/bg_rounded_white"
-            android:indeterminateTint="@color/green_primary" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:indeterminateTint="@color/green_primary"/>
 
     </LinearLayout>
 
